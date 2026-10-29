@@ -1,0 +1,30 @@
+:root { font-family: system-ui, sans-serif; color: #172334; background: #f5f7fa; color-scheme: light dark; }
+* { box-sizing: border-box; }
+body { margin: 0; }
+a { color: #174c9b; }
+header { display: flex; justify-content: space-between; align-items: center; gap: 1rem; padding: 1.25rem; background: #142c48; color: white; }
+.layout { display: flex; max-width: 90rem; margin: auto; }
+nav { min-width: 13rem; padding: 1rem; }
+nav a { display: block; padding: .8rem; border-radius: .3rem; }
+nav a[aria-current] { background: #dce7f8; font-weight: bold; }
+main { flex: 1; min-width: 0; padding: 1.5rem; }
+form { max-width: 28rem; }
+.field { margin: 1rem 0; }
+label { display: block; font-weight: 600; margin-bottom: .4rem; }
+input, select, textarea, button { font: inherit; padding: .7rem; border: 1px solid #65758a; border-radius: .3rem; }
+input, select, textarea { width: 100%; background: white; color: #172334; }
+button { cursor: pointer; background: #174c9b; color: white; margin: .3rem; }
+button:disabled { cursor: wait; opacity: .7; }
+:focus-visible { outline: 3px solid #bd6400; outline-offset: 3px; }
+.alert { padding: 1rem; border: 1px solid #65758a; border-radius: .3rem; }
+.error { color: #a31919; }
+.badge { display: inline-block; padding: .25rem .5rem; border: 1px solid currentColor; border-radius: 1rem; }
+.skip { position: absolute; left: 1rem; top: -5rem; background: white; padding: .8rem; z-index: 2; }
+.skip:focus { top: .5rem; }
+.table-scroll { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; }
+caption { text-align: left; font-weight: bold; padding: .7rem; }
+th, td { text-align: left; padding: .7rem; border-bottom: 1px solid #65758a; }
+@media (max-width: 640px) { .layout { flex-direction: column; } nav { display: flex; flex-wrap: wrap; } header { flex-wrap: wrap; } main { padding: 1rem; } }
+@media (prefers-color-scheme: dark) { :root { color: #edf2fa; background: #14202e; } a { color: #a9ceff; } nav a[aria-current] { background: #294567; } .error { color: #ffb4b4; } .skip { background: #14202e; } }
+@media (forced-colors: active) { button, .alert, .badge { border: 1px solid ButtonText; } }
