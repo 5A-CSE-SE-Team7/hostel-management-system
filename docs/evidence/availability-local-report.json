@@ -1,0 +1,13 @@
+{
+  "start": "2026-10-01T00:00:00Z",
+  "end": "2026-11-01T00:00:00Z",
+  "intervalMs": 60000,
+  "upMs": 60000,
+  "downMs": 0,
+  "unknownMs": 2678340000,
+  "excludedMs": 0,
+  "coveragePercent": 0.002240143369175627,
+  "observedAvailabilityPercent": 100,
+  "fullCalendarMonth": true,
+  "monthlyTargetVerified": false
+}
