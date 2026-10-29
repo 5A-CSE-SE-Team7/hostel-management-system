@@ -54,3 +54,10 @@ test('unread count/read-all are idempotent and cannot mark another user records'
   assert.equal((await student.get('/api/notifications?before=bad')).status, 400);
   assert.equal((await student.post('/api/notifications/nope/read')).status, 400);
 });
+
+test('existing M4 notify contract is preserved without implementing fee logic', async () => {
+  const { notify } = require('../src/utils/notify');
+  const id = await notify(userId, 'fee_assessed', 'Synthetic fee adapter contract', { type: 'fee', id: 123 });
+  const [[row]] = await h.pool.query('SELECT ref_type, ref_id FROM notifications WHERE id = ?', [id]);
+  assert.equal(row.ref_type, 'fee'); assert.equal(row.ref_id, 123);
+});

@@ -54,4 +54,12 @@ function queueDelivery(ids) {
     Promise.all(ids.map(id => deliver(id))).catch(() => console.error('[notify] optional email pipeline failed; use the retry worker'));
   });
 }
-module.exports = { persist, createDelivery, deliver, queueDelivery };
+// Compatibility adapter for existing M4 callers; do not implement fee rules here.
+async function notify(userId, type, message, ref = {}) {
+  try {
+    const [result] = await pool.query('INSERT INTO notifications (user_id, type, message, ref_type, ref_id) VALUES (?,?,?,?,?)', [userId, type, String(message).slice(0, 300), ref.type || null, ref.id || null]);
+    queueDelivery([result.insertId]);
+    return result.insertId;
+  } catch (_) { console.error('[notify] could not persist optional notification'); return null; }
+}
+module.exports = { persist, notify, createDelivery, deliver, queueDelivery };
