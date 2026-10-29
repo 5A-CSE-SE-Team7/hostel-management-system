@@ -7,7 +7,7 @@ header { display: flex; justify-content: space-between; align-items: center; gap
 nav { min-width: 13rem; padding: 1rem; }
 nav a { display: block; padding: .8rem; border-radius: .3rem; }
 nav a[aria-current] { background: #dce7f8; font-weight: bold; }
-main { flex: 1; min-width: 0; padding: 1.5rem; }
+#content { flex: 1; min-width: 0; padding: 1.5rem; }
 form { max-width: 28rem; }
 .field { margin: 1rem 0; }
 label { display: block; font-weight: 600; margin-bottom: .4rem; }
@@ -25,6 +25,6 @@ button:disabled { cursor: wait; opacity: .7; }
 table { width: 100%; border-collapse: collapse; }
 caption { text-align: left; font-weight: bold; padding: .7rem; }
 th, td { text-align: left; padding: .7rem; border-bottom: 1px solid #65758a; }
-@media (max-width: 640px) { .layout { flex-direction: column; } nav { display: flex; flex-wrap: wrap; } header { flex-wrap: wrap; } main { padding: 1rem; } }
+@media (max-width: 640px) { .layout { flex-direction: column; } nav { display: flex; flex-wrap: wrap; } header { flex-wrap: wrap; } #content { padding: 1rem; } }
 @media (prefers-color-scheme: dark) { :root { color: #edf2fa; background: #14202e; } a { color: #a9ceff; } nav a[aria-current] { background: #294567; } .error { color: #ffb4b4; } .skip { background: #14202e; } }
 @media (forced-colors: active) { button, .alert, .badge { border: 1px solid ButtonText; } }
