@@ -48,6 +48,8 @@ export default function Register() {
         onChange={update}
         required
         autoComplete={options.autoComplete}
+        minLength={options.minLength}
+        maxLength={options.maxLength}
         aria-invalid={Boolean(fieldErrors[name])}
         aria-describedby={fieldErrors[name] ? `${name}-error` : undefined}
       />
@@ -66,7 +68,7 @@ export default function Register() {
         {field('srn', 'SRN', { hint: 'Use letters and numbers only.' })}
         {field('name', 'Full name', { autoComplete: 'name' })}
         {field('email', 'Institutional email', { type: 'email', autoComplete: 'email' })}
-        {field('password', 'Password', { type: 'password', autoComplete: 'new-password', hint: '8–72 characters with at least one letter and one number.' })}
+        {field('password', 'Password', { type: 'password', autoComplete: 'new-password', minLength: 8, maxLength: 72, hint: '8–72 characters with at least one letter and one number.' })}
         {field('contact', 'Contact number', { type: 'tel', autoComplete: 'tel' })}
         <button type="submit" disabled={busy}>{busy ? 'Creating account…' : 'Register'}</button>
         <p>Already registered? <Link to="/login">Sign in</Link></p>

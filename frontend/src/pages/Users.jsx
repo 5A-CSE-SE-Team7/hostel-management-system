@@ -74,7 +74,7 @@ export default function Users() {
         <h2>Create staff account</h2>
         <label className="field" htmlFor="new-user-name"><span>Full name</span><input id="new-user-name" required maxLength="120" value={form.name} onChange={(event) => setForm({ ...form, name: event.target.value })} /></label>
         <label className="field" htmlFor="new-user-email"><span>Email</span><input id="new-user-email" type="email" autoComplete="email" required value={form.email} onChange={(event) => setForm({ ...form, email: event.target.value })} /></label>
-        <label className="field" htmlFor="new-user-password"><span>Temporary password</span><input id="new-user-password" type="password" autoComplete="new-password" required minLength="8" value={form.password} onChange={(event) => setForm({ ...form, password: event.target.value })} /></label>
+        <label className="field" htmlFor="new-user-password"><span>Temporary password</span><input id="new-user-password" type="password" autoComplete="new-password" required minLength="8" maxLength="72" value={form.password} onChange={(event) => setForm({ ...form, password: event.target.value })} /></label>
         <label className="field" htmlFor="new-user-role">
           <span>Role</span>
           <select id="new-user-role" value={form.role} onChange={(event) => setForm({ ...form, role: event.target.value })}>

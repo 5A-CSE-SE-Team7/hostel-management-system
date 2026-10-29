@@ -50,6 +50,15 @@ test('TC-Auth-01 returns field details for invalid registration data', async () 
   assert.ok(result.body.requestId);
 });
 
+test('TC-Sec-02 registration enforces password length and letter-plus-digit policy', async () => {
+  const invalidPasswords = ['12345678', 'abcdefgh', 'A1'.repeat(36) + 'A'];
+  for (const password of invalidPasswords) {
+    const result = await h.request(h.app).post('/api/auth/register').send({ ...registration, password });
+    assert.equal(result.status, 400);
+    assert.ok(result.body.details.password);
+  }
+});
+
 test('registration enforces an optional configured institutional email domain', async () => {
   const config = require('../src/config');
   const previousDomain = config.emailDomain;
@@ -161,6 +170,12 @@ test('TC-Auth-03 staff can search and edit student profiles; students cannot acc
 test('TC-Auth-04 admin manages staff roles, prevents self-lockout, invalidates stale sessions, and audits changes', async () => {
   const adminUser = await h.mkUser('admin', 9);
   const admin = await h.login(adminUser);
+  const weakPassword = await admin.post('/api/admin/users').send({
+    name: 'Weak Password User', email: 'weak-password@t.test', password: 'onlyletters', role: 'warden',
+  });
+  assert.equal(weakPassword.status, 400);
+  assert.ok(weakPassword.body.details.password);
+
   const created = await admin.post('/api/admin/users').send({
     name: 'Warden Two',
     email: 'warden2@t.test',
@@ -209,4 +224,18 @@ test('TC-Auth-04 admin endpoints return 401 when signed out and 403 for non-admi
   const warden = await h.login(await h.mkUser('warden', 3));
   assert.equal((await student.get('/api/admin/users')).status, 403);
   assert.equal((await warden.post('/api/admin/users').send({})).status, 403);
+});
+
+test('TC-Sec-02 every stored password is a unique bcrypt hash, never a known plaintext', async () => {
+  const { bcryptRounds } = require('../src/config');
+  const knownPlaintextPasswords = new Set([registration.password, h.PASSWORD, 'Warden123']);
+  const [users] = await h.pool.query('SELECT password_hash FROM users');
+  const hashes = users.map((user) => user.password_hash);
+  assert.ok(hashes.length > 0);
+  for (const hash of hashes) {
+    assert.match(hash, /^\$2[aby]\$\d{2}\$/);
+    assert.equal(Number(hash.slice(4, 6)), bcryptRounds);
+    assert.equal(knownPlaintextPasswords.has(hash), false);
+  }
+  assert.equal(new Set(hashes).size, hashes.length, 'bcrypt hashes must be uniquely salted');
 });
