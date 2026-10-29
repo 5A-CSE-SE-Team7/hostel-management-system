@@ -32,3 +32,5 @@ Run locally with `cd frontend && npm ci && npm test && npm run build`; `npm run 
 ## Verified M1 adapter correction
 
 Remote M1 commit b14ab0b implements GET /api/auth/me as a flat session user, not the initially proposed wrapper. AuthProvider now accepts that actual response (and the wrapper for compatibility). The real backend was inspected; no M1 implementation was changed.
+
+Final integration audit: M1 PR #42 Register imports named post from api.js. S03 now exports compatible get/post/put/patch adapters using its existing validated cookie-aware client. App accepts explicit registrationPage/loginPage extensions so the real M1 pages can be wired without reimplementing registration. Provided M1 pages own their main landmark; the shell uses a div container for guest extensions. Session generations prevent stale /me responses from restoring a logged-out user. Three regression tests were added; no teammate code was changed.
