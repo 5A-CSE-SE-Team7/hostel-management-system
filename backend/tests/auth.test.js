@@ -99,3 +99,61 @@ test('TC-Auth-02 unknown email and wrong password return the same 401 response',
   assert.equal(unknownEmail.body.errorCode, 'INVALID_CREDENTIALS');
   assert.equal(wrongPassword.body.message, unknownEmail.body.message);
 });
+
+test('TC-Auth-03 students can update permitted profile fields but protected fields stay unchanged', async () => {
+  const agent = h.request.agent(h.app);
+  const login = await agent.post('/api/auth/login').send({ email: registration.email, password: registration.password });
+  assert.equal(login.status, 200);
+  const before = await agent.get('/api/profile');
+  assert.equal(before.status, 200);
+  assert.equal(before.body.srn, registration.srn);
+
+  const updated = await agent.put('/api/profile').send({
+    name: 'Updated Student',
+    contact: '9111111111',
+    department: 'ECE',
+    yearOfStudy: 3,
+    guardianName: 'Guardian Name',
+    guardianContact: '9222222222',
+    address: 'New address',
+    role: 'admin',
+    srn: 'HACK123',
+    email: 'changed@t.test',
+  });
+  assert.equal(updated.status, 200);
+  assert.equal(updated.body.name, 'Updated Student');
+  assert.equal(updated.body.contact, '9111111111');
+  assert.equal(updated.body.department, 'ECE');
+  assert.equal(updated.body.yearOfStudy, 3);
+  assert.equal(updated.body.guardianName, 'Guardian Name');
+  assert.equal(updated.body.guardianContact, '9222222222');
+  assert.equal(updated.body.address, 'New address');
+  assert.equal(updated.body.role, 'student');
+  assert.equal(updated.body.srn, registration.srn);
+  assert.equal(updated.body.email, registration.email);
+  assert.equal((await agent.put('/api/profile').send({ yearOfStudy: 99 })).status, 400);
+});
+
+test('TC-Auth-03 staff can search and edit student profiles; students cannot access the staff list', async () => {
+  const target = await h.mkUser('student', 2);
+  const warden = await h.login(await h.mkUser('warden', 1));
+  const student = await h.login(target);
+
+  assert.equal((await student.get('/api/students')).status, 403);
+  const search = await warden.get('/api/students').query({ search: 'PES2UG24CS902' });
+  assert.equal(search.status, 200);
+  assert.equal(search.body.length, 1);
+  assert.equal(search.body[0].id, target.id);
+
+  const detail = await warden.get(`/api/students/${target.id}`);
+  assert.equal(detail.status, 200);
+  const updated = await warden.put(`/api/students/${target.id}`).send({
+    name: 'Staff Updated', department: 'CSE', role: 'admin', srn: 'CHANGED123', email: 'changed@t.test',
+  });
+  assert.equal(updated.status, 200);
+  assert.equal(updated.body.name, 'Staff Updated');
+  assert.equal(updated.body.department, 'CSE');
+  assert.equal(updated.body.role, 'student');
+  assert.equal(updated.body.srn, 'PES2UG24CS902');
+  assert.equal(updated.body.email, target.email);
+});

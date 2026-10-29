@@ -2,7 +2,9 @@ import React from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
 import { useAuth } from './auth.jsx';
 import Login from './pages/Login.jsx';
+import Profile from './pages/Profile.jsx';
 import Register from './pages/Register.jsx';
+import Students from './pages/Students.jsx';
 
 function SignedInHome() {
   const { user, logout, error } = useAuth();
@@ -11,6 +13,10 @@ function SignedInHome() {
       <h1>Welcome, {user.name}</h1>
       <p className="intro">You are signed in as a {user.role}.</p>
       {error && <p className="alert" role="alert">{error}</p>}
+      <nav className="account-links" aria-label="Account">
+        <Link to="/profile">My profile</Link>
+        {['warden', 'admin'].includes(user.role) && <Link to="/students">Manage students</Link>}
+      </nav>
       <button type="button" onClick={logout}>Sign out</button>
     </main>
   );
@@ -19,7 +25,16 @@ function SignedInHome() {
 export default function App() {
   const { user, loading, error } = useAuth();
   if (loading) return <p className="registration" role="status">Checking your session…</p>;
-  if (user) return <SignedInHome />;
+  if (user) {
+    return (
+      <Routes>
+        <Route path="/" element={<SignedInHome />} />
+        <Route path="/profile" element={<Profile />} />
+        <Route path="/students" element={['warden', 'admin'].includes(user.role) ? <Students /> : <Navigate to="/" replace />} />
+        <Route path="*" element={<Navigate to="/" replace />} />
+      </Routes>
+    );
+  }
 
   return (
     <>

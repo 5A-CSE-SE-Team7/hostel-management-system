@@ -23,5 +23,9 @@ body { margin: 0; min-width: 320px; min-height: 100vh; }
 .success { margin: 0; color: #18794e; }
 button { min-height: 2.75rem; padding: .65rem 1rem; border: 0; border-radius: .4rem; background: #174ea6; color: white; font: inherit; font-weight: 700; cursor: pointer; }
 button:disabled { opacity: .65; cursor: wait; }
+.account-links { display: flex; gap: 1rem; margin: 1.25rem 0; }
+.student-results { display: grid; gap: .5rem; margin: 0; padding: 0; list-style: none; }
+.student-result { width: 100%; background: #eef3fb; color: #172033; text-align: left; font-weight: 500; }
+.student-editor { margin-top: 1.25rem; }
 
 @media (max-width: 480px) { .registration { margin: 2rem auto; } .card { padding: 1rem; } }

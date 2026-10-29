@@ -25,3 +25,15 @@ export async function get(path) {
   if (!response.ok) throw new ApiError(response.status, data);
   return data;
 }
+
+export async function put(path, body) {
+  const response = await fetch(`/api${path}`, {
+    method: 'PUT',
+    credentials: 'include',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(body),
+  });
+  const data = await response.json().catch(() => ({}));
+  if (!response.ok) throw new ApiError(response.status, data);
+  return data;
+}

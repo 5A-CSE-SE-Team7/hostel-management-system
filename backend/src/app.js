@@ -38,7 +38,7 @@ function createApp() {
   });
 
   app.use('/api/auth', require('./routes/auth'));
-  // mounted by M1 PR: app.use('/api', require('./routes/profile'));
+  app.use('/api', require('./routes/profile'));
   // mounted by M1 PR: app.use('/api/admin', require('./routes/admin'));
   // mounted by M2 PR: app.use('/api', require('./routes/inventory'));
   // mounted by M2 PR: app.use('/api', require('./routes/allocations'));
