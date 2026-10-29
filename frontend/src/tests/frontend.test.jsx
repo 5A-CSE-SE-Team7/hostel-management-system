@@ -16,6 +16,11 @@ describe('HMS-S03', () => {
     expect(screen.getByRole('link', { name: 'Complaints' })).toBeVisible();
     expect(!!screen.queryByRole('link', { name: 'Fees' })).toBe(role !== 'maintenance');
   });
+  it('accepts the actual flat M1 session response', async () => {
+    vi.stubGlobal('fetch', vi.fn().mockResolvedValue(reply({ id: 1, name: 'Aayaan', role: 'student' })));
+    mount();
+    expect(await screen.findByText('Welcome, Aayaan.')).toBeVisible();
+  });
   it('denies direct fee navigation for maintenance', async () => {
     vi.stubGlobal('fetch', vi.fn().mockResolvedValue(reply({ user: { role: 'maintenance' } })));
     mount('/fees'); expect(await screen.findByRole('heading', { name: 'Access denied' })).toBeVisible();

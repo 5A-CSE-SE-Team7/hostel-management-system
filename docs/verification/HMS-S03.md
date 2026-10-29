@@ -28,3 +28,7 @@ Executed on Node 24.19.0, 2026-10-29:
 - NOT RUN: real browser/screen-reader/WCAG AA audit; component checks do not certify WCAG compliance.
 
 Run locally with `cd frontend && npm ci && npm test && npm run build`; `npm run dev` proxies `/api` to port 4000. No frontend credentials or environment file are required.
+
+## Verified M1 adapter correction
+
+Remote M1 commit b14ab0b implements GET /api/auth/me as a flat session user, not the initially proposed wrapper. AuthProvider now accepts that actual response (and the wrapper for compatibility). The real backend was inspected; no M1 implementation was changed.

@@ -8,7 +8,7 @@ export function AuthProvider({ children }) {
     setState(s => ({ ...s, loading: true, error: '' }));
     try {
       const data = await api('/api/auth/me');
-      const user = data.user;
+      const user = data?.user ?? data;
       if (!user || !['student', 'warden', 'maintenance', 'admin'].includes(user.role)) throw new Error('The session response is invalid.');
       setState({ user, loading: false, error: '' });
     } catch (e) {
