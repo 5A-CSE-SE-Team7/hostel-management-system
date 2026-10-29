@@ -30,5 +30,5 @@ old="  // mounted by M1 PR: app.use('/api/auth', require('./routes/auth'));"
 assert old in s, 'Review M1 integration mount after upstream changes'
 p.write_text(s.replace(old, "  app.use('/api/auth', require('./routes/auth'));"))
 PY
-(cd "$root/backend" && NODE_ENV=test DB_NAME=hms_test node --test --test-concurrency=1 tests/unit.test.js tests/complaints.test.js)
+(cd "$root/backend" && NODE_ENV=test DB_NAME=hms_test node --test --test-concurrency=1 tests/*.test.js)
 (cd "$root/frontend" && npm test && npm run build)

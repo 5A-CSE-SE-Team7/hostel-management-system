@@ -82,4 +82,45 @@ router.get('/complaints/:id', async (req, res, next) => {
     res.json(row);
   } catch (error) { next(error); }
 });
+// HMS-F-010: serialized assignment and independent priority changes.
+const staff = requireRole('warden', 'admin');
+router.get('/maintenance-staff', staff, async (_req, res, next) => {
+  try {
+    const [rows] = await pool.query("SELECT id, name FROM users WHERE role = 'maintenance' AND is_active = 1 ORDER BY name, id");
+    res.json(rows);
+  } catch (error) { next(error); }
+});
+router.post('/complaints/:id/assign', staff, async (req, res, next) => {
+  try {
+    const complaintId = id(req.params.id, 'id');
+    const assignedTo = id(req.body?.assignedTo, 'assignedTo');
+    const d = validate(req.body, { priority: { enum: ['low', 'medium', 'high', 'urgent'] } });
+    const result = await withTransaction(async conn => {
+      const [[complaint]] = await conn.query('SELECT status, priority FROM complaints WHERE id = ? FOR UPDATE', [complaintId]);
+      if (!complaint) throw E.notFound('Complaint');
+      if (complaint.status === 'resolved') throw E.conflict('Resolved complaints cannot be reassigned', 'INVALID_TRANSITION');
+      const [[assignee]] = await conn.query("SELECT id FROM users WHERE id = ? AND role = 'maintenance' AND is_active = 1 FOR SHARE", [assignedTo]);
+      if (!assignee) throw E.validation({ assignedTo: 'Assignee must be an active maintenance staff member' });
+      const status = complaint.status === 'submitted' ? 'assigned' : complaint.status;
+      const priority = d.priority || complaint.priority;
+      await conn.query('UPDATE complaints SET assigned_to = ?, status = ?, priority = ? WHERE id = ?', [assignedTo, status, priority, complaintId]);
+      await audit(req, 'COMPLAINT_ASSIGN', 'complaint', complaintId, { assignedTo, priority }, { conn, strict: true });
+      return { complaintId, status, assignedTo, priority };
+    });
+    res.json(result);
+  } catch (error) { next(error); }
+});
+router.patch('/complaints/:id/priority', staff, async (req, res, next) => {
+  try {
+    const complaintId = id(req.params.id, 'id');
+    const d = validate(req.body, { priority: { required: true, enum: ['low', 'medium', 'high', 'urgent'] } });
+    await withTransaction(async conn => {
+      const [[complaint]] = await conn.query('SELECT id FROM complaints WHERE id = ? FOR UPDATE', [complaintId]);
+      if (!complaint) throw E.notFound('Complaint');
+      await conn.query('UPDATE complaints SET priority = ? WHERE id = ?', [d.priority, complaintId]);
+      await audit(req, 'COMPLAINT_PRIORITY', 'complaint', complaintId, d, { conn, strict: true });
+    });
+    res.json({ complaintId, priority: d.priority });
+  } catch (error) { next(error); }
+});
 module.exports = router;
