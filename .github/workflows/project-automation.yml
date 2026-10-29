@@ -1,0 +1,21 @@
+name: Project automation
+
+# Adds every new issue and PR to the GitHub Project board automatically.
+# Setup (once): create a Project, then set
+#   repo variable  PROJECT_URL            = https://github.com/orgs/<org>/projects/<n>   (or /users/<user>/projects/<n>)
+#   repo secret    ADD_TO_PROJECT_PAT     = classic PAT with `project` + `repo` scopes
+on:
+  issues:
+    types: [opened, transferred]
+  pull_request:
+    types: [opened]
+
+jobs:
+  add-to-project:
+    runs-on: ubuntu-latest
+    if: ${{ vars.PROJECT_URL != '' }}
+    steps:
+      - uses: actions/add-to-project@v1.0.2
+        with:
+          project-url: ${{ vars.PROJECT_URL }}
+          github-token: ${{ secrets.ADD_TO_PROJECT_PAT }}
