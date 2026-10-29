@@ -3,8 +3,7 @@ name: CI
 on:
   push:
     branches: [main]
-  pull_request:
-    branches: [main]
+  pull_request: # Include feature-base PRs in the documented stacked workflow.
   workflow_dispatch:
 
 permissions:

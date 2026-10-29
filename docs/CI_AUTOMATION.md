@@ -4,7 +4,7 @@ Owner: Aayaan Kamil (PES2UG24CS017). Verified issue: https://github.com/5A-CSE-S
 
 ## Checks and review policy
 
-CI runs on pull requests to main, pushes to main and manual dispatch. Use Node 22 (currently 22.23.4; frontend tools require >=22.12). Dependencies install from frozen npm lockfiles. Backend checks use MySQL 8 and the isolated hms_test database. Unit tests and the integration runner report independently after installation; no test failure is ignored. The integration runner executes all tests/*.test.js except unit.test.js, and fails if no integration suite exists. It does not report a unit-only run as integration coverage. Schema initialization and dependency smoke checks precede the suites.
+CI runs on all pull requests (including stacked feature-base PRs), pushes to main and manual dispatch. Use Node 22 (currently 22.23.4; frontend tools require >=22.12). Dependencies install from frozen npm lockfiles. Backend checks use MySQL 8 and the isolated hms_test database. Unit tests and the integration runner report independently after installation; no test failure is ignored. The integration runner executes all tests/*.test.js except unit.test.js, and fails if no integration suite exists. It does not report a unit-only run as integration coverage. Schema initialization and dependency smoke checks precede the suites.
 
 Frontend runs npm test and npm run build independently after installation, so a failing test does not hide build diagnostics. A no-test run fails. Workflow validation uses checksum-pinned actionlint 1.7.7 plus executable validator/runner regression tests. Official checkout/setup-node actions are pinned to verified v6 commit SHAs, with read-only contents permission and no retained checkout credentials.
 
