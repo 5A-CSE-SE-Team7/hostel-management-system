@@ -13,3 +13,5 @@ Actual validation with the staged-source compatibility script, real pinned M1/M2
 Remote/main integration remains pending M1/M2/S03/S04 and the preceding feature stack. SMTP production delivery is NOT RUN. No teammate branch was overwritten. Existing M3 starter notify design was reviewed; its interfaces were adapted to the scoped feature stack rather than copied wholesale.
 
 Compatibility follow-up: inspected M4 fee router imports notify(userId,type,message,ref). The adapter preserves that export and arbitrary fee/complaint reference types; no fee logic is implemented here. An additional genuine DB test checks the M4 call contract.
+
+Latest-team follow-up: PR #42 appeared during implementation at fb7b11ceda2aa7793974b7ac6973ef3427307bdd. The integration fixture now uses its real auth router/middleware with genuine M2 auditing. Our routers use explicit roles and do not require its removed STAFF export. M2 inventory and M4 fee/profile/report routers still import STAFF from older M1; that separate shared contract conflict must be coordinated by their owners, not patched in this feature.
