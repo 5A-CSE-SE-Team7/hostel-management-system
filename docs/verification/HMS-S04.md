@@ -35,3 +35,12 @@ Node subprocess tests require the managed executor's normal process permissions;
 HMS-S04 / Assignment 2b: workflow implementation and local validation complete, acceptance pending. The requirements “failing tests cannot be merged” and “new issues appear on Project automatically” remain BLOCKED until owner settings and a successful real Project workflow/board observation are verified. Issue #4 should remain open; use Refs #4 rather than claiming full closure.
 
 Progress: S03 implementation pushed (draft PR #40, live M1 integration pending); S04 implementation prepared for separate review, external acceptance pending; HMS-F-009/F-010/F-011/F-012/SR-001/F-013U/NF-001/NF-003 not implemented by this checkpoint. Stop here for review before complaint work.
+
+## PR #41 action resolution correction
+
+The initial CI workflow accidentally assigned setup-node's v6 SHA to checkout and checkout's v6 SHA to setup-node. This prevented all five CI jobs from starting. Corrected all eight references, retaining immutable pins and existing permissions/checks:
+- actions/checkout v6: d23441a48e516b6c34aea4fa41551a30e30af803
+- actions/setup-node v6: 249970729cb0ef3589644e2896645e5dc5ba9c38
+- actions/add-to-project v1.0.2 remains 244f685bbc3b7adfa8466e08b698b5577571133e
+
+Each repository/tag was independently resolved with git ls-remote, and its action.yml was successfully retrieved at the corresponding SHA from raw.githubusercontent.com. A regression test checks repository-to-revision association for every uses reference across the modified workflows. Local actionlint and the expanded 12-test CI utility suite pass. Remote rerun results must be assessed separately; this correction does not resolve unmerged application dependencies or Project credentials.

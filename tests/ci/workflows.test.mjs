@@ -64,3 +64,18 @@ test('CI runs tests and build, with separate advisory audits', () => {
   assert.match(ci, /npm audit --audit-level=high/);
   assert.doesNotMatch(ci, /passWithNoTests|audit-level=critical|\|\| true/);
 });
+test('action pins belong to their own official repositories (PR 41 regression)', () => {
+  // Verified with git ls-remote per repository and raw action.yml retrieval.
+  // These v6 tags resolve differently; swapping their SHAs breaks job setup.
+  const published = {
+    'actions/checkout': 'd23441a48e516b6c34aea4fa41551a30e30af803',
+    'actions/setup-node': '249970729cb0ef3589644e2896645e5dc5ba9c38',
+    'actions/add-to-project': '244f685bbc3b7adfa8466e08b698b5577571133e',
+  };
+  for (const file of ['ci', 'pr-checks', 'project-automation']) {
+    for (const [, repo, revision] of workflow(file).matchAll(/uses:\s+([^@\s]+)@([^\s]+)/g)) {
+      assert.ok(published[repo], `verify newly added action ${repo} before pinning`);
+      assert.equal(revision, published[repo], `${repo} must use its own published revision`);
+    }
+  }
+});
