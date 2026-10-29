@@ -5,6 +5,7 @@ import Login from './pages/Login.jsx';
 import Profile from './pages/Profile.jsx';
 import Register from './pages/Register.jsx';
 import Students from './pages/Students.jsx';
+import Users from './pages/Users.jsx';
 
 function SignedInHome() {
   const { user, logout, error } = useAuth();
@@ -16,6 +17,7 @@ function SignedInHome() {
       <nav className="account-links" aria-label="Account">
         <Link to="/profile">My profile</Link>
         {['warden', 'admin'].includes(user.role) && <Link to="/students">Manage students</Link>}
+        {user.role === 'admin' && <Link to="/users">Users &amp; roles</Link>}
       </nav>
       <button type="button" onClick={logout}>Sign out</button>
     </main>
@@ -31,6 +33,7 @@ export default function App() {
         <Route path="/" element={<SignedInHome />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/students" element={['warden', 'admin'].includes(user.role) ? <Students /> : <Navigate to="/" replace />} />
+        <Route path="/users" element={user.role === 'admin' ? <Users /> : <Navigate to="/" replace />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     );

@@ -37,3 +37,15 @@ export async function put(path, body) {
   if (!response.ok) throw new ApiError(response.status, data);
   return data;
 }
+
+export async function patch(path, body) {
+  const response = await fetch(`/api${path}`, {
+    method: 'PATCH',
+    credentials: 'include',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(body),
+  });
+  const data = await response.json().catch(() => ({}));
+  if (!response.ok) throw new ApiError(response.status, data);
+  return data;
+}

@@ -157,3 +157,56 @@ test('TC-Auth-03 staff can search and edit student profiles; students cannot acc
   assert.equal(updated.body.srn, 'PES2UG24CS902');
   assert.equal(updated.body.email, target.email);
 });
+
+test('TC-Auth-04 admin manages staff roles, prevents self-lockout, invalidates stale sessions, and audits changes', async () => {
+  const adminUser = await h.mkUser('admin', 9);
+  const admin = await h.login(adminUser);
+  const created = await admin.post('/api/admin/users').send({
+    name: 'Warden Two',
+    email: 'warden2@t.test',
+    password: 'Warden123',
+    role: 'warden',
+  });
+  assert.equal(created.status, 201);
+  assert.equal(created.body.role, 'warden');
+  assert.equal('password_hash' in created.body, false);
+
+  const warden = h.request.agent(h.app);
+  const loggedIn = await warden.post('/api/auth/login').send({ email: 'warden2@t.test', password: 'Warden123' });
+  assert.equal(loggedIn.status, 200);
+
+  const changed = await admin.patch(`/api/admin/users/${created.body.id}`).send({ role: 'maintenance' });
+  assert.equal(changed.status, 200);
+  assert.equal(changed.body.role, 'maintenance');
+  assert.equal((await warden.get('/api/auth/me')).status, 401, 'changing a role invalidates old sessions');
+
+  const deactivated = await admin.patch(`/api/admin/users/${created.body.id}`).send({ isActive: false });
+  assert.equal(deactivated.status, 200);
+  assert.equal(deactivated.body.isActive, false);
+  const activated = await admin.patch(`/api/admin/users/${created.body.id}`).send({ isActive: true });
+  assert.equal(activated.status, 200);
+  assert.equal(activated.body.isActive, true);
+
+  const [[events]] = await h.pool.query(
+    "SELECT GROUP_CONCAT(action ORDER BY id) AS actions FROM audit_logs WHERE entity_id = ?",
+    [String(created.body.id)],
+  );
+  assert.match(events.actions, /ROLE_ASSIGNED/);
+  assert.match(events.actions, /ROLE_CHANGED/);
+  assert.match(events.actions, /USER_DEACTIVATED/);
+  assert.match(events.actions, /USER_ACTIVATED/);
+
+  const selfRole = await admin.patch(`/api/admin/users/${adminUser.id}`).send({ role: 'warden' });
+  const selfDeactivate = await admin.patch(`/api/admin/users/${adminUser.id}`).send({ isActive: false });
+  assert.equal(selfRole.body.errorCode, 'SELF_LOCKOUT');
+  assert.equal(selfDeactivate.body.errorCode, 'SELF_LOCKOUT');
+  assert.equal((await admin.get('/api/auth/me')).status, 200);
+});
+
+test('TC-Auth-04 admin endpoints return 401 when signed out and 403 for non-admin roles', async () => {
+  assert.equal((await h.request(h.app).get('/api/admin/users')).status, 401);
+  const student = await h.login(await h.mkUser('student', 3));
+  const warden = await h.login(await h.mkUser('warden', 3));
+  assert.equal((await student.get('/api/admin/users')).status, 403);
+  assert.equal((await warden.post('/api/admin/users').send({})).status, 403);
+});
