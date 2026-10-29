@@ -20,3 +20,11 @@ export async function api(path, { body, ...options } = {}) {
   if (response.status !== 204 && !isJson) throw new Error('The server returned an unexpected response. Please retry.');
   return data;
 }
+
+// M1 PR #42's pages use named methods with /auth/... paths. Keep one
+// implementation for credentials, validation and error metadata.
+function apiPath(path) { return path.startsWith('/api/') ? path : `/api${path.startsWith('/') ? path : `/${path}`}`; }
+export const get = (path, options) => api(apiPath(path), options);
+export const post = (path, body) => api(apiPath(path), { method: 'POST', body });
+export const put = (path, body) => api(apiPath(path), { method: 'PUT', body });
+export const patch = (path, body) => api(apiPath(path), { method: 'PATCH', body });
