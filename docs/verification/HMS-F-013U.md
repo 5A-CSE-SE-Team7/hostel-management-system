@@ -1,0 +1,11 @@
+# HMS-F-013U — fee ledger frontend
+
+Aayaan Kamil / PES2UG24CS017; verified issue #22. Stacked base: feature/HMS-S03-react-frontend. Only frontend implementation, contract-test harness and documentation are added; the M4 fee backend is not changed.
+
+Actual M4 API inspected at ebff728: /api/fees/me, /api/fees/ledger/:studentId, /api/fees/dues, POST /api/fees/assessments and POST /api/fees/payments. M1 supplies /api/students?q=. Student views their own assessed/paid/outstanding totals and assessment/payment tables. Warden/admin can search/pick students and record assessments/payments, including optional assessment/reference. Amounts use two decimal places; server validation errors attach to fields and preserve drafts. Changing the selected student aborts stale ledger reads and clears previous data. Missing service errors are never rendered as zero balances. Maintenance cannot request fee data through this page.
+
+Ownership coordination: docs/PR_HANDOFF.md places Fees.jsx in the old M4 branch despite assigning #22 to Aayaan. That original implementation was inspected and preserved on its branch. This separate branch adapts the verified backend contract to S03's actual function-based API client and UI primitives. Request aadi-basal-06 to review this branch as the #22 frontend contribution and avoid also merging the old M4 Fees.jsx. No teammate PR or branch was overwritten and no external coordination message was sent.
+
+Actual PASS: bash scripts/validate-fee-frontend.sh uses a temporary index snapshot with real pinned M1/M2/M4 code, F012 notification adapter and S04 patched dependencies. One real MySQL/API contract test created an assessment/payment, verified student/warden balances and dues, picker shape and denied student access to dues. Frontend: 15 tests (10 S03 + 5 fee), build, both audits zero vulnerabilities. No fake fee backend was used for the API test. Component tests use explicit request mocks.
+
+BLOCKED: standalone main integration and remote acceptance until the real auth/audit/fee backend mounts and S03/S04 changes are reviewed/merged. The API test is contract coverage, not a comprehensive audit of teammate fee logic. No online payment gateway or production finance data is involved.
