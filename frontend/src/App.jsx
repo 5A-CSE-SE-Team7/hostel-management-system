@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import Complaints from './pages/Complaints';
 import Dashboard from './pages/Dashboard';
+import Notifications from './pages/Notifications';
+import NotificationCount from './components/NotificationCount';
 import { Navigate, NavLink, Outlet, Route, Routes } from 'react-router-dom';
 import { useAuth } from './auth';
 import { Alert, Badge, Field } from './components/ui';
@@ -34,5 +36,5 @@ function Pending({ title }) { return <><h1>{title}</h1><Alert>This feature is aw
 export default function App() {
   const { user, loading, error, logout } = useAuth();
   const [logoutError, setLogoutError] = useState('');
-  return <><a className="skip" href="#content">Skip to content</a><header><strong>Hostel Management System</strong>{user && <div><Badge>{user.role}</Badge><button onClick={async () => { try { await logout(); } catch (e) { setLogoutError(e.message); } }}>Sign out</button></div>}</header><div className="layout">{user && <nav aria-label="Main navigation">{navigation.filter(n => n.roles.includes(user.role)).map(n => <NavLink key={n.path} to={n.path} end={n.path === '/'}>{n.label}</NavLink>)}</nav>}<main id="content" tabIndex="-1"><Alert error>{logoutError}</Alert>{loading ? <Alert>Checking your session…</Alert> : <Routes><Route path="/login" element={<Login />} /><Route element={<Protected />}><Route index element={<Dashboard />} /><Route path="complaints" element={<Complaints />} /><Route path="notifications" element={<Pending title="Notifications" />} /><Route element={<Protected roles={['student', 'warden', 'admin']} />}><Route path="fees" element={<Pending title="Fees" />} /></Route></Route><Route path="*" element={<><h1>Page not found</h1><NavLink to="/">Go to dashboard</NavLink></>} /></Routes>}{!loading && !user && error && <button onClick={() => window.location.reload()}>Retry connection</button>}</main></div></>;
+  return <><a className="skip" href="#content">Skip to content</a><header><strong>Hostel Management System</strong>{user && <div><Badge>{user.role}</Badge><button onClick={async () => { try { await logout(); } catch (e) { setLogoutError(e.message); } }}>Sign out</button></div>}</header><div className="layout">{user && <nav aria-label="Main navigation">{navigation.filter(n => n.roles.includes(user.role)).map(n => <NavLink key={n.path} to={n.path} end={n.path === '/'}>{n.label}{n.path === '/notifications' && <NotificationCount />}</NavLink>)}</nav>}<main id="content" tabIndex="-1"><Alert error>{logoutError}</Alert>{loading ? <Alert>Checking your session…</Alert> : <Routes><Route path="/login" element={<Login />} /><Route element={<Protected />}><Route index element={<Dashboard />} /><Route path="complaints" element={<Complaints />} /><Route path="notifications" element={<Notifications />} /><Route element={<Protected roles={['student', 'warden', 'admin']} />}><Route path="fees" element={<Pending title="Fees" />} /></Route></Route><Route path="*" element={<><h1>Page not found</h1><NavLink to="/">Go to dashboard</NavLink></>} /></Routes>}{!loading && !user && error && <button onClick={() => window.location.reload()}>Retry connection</button>}</main></div></>;
 }

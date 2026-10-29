@@ -44,7 +44,7 @@ function createApp() {
   // mounted by M2 PR: app.use('/api', require('./routes/inventory'));
   // mounted by M2 PR: app.use('/api', require('./routes/allocations'));
   app.use('/api', require('./routes/complaints')); // HMS-F-009; requires real M1/M2 modules
-  // mounted by M3 PR: app.use('/api', require('./routes/notifications'));
+  app.use('/api', require('./routes/notifications'));
   // mounted by M4 PR: app.use('/api', require('./routes/fees'));
   // mounted by M4 PR: app.use('/api', require('./routes/visitors'));
   // mounted by M4 PR: app.use('/api', require('./routes/leave'));
