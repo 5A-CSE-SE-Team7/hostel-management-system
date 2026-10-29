@@ -6,6 +6,7 @@ const { pool, withTransaction } = require('../db');
 const { E } = require('../utils/errors');
 const { validate } = require('../utils/validate');
 const { audit } = require('../utils/audit');
+const { requireAuth } = require('../middleware/auth');
 
 const authLimiter = rateLimit({
   windowMs: 15 * 60 * 1000,
@@ -27,6 +28,8 @@ const passwordRule = {
   label: 'Password',
   patternMessage: 'Password must be 8-72 characters and contain a letter and a digit',
 };
+const sessionUser = (user) => ({ id: user.id, role: user.role, name: user.name, email: user.email });
+const dummyPasswordHash = bcrypt.hash('invalid-login-comparison', config.bcryptRounds);
 
 router.post('/register', authLimiter, async (req, res, next) => {
   try {
@@ -81,5 +84,49 @@ router.post('/register', authLimiter, async (req, res, next) => {
     return next(err);
   }
 });
+
+router.post('/login', authLimiter, async (req, res, next) => {
+  try {
+    const data = validate(req.body, {
+      email: { type: 'email', required: true, label: 'Institutional email' },
+      password: { type: 'string', required: true, max: 200, label: 'Password' },
+    });
+    const [[user]] = await pool.query(
+      'SELECT id, email, name, role, password_hash, is_active FROM users WHERE email = ?',
+      [data.email],
+    );
+    const hash = user?.password_hash || await dummyPasswordHash;
+    const passwordMatches = await bcrypt.compare(data.password, hash);
+    if (!user || !passwordMatches || !user.is_active) {
+      await audit(req, 'LOGIN_FAILED', 'user', user?.id ?? null, { email: data.email }, {
+        userId: user?.id ?? null,
+        role: user?.role ?? null,
+      });
+      throw E.invalidCredentials();
+    }
+
+    await new Promise((resolve, reject) => req.session.regenerate((err) => (err ? reject(err) : resolve())));
+    req.session.user = sessionUser(user);
+    await audit(req, 'LOGIN', 'user', user.id, null);
+    return res.json({ userId: user.id, role: user.role, sessionStatus: 'active', name: user.name });
+  } catch (err) {
+    return next(err);
+  }
+});
+
+router.post('/logout', requireAuth, async (req, res, next) => {
+  try {
+    await audit(req, 'LOGOUT', 'user', req.session.user.id, null);
+    req.session.destroy((err) => {
+      if (err) return next(err);
+      res.clearCookie('hms.sid');
+      return res.json({ sessionStatus: 'ended' });
+    });
+  } catch (err) {
+    return next(err);
+  }
+});
+
+router.get('/me', requireAuth, (req, res) => res.json(req.session.user));
 
 module.exports = router;

@@ -18,3 +18,10 @@ export async function post(path, body) {
   if (!response.ok) throw new ApiError(response.status, data);
   return data;
 }
+
+export async function get(path) {
+  const response = await fetch(`/api${path}`, { credentials: 'include' });
+  const data = await response.json().catch(() => ({}));
+  if (!response.ok) throw new ApiError(response.status, data);
+  return data;
+}

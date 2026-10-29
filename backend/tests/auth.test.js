@@ -66,3 +66,36 @@ test('registration enforces an optional configured institutional email domain', 
     config.emailDomain = previousDomain;
   }
 });
+
+test('TC-Auth-02 login creates a role session, /me returns it, and logout invalidates it', async () => {
+  const agent = h.request.agent(h.app);
+  const login = await agent.post('/api/auth/login').send({ email: registration.email, password: registration.password });
+  assert.equal(login.status, 200);
+  assert.equal(login.body.role, 'student');
+  assert.equal(login.body.sessionStatus, 'active');
+  assert.ok(login.headers['set-cookie'].some((cookie) => cookie.includes('HttpOnly') && cookie.includes('SameSite=Lax')));
+  const [[activeSession]] = await h.pool.query('SELECT COUNT(*) AS count FROM sessions');
+  assert.ok(activeSession.count > 0, 'the authenticated session is stored in MySQL');
+
+  const me = await agent.get('/api/auth/me');
+  assert.equal(me.status, 200);
+  assert.equal(me.body.email, registration.email);
+  assert.equal(me.body.role, 'student');
+
+  const logout = await agent.post('/api/auth/logout').send({});
+  assert.equal(logout.status, 200);
+  assert.equal(logout.body.sessionStatus, 'ended');
+  assert.equal((await agent.get('/api/auth/me')).status, 401);
+  const [[endedSession]] = await h.pool.query('SELECT COUNT(*) AS count FROM sessions');
+  assert.equal(endedSession.count, 0, 'logout removes the server-side session');
+});
+
+test('TC-Auth-02 unknown email and wrong password return the same 401 response', async () => {
+  const wrongPassword = await h.request(h.app).post('/api/auth/login').send({ email: registration.email, password: 'WrongPass123' });
+  const unknownEmail = await h.request(h.app).post('/api/auth/login').send({ email: 'unknown@t.test', password: 'WrongPass123' });
+  assert.equal(wrongPassword.status, 401);
+  assert.equal(unknownEmail.status, 401);
+  assert.equal(wrongPassword.body.errorCode, 'INVALID_CREDENTIALS');
+  assert.equal(unknownEmail.body.errorCode, 'INVALID_CREDENTIALS');
+  assert.equal(wrongPassword.body.message, unknownEmail.body.message);
+});

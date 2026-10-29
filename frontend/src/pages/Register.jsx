@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { post } from '../api.js';
 
 const INITIAL_FORM = { srn: '', name: '', email: '', password: '', contact: '' };
@@ -68,6 +69,7 @@ export default function Register() {
         {field('password', 'Password', { type: 'password', autoComplete: 'new-password', hint: '8–72 characters with at least one letter and one number.' })}
         {field('contact', 'Contact number', { type: 'tel', autoComplete: 'tel' })}
         <button type="submit" disabled={busy}>{busy ? 'Creating account…' : 'Register'}</button>
+        <p>Already registered? <Link to="/login">Sign in</Link></p>
       </form>
     </main>
   );
