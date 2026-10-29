@@ -1,0 +1,27 @@
+:root {
+  font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  color: #172033;
+  background: #f3f6fb;
+  font-synthesis: none;
+}
+
+* { box-sizing: border-box; }
+
+body { margin: 0; min-width: 320px; min-height: 100vh; }
+
+.registration { width: min(100% - 2rem, 34rem); margin: 4rem auto; }
+.registration h1 { margin-bottom: .5rem; }
+.intro { margin-top: 0; color: #566176; line-height: 1.5; }
+.card { display: grid; gap: 1rem; padding: 1.5rem; background: white; border: 1px solid #d9e0eb; border-radius: .75rem; box-shadow: 0 12px 32px #20304a12; }
+.field { display: grid; gap: .4rem; font-weight: 600; }
+.field input { width: 100%; min-height: 2.75rem; padding: .65rem .75rem; border: 1px solid #aab5c5; border-radius: .4rem; font: inherit; }
+.field input:focus { outline: 3px solid #9ec5fe; border-color: #2869c7; }
+.field input[aria-invalid="true"] { border-color: #b42318; }
+.field-error { color: #b42318; font-weight: 400; }
+.hint { color: #566176; font-weight: 400; }
+.alert { margin: 0; color: #b42318; }
+.success { margin: 0; color: #18794e; }
+button { min-height: 2.75rem; padding: .65rem 1rem; border: 0; border-radius: .4rem; background: #174ea6; color: white; font: inherit; font-weight: 700; cursor: pointer; }
+button:disabled { opacity: .65; cursor: wait; }
+
+@media (max-width: 480px) { .registration { margin: 2rem auto; } .card { padding: 1rem; } }
