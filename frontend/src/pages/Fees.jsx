@@ -41,7 +41,7 @@ function StaffFees() {
   const picker = useId();
   async function refreshStaff(q = '') {
     setLoading(true); setError('');
-    try { const [people, balances] = await Promise.all([api(`/api/students?q=${encodeURIComponent(q)}`), api('/api/fees/dues')]); setStudents(people); setDues(balances); }
+    try { const [people, balances] = await Promise.all([api(`/api/students?search=${encodeURIComponent(q)}&q=${encodeURIComponent(q)}`), api('/api/fees/dues')]); setStudents(people); setDues(balances); }
     catch (e) { setError(e.message); }
     finally { setLoading(false); }
   }

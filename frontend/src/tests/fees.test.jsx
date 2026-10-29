@@ -41,3 +41,9 @@ it('unavailable fee service is an error with retry, not a zero balance', async (
   useAuth.mockReturnValue({ user: { role: 'student' } }); vi.stubGlobal('fetch', vi.fn().mockResolvedValue(json({ message: 'Fee service unavailable' }, 404))); render(<Fees />);
   expect(await screen.findByRole('alert')).toHaveTextContent('Fee service unavailable'); expect(screen.getByRole('button', { name: 'Retry ledger' })).toBeEnabled(); expect(screen.queryByText('₹ 0.00')).toBeNull();
 });
+
+it('sends the current M1 search contract while retaining original q compatibility', async () => {
+  useAuth.mockReturnValue({ user: { role: 'warden' } }); const fetch = fixture(); render(<Fees />); const user = userEvent.setup();
+  await screen.findByLabelText('Student'); await user.type(screen.getByLabelText('Search students by name or SRN'),'PES 017'); await user.click(screen.getByRole('button',{name:'Search students'}));
+  expect(fetch.mock.calls.some(([path]) => path === '/api/students?search=PES%20017&q=PES%20017')).toBe(true);
+});
