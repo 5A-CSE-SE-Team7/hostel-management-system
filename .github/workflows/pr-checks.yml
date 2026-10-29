@@ -2,20 +2,24 @@ name: PR checks
 
 on:
   pull_request:
-    types: [opened, edited, synchronize, reopened]
+    types: [opened, edited, synchronize, reopened, ready_for_review]
+
+permissions:
+  contents: read
 
 jobs:
   linked-issue:
     name: PR must reference a backlog issue
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     steps:
       - name: Check for "Closes #N" / "Fixes #N" / "Refs #N"
         env:
           BODY: ${{ github.event.pull_request.body }}
         run: |
           if echo "$BODY" | grep -Eiq '(close[sd]?|fix(e[sd])?|resolve[sd]?|refs?) +#[0-9]+'; then
-            echo "Linked issue found."
+            echo 'Linked issue found.'
           else
-            echo "::error::Please link the backlog issue in the PR description, e.g. 'Closes #12'."
+            echo "::error::Please link the backlog issue in the PR description, e.g. 'Refs #4'."
             exit 1
           fi
