@@ -79,3 +79,11 @@ test('action pins belong to their own official repositories (PR 41 regression)',
     }
   }
 });
+test('combined validation preserves real failures and isolates proposed owner changes', () => {
+  const ci=workflow('ci');
+  assert.match(ci,/Verify actual combined owner contracts/);
+  assert.match(ci,/run: bash scripts\/ci\/combined-integration.sh\n/);
+  const script=readFileSync(new URL('../../scripts/ci/combined-integration.sh',import.meta.url),'utf8');
+  assert.match(script,/exit 2/); assert.match(script,/--with-proposed-staff-export/);
+  assert.match(script,/exit "\$result"/); assert.match(script,/No teammate source was changed/);
+});

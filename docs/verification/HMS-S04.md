@@ -44,3 +44,7 @@ The initial CI workflow accidentally assigned setup-node's v6 SHA to checkout an
 - actions/add-to-project v1.0.2 remains 244f685bbc3b7adfa8466e08b698b5577571133e
 
 Each repository/tag was independently resolved with git ls-remote, and its action.yml was successfully retrieved at the corresponding SHA from raw.githubusercontent.com. A regression test checks repository-to-revision association for every uses reference across the modified workflows. Local actionlint and the expanded 12-test CI utility suite pass. Remote rerun results must be assessed separately; this correction does not resolve unmerged application dependencies or Project credentials.
+
+## Final debugging batch
+
+Added an explicit combined-candidate workflow and real-network React/API journeys. Genuine M1 Register/Login now work with S03 adapters; current M1 student search works with the fee UI. Shared shell corrections were brought into PRs #43–46/#48 via normal merges, not force pushes or copied business features. Workflow lint and 13 CI utility tests pass. Complete latest conditional fixture: 53 backend tests executed, 51 pass, 2 fail in teammate audit contracts; 32 frontend tests pass, build passes, both dependency audits report zero. Without the explicit temporary STAFF proposal, actual combined startup is BLOCKED. All teammate proposals and exact refs are documented; no production integration is claimed. New GitHub results must be inspected separately after this push.
