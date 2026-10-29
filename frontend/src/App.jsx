@@ -9,7 +9,7 @@ export const navigation = [
   { path: '/notifications', label: 'Notifications', roles: ['student', 'warden', 'maintenance', 'admin'] },
   { path: '/fees', label: 'Fees', roles: ['student', 'warden', 'admin'] },
 ];
-function Login() {
+function Login({ registrationEnabled = false }) {
   const { login, user, error: serviceError } = useAuth();
   const [error, setError] = useState('');
   const [busy, setBusy] = useState(false);
@@ -21,7 +21,7 @@ function Login() {
     catch (err) { setError(err.message); }
     finally { setBusy(false); }
   }
-  return <><h1>Sign in</h1><Alert error>{serviceError || error}</Alert><form onSubmit={submit}><Field label="Institutional email" name="email" type="email" autoComplete="username" required /><Field label="Password" name="password" type="password" autoComplete="current-password" required /><button disabled={busy}>{busy ? 'Signing in…' : 'Sign in'}</button></form></>;
+  return <><h1>Sign in</h1><Alert error>{serviceError || error}</Alert><form onSubmit={submit}><Field label="Institutional email" name="email" type="email" autoComplete="username" required /><Field label="Password" name="password" type="password" autoComplete="current-password" required /><button disabled={busy}>{busy ? 'Signing in…' : 'Sign in'}</button></form>{registrationEnabled && <NavLink to="/register">Create an account</NavLink>}</>;
 }
 function Protected({ roles }) {
   const { user } = useAuth();
@@ -30,8 +30,9 @@ function Protected({ roles }) {
   return <Outlet />;
 }
 function Pending({ title }) { return <><h1>{title}</h1><Alert>This feature is awaiting its module integration.</Alert></>; }
-export default function App() {
+export default function App({ registrationPage = null, loginPage = null }) {
   const { user, loading, error, logout } = useAuth();
   const [logoutError, setLogoutError] = useState('');
-  return <><a className="skip" href="#content">Skip to content</a><header><strong>Hostel Management System</strong>{user && <div><Badge>{user.role}</Badge><button onClick={async () => { try { await logout(); } catch (e) { setLogoutError(e.message); } }}>Sign out</button></div>}</header><div className="layout">{user && <nav aria-label="Main navigation">{navigation.filter(n => n.roles.includes(user.role)).map(n => <NavLink key={n.path} to={n.path} end={n.path === '/'}>{n.label}</NavLink>)}</nav>}<main id="content" tabIndex="-1"><Alert error>{logoutError}</Alert>{loading ? <Alert>Checking your session…</Alert> : <Routes><Route path="/login" element={<Login />} /><Route element={<Protected />}><Route index element={<><h1>Dashboard</h1><p>Welcome, {user?.name || 'hostel user'}.</p><Alert>Select a service from the navigation.</Alert></>} /><Route path="complaints" element={<Pending title="Complaints" />} /><Route path="notifications" element={<Pending title="Notifications" />} /><Route element={<Protected roles={['student', 'warden', 'admin']} />}><Route path="fees" element={<Fees />} /></Route></Route><Route path="*" element={<><h1>Page not found</h1><NavLink to="/">Go to dashboard</NavLink></>} /></Routes>}{!loading && !user && error && <button onClick={() => window.location.reload()}>Retry connection</button>}</main></div></>;
+  const Content = !user && (registrationPage || loginPage) ? 'div' : 'main';
+  return <><a className="skip" href="#content">Skip to content</a><header><strong>Hostel Management System</strong>{user && <div><Badge>{user.role}</Badge><button onClick={async () => { try { await logout(); } catch (e) { setLogoutError(e.message); } }}>Sign out</button></div>}</header><div className="layout">{user && <nav aria-label="Main navigation">{navigation.filter(n => n.roles.includes(user.role)).map(n => <NavLink key={n.path} to={n.path} end={n.path === '/'}>{n.label}</NavLink>)}</nav>}<Content id="content" tabIndex="-1"><Alert error>{logoutError}</Alert>{loading ? <Alert>Checking your session…</Alert> : <Routes><Route path="/login" element={user ? <Navigate to="/" replace /> : loginPage || <Login registrationEnabled={!!registrationPage} />} />{registrationPage && <Route path="/register" element={user ? <Navigate to="/" replace /> : registrationPage} />}<Route element={<Protected />}><Route index element={<><h1>Dashboard</h1><p>Welcome, {user?.name || 'hostel user'}.</p><Alert>Select a service from the navigation.</Alert></>} /><Route path="complaints" element={<Pending title="Complaints" />} /><Route path="notifications" element={<Pending title="Notifications" />} /><Route element={<Protected roles={['student', 'warden', 'admin']} />}><Route path="fees" element={<Fees />} /></Route></Route><Route path="*" element={<><h1>Page not found</h1><NavLink to="/">Go to dashboard</NavLink></>} /></Routes>}{!loading && !user && error && <button onClick={() => window.location.reload()}>Retry connection</button>}</Content></div></>;
 }
