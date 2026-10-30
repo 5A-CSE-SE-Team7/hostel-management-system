@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const { pool, withTransaction } = require('../db');
 const { E } = require('../utils/errors');
+const { audit } = require('../utils/audit');
 const { validate, parseId } = require('../utils/validate');
 const { requireAuth, requireRole } = require('../middleware/auth');
 
@@ -118,6 +119,7 @@ router.get('/students/:id', staffOnly, async (req, res, next) => {
     const id = parseId(req.params.id, 'studentId');
     const profile = await findProfile(id);
     if (profile.role !== 'student' || !profile.srn) throw E.notFound('Student');
+    await audit(req, 'STUDENT_RECORD_VIEW', 'user', id, null, { strict: true });
     return res.json(profile);
   } catch (err) {
     return next(err);
