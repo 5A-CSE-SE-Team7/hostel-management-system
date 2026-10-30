@@ -44,10 +44,17 @@ References: HMS SRS v1.0 security/accessibility and acceptance requirements; SAD
 
 The read-only combined job snapshots committed real modules pinned in docs/integration/refs.json. It does not merge main or rewrite PR history. Current refs include actual repairs on existing PR42 and PR51 and the normally propagated complaint stack; the complete real frontend and M1 backend tests are retained.
 
-Default local command on Node22: `bash scripts/ci/combined-integration.sh`. Actual result: PASS, 70/70 backend tests, 45/45 frontend tests, production build PASS, both full dependency audits zero vulnerabilities. No temporary STAFF export or fee calendar proposal is applied. The existing failure diagnostic is retained for older snapshots and cannot mask a nonzero actual-contract step.
+Default local command on Node22: `bash scripts/ci/combined-integration.sh`. Actual result: PASS, 86/86 backend tests, 49/49 frontend tests, production build PASS, both full dependency audits zero vulnerabilities. No temporary STAFF export or fee calendar proposal is applied. The existing failure diagnostic is retained for older snapshots and cannot mask a nonzero actual-contract step.
 
 The real network journeys cover registration/login, profile/account role navigation, student complaints, warden assignment, maintenance resolution, durable notifications and warden/student fee transactions. Real MySQL regressions cover impossible calendars, decimal totals, authorization and SQL tampering through the genuine audit helper. Details and exact source refs are committed under docs/integration/.
 
 Standalone main-based PR checks may still fail until genuine prerequisites land on main; the full candidate passing does not change their results. Existing feature-base snapshots still carry the old main-only trigger until the reviewed S04 workflow is integrated. Preserve required checks and scope; never remove missing-module tests to break that dependency cycle. The Project workflow still needs owner settings/real board verification. Private API/full signed-in logs are Forbidden in this environment; public actual job steps/annotations and local reproductions are the available evidence.
 
 Canonical compatible dependency manifests/lockfiles were also applied to the affected existing feature/M1/M4 branches after confirming no original dependency or script names were removed. Both audits now pass on those actual graphs; no severity threshold or security check was weakened. All four genuine M1 frontend account-navigation regression cases are retained in the candidate.
+
+
+## M4 overlap resolved without duplicate implementation
+
+Existing PR52 is the Sprint1 base; existing PR51 normally inherits it and adds reports/CSV plus retained M4 screens. The current default combined step still executes every full-suite backend/frontend test. An additional `--m4-sprint1` step validates the actual Sprint1 APIs with genuine M1/M2/M3 prerequisites (83 backend tests) and the 11 applicable fee/core UI tests; it is not a substitute for the full 86-backend/49-frontend check. Reports are intentionally not mounted in that separate Sprint1 scope. Both builds and both full audits pass.
+
+M4 module assertions are copied from their real existing branches. Shared Sprint1 assertions execute once; the full module adds the report assertions with its own actual API fixture. The genuine shared calendar/numeric validator is composed too, preventing the old route/global validator mismatch. M4 frontend compatibility and CSV download contracts are tested over real HTTP sessions. The canonical #48 fee component remains unchanged; no competing M4 Fees.jsx is copied over it. See PR51 docs/integration/M4_PR_SEQUENCE.md.

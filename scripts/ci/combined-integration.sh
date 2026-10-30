@@ -5,7 +5,9 @@ server_pid=''
 cleanup() { if [[ -n "$server_pid" ]]; then kill "$server_pid" 2>/dev/null || true; wait "$server_pid" 2>/dev/null || true; fi; rm -rf "$root"; }
 trap cleanup EXIT
 git checkout-index --all --prefix="$root/"
-python scripts/ci/compose-integration.py "$root"
+flags=()
+if [[ "${1:-}" == '--m4-sprint1' ]]; then flags+=(--m4-sprint1); fi
+python scripts/ci/compose-integration.py "$root" "${flags[@]}"
 for component in backend frontend; do
   (cd "$root/$component" && npm ci --no-fund && npm audit --audit-level=high)
 done
@@ -29,6 +31,11 @@ for attempt in {1..100}; do
 done
 [[ -f "$root/port" ]] || { cat "$root/api.log"; exit 1; }
 port="$(cat "$root/port")"
-(cd "$root/frontend" && HMS_API_BASE="http://127.0.0.1:$port" npm test) || result=1
+if [[ "${1:-}" == '--m4-sprint1' ]]; then
+  # Additional scope check, never a replacement for the full default job.
+  (cd "$root/frontend" && HMS_API_BASE="http://127.0.0.1:$port" npm test -- src/tests/fees.test.jsx src/tests/live-ui.test.jsx) || result=1
+else
+  (cd "$root/frontend" && HMS_API_BASE="http://127.0.0.1:$port" npm test) || result=1
+fi
 (cd "$root/frontend" && npm run build) || result=1
 exit "$result"

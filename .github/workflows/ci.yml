@@ -158,6 +158,9 @@ jobs:
       - name: Verify actual combined owner contracts
         id: actual-contracts
         run: bash scripts/ci/combined-integration.sh
+      - name: Verify M4 Sprint1 scope with genuine prerequisites
+        if: ${{ !cancelled() }}
+        run: bash scripts/ci/combined-integration.sh --m4-sprint1
       - name: Diagnose proposed STAFF export without masking actual failures
         if: ${{ !cancelled() && steps.actual-contracts.outcome == 'failure' }}
         run: bash scripts/ci/combined-integration.sh --with-proposed-staff-export
