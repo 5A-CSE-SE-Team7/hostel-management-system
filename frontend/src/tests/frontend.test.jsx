@@ -11,8 +11,8 @@ function reply(body, status = 200) { return new Response(JSON.stringify(body), {
 function mount(path = '/') { return render(<MemoryRouter initialEntries={[path]}><AuthProvider><App /></AuthProvider></MemoryRouter>); }
 describe('HMS-S03', () => {
   it.each(['student', 'warden', 'maintenance', 'admin'])('filters navigation for %s', async role => {
-    vi.stubGlobal('fetch', vi.fn().mockResolvedValue(reply({ user: { name: 'Demo', role } })));
-    mount(); await screen.findByRole('heading', { name: 'Dashboard' });
+    vi.stubGlobal('fetch', vi.fn().mockImplementation(path => Promise.resolve(reply(path === '/api/auth/me' ? { user: { name: 'Demo', role } } : []))));
+    mount(); await screen.findByRole('heading', { name: role === 'maintenance' ? 'Assigned maintenance work' : 'Dashboard' });
     expect(screen.getByRole('link', { name: 'Complaints' })).toBeVisible();
     expect(!!screen.queryByRole('link', { name: 'Fees' })).toBe(role !== 'maintenance');
   });

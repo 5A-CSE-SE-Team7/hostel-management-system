@@ -53,6 +53,7 @@ it('keeps complaint submission and tracking reachable beside account pages after
   let submitted = false;
   vi.stubGlobal('fetch', vi.fn(async (path, options = {}) => {
     if (path === '/api/auth/me') return reply({ role: 'student', name: 'Student' });
+    if (path === '/api/notifications/unread-count') return reply({ count: 0 });
     if (path === '/api/complaint-categories') return reply([{ id: 1, name: 'Electrical' }]);
     if (path === '/api/complaints' && options.method === 'POST') {
       expect(JSON.parse(options.body)).toMatchObject({ categoryId: 1, location: 'A101', description: 'Fan broken after merge' });
