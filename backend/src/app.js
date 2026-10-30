@@ -9,7 +9,7 @@ const common = require('./middleware/common');
 
 function createApp() {
   const app = express();
-  app.set('trust proxy', 1); // behind nginx / cloud LB that terminates TLS
+  app.set('trust proxy', config.trustProxy); // explicitly scoped TLS terminator only
   app.disable('x-powered-by');
 
   app.use(common.requestId);
@@ -37,18 +37,17 @@ function createApp() {
     catch (e) { res.status(503).json({ status: 'degraded' }); }
   });
 
-  // Route mounts are enabled by their owning module PRs.
-  // mounted by M1 PR: app.use('/api/auth', require('./routes/auth'));
-  // mounted by M1 PR: app.use('/api', require('./routes/profile'));
-  // mounted by M1 PR: app.use('/api/admin', require('./routes/admin'));
-  // mounted by M2 PR: app.use('/api', require('./routes/inventory'));
-  // mounted by M2 PR: app.use('/api', require('./routes/allocations'));
-  // mounted by M3 PR: app.use('/api', require('./routes/complaints'));
-  // mounted by M3 PR: app.use('/api', require('./routes/notifications'));
-  // mounted by M4 PR: app.use('/api', require('./routes/fees'));
-  // mounted by M4 PR: app.use('/api', require('./routes/visitors'));
-  // mounted by M4 PR: app.use('/api', require('./routes/leave'));
-  // mounted by M4 PR: app.use('/api/reports', require('./routes/reports'));
+  app.use('/api/auth', require('./routes/auth'));
+  app.use('/api', require('./routes/profile'));
+  app.use('/api/admin', require('./routes/admin'));
+  app.use('/api', require('./routes/inventory'));
+  app.use('/api', require('./routes/allocations'));
+  app.use('/api', require('./routes/complaints'));
+  app.use('/api', require('./routes/notifications'));
+  app.use('/api', require('./routes/fees'));
+  app.use('/api', require('./routes/visitors'));
+  app.use('/api', require('./routes/leave'));
+  app.use('/api/reports', require('./routes/reports'));
 
   app.use(common.notFound);
   app.use(common.errorHandler);
