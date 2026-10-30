@@ -1,51 +1,30 @@
 export class ApiError extends Error {
   constructor(status, body) {
-    super(body?.message || `Request failed (${status})`);
+    super(body.message || `Request failed (${status})`);
     this.status = status;
-    this.errorCode = body?.errorCode;
-    this.details = body?.details;
+    this.errorCode = body.errorCode;
+    this.details = body.details;
+    this.requestId = body.requestId;
   }
 }
-
-export async function post(path, body) {
-  const response = await fetch(`/api${path}`, {
-    method: 'POST',
-    credentials: 'include',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(body),
+export async function api(path, { body, ...options } = {}) {
+  if (!path.startsWith('/api/')) throw new Error('API paths must begin with /api/');
+  const response = await fetch(path, {
+    ...options, credentials: 'include',
+    headers: { Accept: 'application/json', ...(body !== undefined ? { 'Content-Type': 'application/json' } : {}), ...options.headers },
+    ...(body !== undefined ? { body: JSON.stringify(body) } : {}),
   });
-  const data = await response.json().catch(() => ({}));
-  if (!response.ok) throw new ApiError(response.status, data);
+  const isJson = response.headers.get('content-type')?.includes('application/json');
+  const data = response.status === 204 ? null : isJson ? await response.json() : null;
+  if (!response.ok) throw new ApiError(response.status, data || {});
+  if (response.status !== 204 && !isJson) throw new Error('The server returned an unexpected response. Please retry.');
   return data;
 }
 
-export async function get(path) {
-  const response = await fetch(`/api${path}`, { credentials: 'include' });
-  const data = await response.json().catch(() => ({}));
-  if (!response.ok) throw new ApiError(response.status, data);
-  return data;
-}
-
-export async function put(path, body) {
-  const response = await fetch(`/api${path}`, {
-    method: 'PUT',
-    credentials: 'include',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(body),
-  });
-  const data = await response.json().catch(() => ({}));
-  if (!response.ok) throw new ApiError(response.status, data);
-  return data;
-}
-
-export async function patch(path, body) {
-  const response = await fetch(`/api${path}`, {
-    method: 'PATCH',
-    credentials: 'include',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(body),
-  });
-  const data = await response.json().catch(() => ({}));
-  if (!response.ok) throw new ApiError(response.status, data);
-  return data;
-}
+// M1 PR #42's pages use named methods with /auth/... paths. Keep one
+// implementation for credentials, validation and error metadata.
+function apiPath(path) { return path.startsWith('/api/') ? path : `/api${path.startsWith('/') ? path : `/${path}`}`; }
+export const get = (path, options) => api(apiPath(path), options);
+export const post = (path, body) => api(apiPath(path), { method: 'POST', body });
+export const put = (path, body) => api(apiPath(path), { method: 'PUT', body });
+export const patch = (path, body) => api(apiPath(path), { method: 'PATCH', body });
