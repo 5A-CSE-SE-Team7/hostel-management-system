@@ -13,4 +13,6 @@ function requireRole(...roles) {
   };
 }
 
-module.exports = { requireAuth, requireRole };
+// Shared M2/M4 contract: maintenance staff cannot administer fees or inventory.
+const STAFF = ['warden', 'admin'];
+module.exports = { requireAuth, requireRole, STAFF };

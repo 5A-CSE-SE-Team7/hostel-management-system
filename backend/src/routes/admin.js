@@ -5,7 +5,7 @@ const config = require('../config');
 const { E } = require('../utils/errors');
 const { validate, parseId } = require('../utils/validate');
 const { requireRole } = require('../middleware/auth');
-const { audit } = require('../utils/audit');
+const { audit, verifyChain } = require('../utils/audit');
 
 const adminOnly = requireRole('admin');
 const accountRoles = ['student', 'warden', 'maintenance', 'admin'];
@@ -108,6 +108,31 @@ router.patch('/users/:id', adminOnly, async (req, res, next) => {
   } catch (err) {
     return next(err);
   }
+});
+
+// Restore the existing shared audit API contract with the genuine hash chain.
+router.get('/audit', adminOnly, async (req, res, next) => {
+  try {
+    const filters = validate(req.query, {
+      action: { max: 80 }, userId: { type: 'int', min: 1 },
+      limit: { type: 'int', min: 1, max: 500 },
+    });
+    const where = []; const values = [];
+    if (filters.action) { where.push('action = ?'); values.push(filters.action); }
+    if (filters.userId) { where.push('user_id = ?'); values.push(filters.userId); }
+    values.push(filters.limit ?? 100);
+    const [rows] = await pool.query(
+      `SELECT id, user_id AS userId, role, action, entity, entity_id AS entityId,
+              details, ip, created_at AS createdAt, hash
+         FROM audit_logs ${where.length ? `WHERE ${where.join(' AND ')}` : ''}
+        ORDER BY id DESC LIMIT ?`, values,
+    );
+    return res.json(rows);
+  } catch (err) { return next(err); }
+});
+router.get('/audit/verify', adminOnly, async (_req, res, next) => {
+  try { return res.json(await verifyChain()); }
+  catch (err) { return next(err); }
 });
 
 module.exports = router;
