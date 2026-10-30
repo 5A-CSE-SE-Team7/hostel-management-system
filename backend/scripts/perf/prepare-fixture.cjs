@@ -5,6 +5,10 @@ if (!/^hms_perf_[0-9]+$/.test(process.env.DB_NAME || '')) throw new Error('Only 
 const req = createRequire(path.join(process.env.HMS_BACKEND_ROOT, 'package.json'));
 const { pool } = req('./src/db');
 (async () => {
+  // Dedicated synthetic database only: benchmark production-strength login hashes.
+  const bcrypt = req('bcryptjs');
+  await pool.query('UPDATE users SET password_hash = ?', [await bcrypt.hash('Hostel@123', 12)]);
+  const [[databaseVersion]] = await pool.query('SELECT VERSION() version');
   const [students] = await pool.query("SELECT id FROM users WHERE role='student' ORDER BY id");
   const [[category]] = await pool.query('SELECT id FROM complaint_categories ORDER BY id LIMIT 1');
   const [beds] = await pool.query('SELECT id FROM beds ORDER BY id');
@@ -21,5 +25,5 @@ const { pool } = req('./src/db');
   };
   for(const [name,sql] of Object.entries(queries)){const [rows]=await pool.query(`EXPLAIN ${sql}`);plans[name]={sql,rows};}
   const counts={};for(const table of ['users','students','beds','allocations','complaints','fee_assessments']){const [[row]]=await pool.query(`SELECT COUNT(*) AS count FROM ${table}`);counts[table]=row.count;}
-  fs.writeFileSync(process.argv[2],JSON.stringify({synthetic:true,counts,plans},null,2)+'\n');
+  fs.writeFileSync(process.argv[2],JSON.stringify({synthetic:true,passwordHashCost:12,mysqlVersion:databaseVersion.version,counts,plans},null,2)+'\n');
 })().catch(error=>{console.error(error.message);process.exitCode=1;}).finally(()=>pool.end());

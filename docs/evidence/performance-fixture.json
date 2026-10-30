@@ -1,5 +1,7 @@
 {
   "synthetic": true,
+  "passwordHashCost": 12,
+  "mysqlVersion": "8.0.46",
   "counts": {
     "users": 10,
     "students": 6,
@@ -35,7 +37,7 @@
           "possible_keys": "uq_room",
           "key": "uq_room",
           "key_len": "4",
-          "ref": "hms_perf_31198.b.id",
+          "ref": "hms_perf_115427.b.id",
           "rows": 3,
           "filtered": 100,
           "Extra": "Using index"
@@ -49,7 +51,7 @@
           "possible_keys": "uq_bed",
           "key": "uq_bed",
           "key_len": "4",
-          "ref": "hms_perf_31198.r.id",
+          "ref": "hms_perf_115427.r.id",
           "rows": 4,
           "filtered": 100,
           "Extra": "Using index"
@@ -63,7 +65,7 @@
           "possible_keys": "fk_alloc_bed",
           "key": "fk_alloc_bed",
           "key_len": "4",
-          "ref": "hms_perf_31198.bd.id",
+          "ref": "hms_perf_115427.bd.id",
           "rows": 1,
           "filtered": 100,
           "Extra": "Using where"
@@ -96,7 +98,7 @@
           "possible_keys": "PRIMARY",
           "key": "PRIMARY",
           "key_len": "4",
-          "ref": "hms_perf_31198.a.student_id",
+          "ref": "hms_perf_115427.a.student_id",
           "rows": 1,
           "filtered": 100,
           "Extra": null
@@ -110,7 +112,7 @@
           "possible_keys": "PRIMARY",
           "key": "PRIMARY",
           "key_len": "4",
-          "ref": "hms_perf_31198.a.bed_id",
+          "ref": "hms_perf_115427.a.bed_id",
           "rows": 1,
           "filtered": 100,
           "Extra": null
@@ -143,7 +145,7 @@
           "possible_keys": "fk_comp_cat",
           "key": "fk_comp_cat",
           "key_len": "4",
-          "ref": "hms_perf_31198.cc.id",
+          "ref": "hms_perf_115427.cc.id",
           "rows": 1,
           "filtered": 100,
           "Extra": "Using index"
@@ -176,7 +178,7 @@
           "possible_keys": "idx_comp_student",
           "key": "idx_comp_student",
           "key_len": "4",
-          "ref": "hms_perf_31198.u.id",
+          "ref": "hms_perf_115427.u.id",
           "rows": 1,
           "filtered": 11.11,
           "Extra": "Using where"

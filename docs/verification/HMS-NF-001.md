@@ -1,29 +1,25 @@
-# HMS-NF-001 — representative authenticated performance verification
+# HMS-NF-001 — current integrated performance evidence
 
-Aayaan Kamil / PES2UG24CS017; verified issue #26. Independent main-based measurement tooling; no teammate business logic or schema is changed.
+Aayaan Kamil / PES2UG24CS017; existing PR49 / issue26. This supersedes the earlier local snapshot without upgrading it to production evidence.
 
-Reproduce: stage intended source, then run `bash scripts/validate-performance.sh`. It snapshots the index into /tmp, composes real pinned M1/M2/M4/F012 implementations there, installs patched S04 dependencies, creates a dedicated hms_perf_PID database and synthetic dataset, runs the actual API, records JSON evidence, then stops only its own server and drops only its own temporary database. It never resets the development database or merges team branches. Required prerequisite commits are pinned in the script.
+The runner now composes committed real M1/M2/M4/complaint/TLS/monitoring sources via CI snapshot 86a570c07b814c0ff54d3ce0efad589ae13368aa. It applies no STAFF/calendar proposals and preserves the production p90 threshold of 3000ms. It creates only a disposable hms_perf_PID database, refuses other names in the fixture preparer, stops its temporary server and drops its database on exit. It uses the already-running local Docker MySQL service and never modifies main or production data.
 
-The original health-only load-test mode is preserved. The new `bash backend/scripts/loadtest.sh --representative BASE_URL OUTPUT.json` mode requires PERF_EMAIL/PERF_PASSWORD through environment bindings; never put production credentials in source or reports. Non-loopback targets require HTTPS. Workload validates JSON shapes/status, authenticates each concurrent session, retains failed/timeout samples, checks expected counts and computes nearest-rank p90 separately per endpoint. No cold-start/login observations are excluded as warmup.
+The synthetic fixture deliberately upgrades its seed password hashes from baseline cost10 to the actual M1 production cost12 before measuring login. This prevents the old seed hash strength understating authentication cost. Test-server mode increases rate-limit allowance for a controlled benchmark; no production rate limits were changed.
 
-## Actual latest run
-
-Started 2026-10-29T16:43:33.916Z; ended 2026-10-29T16:43:35.708Z. Environment: {'node': 'v24.19.0', 'cpus': 5, 'memoryBytes': 35743760384}. Concurrency 5, 20 iterations per session. One documented synthetic admin account, five independent sessions. Dataset: 10 users, 6 students, 12 beds, 6 allocations, 1000 complaints, 6 fee assessments. NODE_ENV=test disabled access logging; local HTTP and local MySQL 8 were used.
+Actual run: 2026-10-30T09:42:52.717Z through 2026-10-30T09:42:56.425Z; Node v22.23.4; 5 visible CPUs; MySQL 8.0.46; 5 concurrent authenticated admin sessions, 20 iterations/session, 605 measured requests, zero errors, no warmup samples excluded. Fixture: 10 synthetic users, 6 students, 12 beds, 6 allocations, 1000 complaints and 6 fee assessments. Browser rendering/TLS/network deployment latency is not measured.
 
 | Operation | Requests | Errors | p90 ms | Result |
 | --- | ---: | ---: | ---: | --- |
-| login | 5 | 0 | 524.85 | PASS |
-| inventory | 100 | 0 | 9.57 | PASS |
-| allocations | 100 | 0 | 10.6 | PASS |
-| complaint_tracking | 100 | 0 | 9.64 | PASS |
-| dashboard_fee_dues | 100 | 0 | 9.43 | PASS |
-| occupancy_report | 100 | 0 | 22.62 | PASS |
-| complaint_report | 100 | 0 | 26.17 | PASS |
+| login | 5 | 0 | 1994.91 | PASS |
+| inventory | 100 | 0 | 12.72 | PASS |
+| allocations | 100 | 0 | 12.32 | PASS |
+| complaint_tracking | 100 | 0 | 13.13 | PASS |
+| dashboard_fee_dues | 100 | 0 | 12.31 | PASS |
+| occupancy_report | 100 | 0 | 30.67 | PASS |
+| complaint_report | 100 | 0 | 32.5 | PASS |
 
-Raw timings: docs/evidence/performance-local.json. PASS: all 605 measured requests succeeded and every workload p90 was <=3000ms. Two automated benchmark tests also pass, covering percentile rank, real cookie propagation and failure classification for unexpected response bodies. This is measured local API performance, not production/browser rendering performance or 500-concurrent-user scalability (HMS-NF-002 belongs elsewhere).
+All measured endpoints pass p90<=3000ms under this declared local load. Raw individual samples/environment are in docs/evidence/performance-local.json; counts and actual EXPLAIN SQL/plans are in performance-fixture.json. Existing indexes support the measured workload; no unsubstantiated schema/index changes were introduced. Two benchmark regression tests pass.
 
-## Query review and limitations
+Reproduce after fetching referenced existing branches: `npm exec --yes --package=node@22 -- bash scripts/validate-performance.sh`. Docker MySQL must already be running. Optional HMS_MONITOR_EVIDENCE_DIR captures a real healthy probe and an intentionally stopped-fixture probe; those observations are synthetic monitor validation, not production downtime evidence.
 
-Actual EXPLAIN output and SQL for representative inventory, allocation, complaint and report queries are in docs/evidence/performance-fixture.json. They are representative statement shapes, not a claim to capture every executed statement. Allocation uses primary/foreign-key lookups; inventory uses existing room/bed/allocation indexes, with sort/temporary work; complaint joins use existing category/student keys. Report joins scan the small users table and sort. Estimated EXPLAIN row counts are optimizer estimates; the actual fixture counts are recorded separately. No extra index is justified by this measured workload; do not silently change teammate schema. Reassess date-range report indexes and pagination using real production-scale distributions before a production performance claim.
-
-BLOCKED/NOT RUN: browser paint/navigation timings, network/TLS overhead, sustained production workload, representative deployment sizing and production database distributions. A local p90 PASS is not proof all SRS performance acceptance criteria are satisfied. Full-month availability is tracked separately by NF003. Remote CI on the standalone main-based branch still depends on S03/M1/M2/S04 integration; benchmark API composition is isolated validation evidence, not a hidden merge.
+PASS: this representative local API benchmark. BLOCKED/NOT TESTED: production/browser performance, sustained production-sized distributions and actual deployment sizing. No 500-user scalability or production performance claim is made. Standalone main-based application CI still needs genuine frontend/auth/audit prerequisites; required failures are retained.
