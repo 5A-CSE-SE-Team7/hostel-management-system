@@ -1,5 +1,14 @@
 const { E } = require('./errors');
 
+function isValidCalendarDate(v) {
+  if (typeof v !== 'string' || !/^\d{4}-\d{2}-\d{2}$/.test(v)) return false;
+  const [year, month, day] = v.split('-').map(Number);
+  // MySQL DATE/DATETIME cannot store years outside this range.
+  if (year < 1000 || year > 9999) return false;
+  const d = new Date(Date.UTC(year, month - 1, day));
+  return d.getUTCFullYear() === year && d.getUTCMonth() === month - 1 && d.getUTCDate() === day;
+}
+
 /**
  * Tiny schema validator. rules: { field: { type, required, min, max, enum, pattern, label } }
  * types: string | int | number | date | datetime | email | bool
@@ -39,11 +48,16 @@ function validate(body, rules) {
         break;
       }
       case 'date':
-        if (!/^\d{4}-\d{2}-\d{2}$/.test(v) || Number.isNaN(Date.parse(v))) { errors[field] = `${label} must be a date (YYYY-MM-DD)`; continue; }
+        if (!isValidCalendarDate(v)) { errors[field] = `${label} must be a valid calendar date (YYYY-MM-DD)`; continue; }
         break;
       case 'datetime': {
+        if (typeof v !== 'string') { errors[field] = `${label} must be a valid date/time`; continue; }
         const d = new Date(v);
-        if (Number.isNaN(d.getTime())) { errors[field] = `${label} must be a valid date/time`; continue; }
+        if (Number.isNaN(d.getTime()) || d.getUTCFullYear() < 1000 || d.getUTCFullYear() > 9999) { errors[field] = `${label} must be a valid date/time`; continue; }
+        const isoMatch = String(v).match(/^(\d{4})-(\d{2})-(\d{2})/);
+        if (isoMatch && !isValidCalendarDate(`${isoMatch[1]}-${isoMatch[2]}-${isoMatch[3]}`)) {
+          errors[field] = `${label} must be a valid date/time`; continue;
+        }
         v = d.toISOString().slice(0, 19).replace('T', ' ');
         break;
       }
@@ -66,4 +80,4 @@ const parseId = (v, what = 'id') => {
   return n;
 };
 
-module.exports = { validate, parseId };
+module.exports = { validate, parseId, isValidCalendarDate };

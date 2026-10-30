@@ -37,14 +37,15 @@ function createApp() {
     catch (e) { res.status(503).json({ status: 'degraded' }); }
   });
 
-  // Route mounts are enabled by their owning module PRs.
-  // mounted by M1 PR: app.use('/api/auth', require('./routes/auth'));
-  // mounted by M1 PR: app.use('/api', require('./routes/profile'));
-  // mounted by M1 PR: app.use('/api/admin', require('./routes/admin'));
+  // Require the real M1 modules: never swallow import or initialization errors.
+  app.use('/api/auth', require('./routes/auth'));
+  app.use('/api', require('./routes/profile'));
+  app.use('/api/admin', require('./routes/admin'));
   // mounted by M2 PR: app.use('/api', require('./routes/inventory'));
   // mounted by M2 PR: app.use('/api', require('./routes/allocations'));
   // mounted by M3 PR: app.use('/api', require('./routes/complaints'));
   // mounted by M3 PR: app.use('/api', require('./routes/notifications'));
+  // Shared Sprint 1 routes plus the additive Sprint 2 reports API.
   app.use('/api', require('./routes/fees'));
   app.use('/api', require('./routes/visitors'));
   app.use('/api', require('./routes/leave'));
