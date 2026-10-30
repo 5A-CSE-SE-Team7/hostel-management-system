@@ -40,8 +40,9 @@ else:
     p=root/'backend/src/app.js';s=p.read_text()
     for owner,name,mount in [('M1','auth','/api/auth'),('M1','profile','/api'),('M1','admin','/api/admin'),('M2','inventory','/api'),('M2','allocations','/api'),('M3','complaints','/api'),('M3','notifications','/api'),('M4','fees','/api'),('M4','visitors','/api'),('M4','leave','/api'),('M4','reports','/api/reports')]:
         old=f"  // mounted by {owner} PR: app.use('{mount}', require('./routes/{name}'));"
-        assert old in s, f'Review upstream mount {name}'
-        s=s.replace(old,f"  app.use('{mount}', require('./routes/{name}'));")
+        active=f"  app.use('{mount}', require('./routes/{name}'));"
+        if old in s: s=s.replace(old,active)
+        else: assert active in s, f'Review upstream mount {name}'
     p.write_text(s)
     target=root/'frontend/integration/complete.test.jsx'
     target.write_text(Path('tests/integration/live-ui.test.jsx').read_text().replace("from '../", "from '../src/"))

@@ -1,3 +1,9 @@
+# Final standalone and merge-order synchronization
+
+The CI branch now normally inherits the genuine PR53 foundation (which contains PR42 and PR40/39); missing auth/audit/main.jsx imports are corrected through actual prerequisite ancestry, never stubs. Other feature branches normally inherit only earlier sprint prerequisites. A Git object-only simulation of the approved 16-PR Sprint1-then-Sprint2 sequence is clean after the inventory, complaint, notification, canonical fee and frontend package-script resolutions. It does not merge main or authorize bypassing reviews, draft status or fresh required merge-ref checks.
+
+The final workload records 705 real local requests with zero errors (cost12 login p90 1895.59ms; real allocation occupancy p90 11.98ms; available-bed reads p90 14.79ms). The immutable measured source baseline is recorded on PR49, and no production/browser/500-user claim is made. Project credentials/board verification, required code-owner approvals and the actual Sprint1 recording remain human actions. PR bases/issue ownership/review states were preserved.
+
 # Current Sprint1 repair verification
 
 CI now composes actual PR54/55 inventory/allocation and original owner tests, with the genuine PR52 Sprint1 branch as the exact production source boundary. PR52 normally inherits PR53/54/55 and PR43/44, delivers Visitors/Leave and their role-guarded routing, and contains no fee frontend, Reports, resolution or complaint-notification controllers. Additional --m4-sprint1 verification runs **all** Sprint1 unit and live suites, no selected subset masking missing screens.
