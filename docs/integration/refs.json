@@ -3,8 +3,9 @@
   "m2": "17ad39d1de05beef6fc23b511d64cd86635dd9bc",
   "m4": "ebff728868b13825dc0df6126debf2efebca234a",
   "complaints": "8817073be92b56f140c500916a86463084b37b6a",
-  "fees": "b75781ed6ee1a49213d9fe4efd9b67012c6854ce",
+  "fees": "d82bee2d3b441720da354e7a68097c662680b908",
   "tls": "105ad79ffae2aa9447ef3297adf5545f8779af63",
   "performance": "85a3f5c81fad99413e276baad171a51b6fa7daaa",
-  "availability": "116a439be1a3bbaabf1c0897e1ecfa2988033792"
+  "availability": "116a439be1a3bbaabf1c0897e1ecfa2988033792",
+  "frontendIntegration": "81fdf34da235f7f28c57930fac7ccbdb325a03bf"
 }

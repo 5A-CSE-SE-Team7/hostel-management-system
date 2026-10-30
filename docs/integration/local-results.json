@@ -1,5 +1,5 @@
 {
-  "observedAt": "2026-10-29T17:20:23.922991+00:00",
+  "observedAt": "2026-10-30T02:58:13.957434+00:00",
   "actualCombinedContracts": {
     "status": "BLOCKED",
     "exitCode": 2,
@@ -9,18 +9,22 @@
     "status": "FAIL",
     "exitCode": 1,
     "backend": {
-      "executed": 53,
-      "passed": 51,
-      "failed": 2,
+      "executed": 66,
+      "passed": 61,
+      "failed": 5,
       "skipped": 0,
       "failedTests": [
         "TC-Sec-04 sensitive record auditing",
-        "TC-Sec-05 admin audit API/tamper verification"
-      ]
+        "TC-Sec-05 admin audit API/tamper verification",
+        "Impossible paidOn 2026-02-30 returns 500",
+        "Non-leap paidOn 2026-02-29 returns 500",
+        "Impossible dueDate 2026-02-30 returns 500"
+      ],
+      "completeM1TestsIncluded": true
     },
     "frontend": {
-      "executed": 32,
-      "passed": 32,
+      "executed": 40,
+      "passed": 40,
       "failed": 0,
       "includesRealApiJourneys": true
     },
@@ -29,9 +33,17 @@
     "frontendAudit": "PASS: 0 vulnerabilities"
   },
   "workflowTests": {
-    "passed": 13,
+    "passed": 14,
     "failed": 0
   },
   "workflowLint": "PASS",
-  "productionValidation": "NOT RUN"
+  "productionValidation": "NOT TESTED",
+  "node": "22.23.4",
+  "feeProposalOnly": {
+    "status": "PASS",
+    "executed": 12,
+    "passed": 12,
+    "failed": 0,
+    "warning": "Temporary explicit STAFF export plus review-only issue21 calendar patch; not an actual owner change"
+  }
 }

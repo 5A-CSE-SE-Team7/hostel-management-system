@@ -87,3 +87,12 @@ test('combined validation preserves real failures and isolates proposed owner ch
   assert.match(script,/exit 2/); assert.match(script,/--with-proposed-staff-export/);
   assert.match(script,/exit "\$result"/); assert.match(script,/No teammate source was changed/);
 });
+test('combined fixture preserves the complete real frontend and fee contracts', () => {
+  const compose = readFileSync(new URL('../../scripts/ci/compose-integration.py', import.meta.url), 'utf8');
+  assert.match(compose, /copy\('frontendIntegration',prefix\)/);
+  assert.match(compose, /fee-contract\.test/);
+  assert.match(compose, /'backend\/tests'.*copy\('m1',prefix\)/);
+  assert.doesNotMatch(compose, /s\.replace.*Pending title/);
+  const refs = JSON.parse(readFileSync(new URL('../../docs/integration/refs.json', import.meta.url)));
+  assert.match(refs.frontendIntegration, /^[a-f0-9]{40}$/);
+});
