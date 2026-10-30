@@ -14,7 +14,7 @@ const E = {
   invalidCredentials: () => new ApiError(401, 'INVALID_CREDENTIALS', 'Invalid email or password'),
   forbidden: (message = 'You do not have permission to perform this action') => new ApiError(403, 'FORBIDDEN', message),
   notFound: (what = 'Resource') => new ApiError(404, 'NOT_FOUND', `${what} not found`),
-  conflict: (message, errorCode = 'CONFLICT') => new ApiError(409, errorCode, message),
+  conflict: (message, errorCode = 'CONFLICT', details) => new ApiError(409, errorCode, message, details),
 };
 
 module.exports = { ApiError, E };
