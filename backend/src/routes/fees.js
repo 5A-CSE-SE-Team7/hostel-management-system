@@ -10,6 +10,17 @@ const { requireAuth, requireRole, STAFF } = require('../middleware/auth');
 router.use(requireAuth);
 const staff = requireRole(...STAFF);
 
+// Proposal for issue #21 owner: reject invalid calendars before MySQL inserts.
+function validateFee(body, rules) {
+  const data = validate(body, rules);
+  for (const field of ['dueDate', 'paidOn']) {
+    if (data[field] && (data[field] < '1000-01-01' || new Date(data[field]).toISOString().slice(0, 10) !== data[field])) {
+      throw E.validation({ [field]: 'Enter an existing calendar date (YYYY-MM-DD)' });
+    }
+  }
+  return data;
+}
+
 async function ledger(studentId) {
   const [assessments] = await pool.query(
     `SELECT fa.id, fa.description, fa.amount, fa.due_date AS dueDate, fa.created_at AS createdAt,
@@ -35,7 +46,7 @@ async function assertStudent(id) {
 
 router.post('/fees/assessments', staff, async (req, res, next) => {
   try {
-    const d = validate(req.body, { studentId: { type: 'int', required: true, min: 1 }, description: { required: true, max: 200 },
+    const d = validateFee(req.body, { studentId: { type: 'int', required: true, min: 1 }, description: { required: true, max: 200 },
       amount: { type: 'number', required: true, min: 0.01, max: 10000000 }, dueDate: { type: 'date', required: true } });
     await assertStudent(d.studentId);
     const [r] = await pool.query('INSERT INTO fee_assessments (student_id, description, amount, due_date, created_by) VALUES (?,?,?,?,?)',
@@ -48,7 +59,7 @@ router.post('/fees/assessments', staff, async (req, res, next) => {
 
 router.post('/fees/payments', staff, async (req, res, next) => {
   try {
-    const d = validate(req.body, { studentId: { type: 'int', required: true, min: 1 }, assessmentId: { type: 'int', min: 1 },
+    const d = validateFee(req.body, { studentId: { type: 'int', required: true, min: 1 }, assessmentId: { type: 'int', min: 1 },
       amount: { type: 'number', required: true, min: 0.01, max: 10000000 }, paidOn: { type: 'date', required: true }, reference: { max: 100 } });
     await assertStudent(d.studentId);
     if (d.assessmentId) {
