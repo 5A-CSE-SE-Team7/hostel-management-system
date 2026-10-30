@@ -7,7 +7,7 @@ The administrator explicitly authorized repairs to existing teammate PRs on 2026
 - No new M2/audit PR exists. The existing M2 branch supplies genuine inventory/allocation/audit code in the isolated candidate. This restores existing integration contracts; it does not claim completion of Abhishek's full audit issue, UI, review or submission.
 - The complaint stack was normally updated in order #43→#44→#45→#46. The pinned frontend candidate retains real M1 account pages, complaint lifecycle/notifications and the fee frontend.
 
-Default actual combined validation now passes 70 backend and 41 frontend tests, build and both full audits. It applies no temporary STAFF/calendar patch. Historical proposal flags/scripts are retained only for older snapshots and are not used for this result; the actual-contract check remains mandatory and nonzero on a missing contract.
+Default actual combined validation now passes 70 backend and 45 frontend tests, build and both full audits. It applies no temporary STAFF/calendar patch. Historical proposal flags/scripts are retained only for older snapshots and are not used for this result; the actual-contract check remains mandatory and nonzero on a missing contract.
 
 Repository-owner Project configuration, private protection verification, main integration and operational deployment/observation acceptance remain external dependencies. Full issue15 ownership and acceptance remain with its assignee.
 

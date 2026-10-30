@@ -17,7 +17,7 @@ for prefix in ['backend/src/routes/complaints.js','backend/src/routes/notificati
 # shared frontend regression, complaint feature or fee test is silently omitted.
 for prefix in ['frontend/src','frontend/index.html','frontend/vite.config.js','frontend/vitest.config.js']:
  copy('frontendIntegration',prefix)
-for prefix in ['backend/src/routes/auth.js','backend/src/routes/profile.js','backend/src/routes/admin.js','backend/src/middleware/auth.js','backend/src/utils/errors.js','backend/tests','frontend/src/pages/Login.jsx','frontend/src/pages/Register.jsx']:copy('m1',prefix)
+for prefix in ['backend/src/routes/auth.js','backend/src/routes/profile.js','backend/src/routes/admin.js','backend/src/middleware/auth.js','backend/src/utils/errors.js','backend/tests','frontend/src/pages/Login.jsx','frontend/src/pages/Register.jsx','frontend/src/tests']:copy('m1',prefix)
 for prefix in ['backend/src/routes/inventory.js','backend/src/routes/allocations.js','backend/src/utils/audit.js','backend/tests/room.test.js']:copy('m2',prefix)
 for prefix in ['backend/src/routes/fees.js','backend/src/routes/visitors.js','backend/src/routes/leave.js','backend/src/routes/reports.js','backend/tests/admin.test.js']:copy('m4',prefix)
 for prefix in ['backend/src/app.js','backend/src/config.js','backend/src/server.js','backend/src/middleware/common.js','backend/tests/tls.test.js']:copy('tls',prefix)

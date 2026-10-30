@@ -1,5 +1,5 @@
 {
-  "observedAt": "2026-10-30T09:38:47.125437+00:00",
+  "observedAt": "2026-10-30T09:52:49.872139+00:00",
   "node": "22.23.4",
   "actualCombinedContracts": {
     "status": "PASS",
@@ -14,8 +14,8 @@
       "skipped": 0
     },
     "frontend": {
-      "executed": 41,
-      "passed": 41,
+      "executed": 45,
+      "passed": 45,
       "failed": 0,
       "includesRealApiJourneys": true
     },
