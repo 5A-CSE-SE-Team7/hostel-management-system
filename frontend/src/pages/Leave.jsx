@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { get, post, patch } from '../api.js';
+import { get, post } from '../api.js';
 import { useAuth } from '../auth.jsx';
 import { Alert, Badge, Input, Select, Table, fmtDate, useAction, useLoad, toUtc } from '../components/m4-ui.jsx';
 
