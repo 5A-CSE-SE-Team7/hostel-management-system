@@ -16,4 +16,13 @@ Monthly availability = observed uptime excluding announced maintenance / planned
 `nmap --script ssl-enum-ciphers -p 443 <host>` or testssl.sh; expect only TLSv1.2/1.3. Plain HTTP on the API port returns 426 when `REQUIRE_HTTPS=true`.
 
 ## Load testing
-`backend/scripts/loadtest.sh http://host:4000 500 30` is a quick smoke (autocannon against /api/health). The Test Plan calls for JMeter scenarios with authenticated sessions; keep those plans under `docs/perf/`.
+`backend/scripts/loadtest.sh http://host:4000 500 30` is a health-only smoke using autocannon. To run the authenticated 500-user scenario, start a dedicated local or staging API with the M1 authentication routes and a synthetic seeded account, then run:
+
+```bash
+cd backend
+PERF_EMAIL=admin@hms.test PERF_PASSWORD='Hostel@123' \
+LOADTEST_VUS=500 LOADTEST_DURATION_SECONDS=30 LOADTEST_RAMP_UP_SECONDS=30 \
+bash scripts/loadtest.sh --authenticated http://127.0.0.1:4000 perf-results.json
+```
+
+Each virtual user logs in separately and keeps its own session cookie while repeatedly calling `/api/auth/me`. Login attempts share one synthetic account; use `NODE_ENV=test` for the dedicated test server so its login limiter allows the full ramp. Do not enable test mode on production or expose this scenario to production data. The JSON report records attempted and successful logins, distinct sessions, authenticated request success rate, p90/max latency, and failures without storing credentials or response bodies. `DB_CONNECTION_LIMIT` controls the shared query/session pool (default 100); keep it below the MySQL server's available connection budget. A PASS requires all requested users to obtain unique sessions and zero failed authenticated requests.
