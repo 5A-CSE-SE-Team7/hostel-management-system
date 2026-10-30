@@ -1,3 +1,18 @@
+# Actual updated workload measurement
+
+Executed locally against the real Node22/MySQL application composed from integration snapshot `2fe8f69cf358205c12a483041cba66173c14cd78` (full owner refs in performance-baseline.json), using 5 authenticated admin sessions × 20 iterations and bcrypt cost12 synthetic accounts. All **705 recorded requests passed**, including 100 requests each to the real allocation occupancy and available-bed APIs. No nonexistent GET /api/allocations was called. All measured p90 values were below 3000ms. This is local representative API evidence, not deployed/browser/500-user verification.
+
+| Endpoint | p90 ms | Errors |
+|---|---:|---:|
+| login | 1895.59 | 0 |
+| inventory | 11.49 | 0 |
+| allocation_occupancy | 11.98 | 0 |
+| available_beds | 14.79 | 0 |
+| complaint_tracking | 15.26 | 0 |
+| dashboard_fee_dues | 13.44 | 0 |
+| occupancy_report | 30.73 | 0 |
+| complaint_report | 38.23 | 0 |
+
 # Current API workload repair
 
 The accepted new allocation PR55 supplies GET /api/occupancy and GET /api/beds/available, not GET /api/allocations. The representative workload now measures both real allocation reads and validates their response contracts, while retaining inventory, complaint tracking, fee dues, occupancy/complaint reports and cost12 login. No endpoint is invented. These reads do not claim to measure a POST allocation transaction or browser rendering.
