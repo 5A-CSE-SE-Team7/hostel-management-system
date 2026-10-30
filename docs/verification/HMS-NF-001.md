@@ -1,3 +1,9 @@
+# Current API workload repair
+
+The accepted new allocation PR55 supplies GET /api/occupancy and GET /api/beds/available, not GET /api/allocations. The representative workload now measures both real allocation reads and validates their response contracts, while retaining inventory, complaint tracking, fee dues, occupancy/complaint reports and cost12 login. No endpoint is invented. These reads do not claim to measure a POST allocation transaction or browser rendering.
+
+The runner resolves the existing CI branch into an immutable recorded snapshot, records all actual source pins and the workload commit in performance-baseline.json, and supports exact replay with HMS_CI_REF=<recorded SHA>. It copies the committed current benchmark and prepares only a dedicated hms_perf_PID database, which is dropped afterward. Earlier measurements below describe the older explicitly documented API candidate and are not current-baseline results. New measurements are only claimed once actually executed and recorded.
+
 # HMS-NF-001 — current integrated performance evidence
 
 Aayaan Kamil / PES2UG24CS017; existing PR49 / issue26. This supersedes the earlier local snapshot without upgrading it to production evidence.

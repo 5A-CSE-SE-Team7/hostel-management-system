@@ -7,7 +7,8 @@ export function percentile(values, proportion = 0.9) {
 }
 export const workload = [
   { name: 'inventory', path: '/api/inventory', valid: data => Array.isArray(data) },
-  { name: 'allocations', path: '/api/allocations', valid: data => Array.isArray(data) },
+  { name: 'allocation_occupancy', path: '/api/occupancy', valid: data => Number.isInteger(data.totalBeds) && Number.isInteger(data.occupiedBeds) && data.totalBeds >= data.occupiedBeds && data.availableBeds === data.totalBeds - data.occupiedBeds && Array.isArray(data.blocks) },
+  { name: 'available_beds', path: '/api/beds/available', valid: data => Array.isArray(data) && data.every(bed => Number.isInteger(bed.id) && !!bed.room?.roomNumber && !!bed.block?.name) },
   { name: 'complaint_tracking', path: '/api/complaints?limit=100', valid: data => Array.isArray(data) },
   { name: 'dashboard_fee_dues', path: '/api/fees/dues', valid: data => Array.isArray(data) },
   { name: 'occupancy_report', path: '/api/reports/occupancy', valid: data => data.type === 'occupancy' && !!data.occupancy },

@@ -19,7 +19,8 @@ const { pool } = req('./src/db');
   const plans={};
   const queries={
     inventory:'SELECT b.id,r.id,bd.id,a.id FROM blocks b LEFT JOIN rooms r ON r.block_id=b.id LEFT JOIN beds bd ON bd.room_id=r.id LEFT JOIN allocations a ON a.bed_id=bd.id AND a.released_at IS NULL ORDER BY b.name,r.room_number,bd.label',
-    allocations:'SELECT a.id,u.name,bd.label FROM allocations a JOIN users u ON u.id=a.student_id JOIN beds bd ON bd.id=a.bed_id ORDER BY a.id DESC LIMIT 500',
+    allocation_occupancy:'SELECT b.id,COUNT(d.id) AS totalBeds,SUM(a.id IS NOT NULL) AS occupiedBeds FROM blocks b LEFT JOIN rooms r ON r.block_id=b.id AND r.is_active=1 LEFT JOIN beds d ON d.room_id=r.id AND d.is_active=1 LEFT JOIN allocations a ON a.bed_id=d.id AND a.released_at IS NULL WHERE b.is_active=1 GROUP BY b.id',
+    available_beds:'SELECT d.id FROM beds d JOIN rooms r ON r.id=d.room_id AND r.is_active=1 JOIN blocks b ON b.id=r.block_id AND b.is_active=1 WHERE d.is_active=1 AND NOT EXISTS (SELECT 1 FROM allocations a WHERE a.bed_id=d.id AND a.released_at IS NULL)',
     complaints:'SELECT c.id,cc.name FROM complaints c JOIN complaint_categories cc ON cc.id=c.category_id ORDER BY c.id DESC LIMIT 100',
     complaint_report:'SELECT c.id,u.name FROM complaints c JOIN users u ON u.id=c.student_id WHERE c.created_at BETWEEN DATE_FORMAT(CURDATE(),\'%Y-%m-01\') AND NOW() ORDER BY c.id',
   };
