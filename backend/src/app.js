@@ -9,7 +9,7 @@ const common = require('./middleware/common');
 
 function createApp() {
   const app = express();
-  app.set('trust proxy', config.trustProxy); // explicitly scoped TLS terminator only
+  app.set('trust proxy', config.trustProxy); // behind nginx / cloud LB that terminates TLS
   app.disable('x-powered-by');
 
   app.use(common.requestId);
@@ -40,11 +40,10 @@ function createApp() {
   app.use('/api/auth', require('./routes/auth'));
   app.use('/api', require('./routes/profile'));
   app.use('/api/admin', require('./routes/admin'));
-  // mounted by M2 PR: app.use('/api', require('./routes/inventory'));
-  // mounted by M2 PR: app.use('/api', require('./routes/allocations'));
-  app.use('/api', require('./routes/complaints')); // HMS-F-009; requires real M1/M2 modules
+  app.use('/api', require('./routes/inventory'));
+  app.use('/api', require('./routes/allocations'));
+  app.use('/api', require('./routes/complaints'));
   app.use('/api', require('./routes/notifications'));
-  // Shared Sprint 1 routes plus the additive Sprint 2 reports API.
   app.use('/api', require('./routes/fees'));
   app.use('/api', require('./routes/visitors'));
   app.use('/api', require('./routes/leave'));
