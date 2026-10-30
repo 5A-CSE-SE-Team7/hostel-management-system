@@ -169,6 +169,81 @@ test('allocation transfer is atomic, keeps history, and rejects unavailable targ
   assert.equal(active.body.some((allocation) => allocation.id === transfer.body.allocationId), true);
 });
 
+test('check-in/out validates state and dates while preserving occupancy history (TC-Room-04)', async () => {
+  await resetDb();
+  const app = createTestApp();
+  const warden = userClient(app, await mkUser('warden', 1));
+  const student = await mkUser('student', 1);
+  const studentClient = userClient(app, student);
+  const { bedIds } = await mkInventory(warden, 2, 'checkin');
+  const allocation = await warden.post('/api/allocations').send({ studentId: student.id, bedId: bedIds[0] });
+  assert.equal(allocation.status, 201);
+
+  const today = new Date().toISOString().slice(0, 10);
+  const yesterday = new Date(Date.now() - 86400000).toISOString().slice(0, 10);
+  const tomorrow = new Date(Date.now() + 86400000).toISOString().slice(0, 10);
+  const checkOutBeforeCheckIn = await warden.post(`/api/allocations/${allocation.body.id}/check-out`).send({ checkOutDate: today });
+  assert.equal(checkOutBeforeCheckIn.status, 409);
+  assert.equal(checkOutBeforeCheckIn.body.errorCode, 'NOT_CHECKED_IN');
+
+  const beforeAllocation = await warden.post(`/api/allocations/${allocation.body.id}/check-in`).send({ checkInDate: '2000-01-01' });
+  assert.equal(beforeAllocation.status, 400);
+  const invalidCalendarDate = await warden.post(`/api/allocations/${allocation.body.id}/check-in`).send({ checkInDate: '2026-02-31' });
+  assert.equal(invalidCalendarDate.status, 400);
+  const futureCheckIn = await warden.post(`/api/allocations/${allocation.body.id}/check-in`).send({ checkInDate: tomorrow });
+  assert.equal(futureCheckIn.status, 400);
+
+  const checkIn = await warden.post(`/api/allocations/${allocation.body.id}/check-in`).send({ checkInDate: today });
+  assert.equal(checkIn.status, 200);
+  assert.equal(checkIn.body.status, 'checked_in');
+  assert.equal(checkIn.body.checkInDate, today);
+  assert.equal((await warden.get('/api/occupancy')).body.occupiedBeds, 1);
+  const duplicateCheckIn = await warden.post(`/api/allocations/${allocation.body.id}/check-in`).send({ checkInDate: today });
+  assert.equal(duplicateCheckIn.status, 409);
+  assert.equal(duplicateCheckIn.body.errorCode, 'ALREADY_CHECKED_IN');
+
+  const studentRoom = await studentClient.get('/api/me/room');
+  assert.equal(studentRoom.status, 200);
+  assert.equal(studentRoom.body.allocation.status, 'checked_in');
+  assert.equal(studentRoom.body.history[0].checkInDate, today);
+
+  const earlyCheckOut = await warden.post(`/api/allocations/${allocation.body.id}/check-out`).send({ checkOutDate: yesterday });
+  assert.equal(earlyCheckOut.status, 400);
+  const checkOut = await warden.post(`/api/allocations/${allocation.body.id}/check-out`).send({ checkOutDate: today });
+  assert.equal(checkOut.status, 200);
+  assert.equal(checkOut.body.status, 'checked_out');
+  assert.equal(checkOut.body.checkOutDate, today);
+  assert.equal((await warden.get('/api/occupancy')).body.occupiedBeds, 0);
+  const duplicateCheckOut = await warden.post(`/api/allocations/${allocation.body.id}/check-out`).send({ checkOutDate: today });
+  assert.equal(duplicateCheckOut.status, 409);
+
+  const available = await warden.get('/api/beds/available');
+  assert.equal(available.body.some((bed) => bed.id === bedIds[0]), true);
+  const currentAllocations = await warden.get('/api/allocations');
+  assert.equal(currentAllocations.body.some((row) => row.id === allocation.body.id), false);
+  const staffHistory = await warden.get('/api/allocations/history');
+  const historyRow = staffHistory.body.find((row) => row.id === allocation.body.id);
+  assert.equal(historyRow.status, 'checked_out');
+  assert.equal(historyRow.checkInDate, today);
+  assert.equal(historyRow.checkOutDate, today);
+
+  const studentHistory = await studentClient.get('/api/me/room');
+  assert.equal(studentHistory.body.allocation, null);
+  assert.equal(studentHistory.body.history[0].status, 'checked_out');
+  assert.equal((await studentClient.get('/api/allocations/history')).status, 403);
+
+  const [[{ total: checkInEvents }]] = await pool.query(
+    "SELECT COUNT(*) AS total FROM audit_logs WHERE action = 'ALLOCATION_CHECK_IN' AND entity_id = ?",
+    [String(allocation.body.id)]
+  );
+  const [[{ total: checkOutEvents }]] = await pool.query(
+    "SELECT COUNT(*) AS total FROM audit_logs WHERE action = 'ALLOCATION_CHECK_OUT' AND entity_id = ?",
+    [String(allocation.body.id)]
+  );
+  assert.equal(Number(checkInEvents), 1);
+  assert.equal(Number(checkOutEvents), 1);
+});
+
 test.after(async () => {
   await closeAll();
 });

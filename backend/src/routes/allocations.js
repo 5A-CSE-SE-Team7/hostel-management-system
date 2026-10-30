@@ -18,6 +18,23 @@ function run(handler) {
   return (req, res, next) => Promise.resolve(handler(req, res, next)).catch(next);
 }
 
+function todayUtc() {
+  return new Date().toISOString().slice(0, 10);
+}
+
+function assertCalendarDate(value, field, { notAfter = todayUtc(), notBefore = null } = {}) {
+  const parsed = new Date(`${value}T00:00:00.000Z`);
+  if (Number.isNaN(parsed.getTime()) || parsed.toISOString().slice(0, 10) !== value) {
+    throw E.validation({ [field]: `${field} must be a valid calendar date` });
+  }
+  if (notAfter && value > notAfter) {
+    throw E.validation({ [field]: `${field} cannot be in the future` });
+  }
+  if (notBefore && value < notBefore) {
+    throw E.validation({ [field]: `${field} cannot be before ${notBefore}` });
+  }
+}
+
 router.get('/beds/available', requireRole('admin', 'warden'), run(async (_req, res) => {
   const [beds] = await pool.query(`
     SELECT d.id AS bed_id, d.label, r.id AS room_id, r.room_number, r.floor,
@@ -94,10 +111,38 @@ router.get('/allocations', requireRole('admin', 'warden'), run(async (_req, res)
   })));
 }));
 
+router.get('/allocations/history', requireRole('admin', 'warden'), run(async (_req, res) => {
+  const [rows] = await pool.query(`
+    SELECT a.id AS allocation_id, a.student_id, u.name AS student_name, a.bed_id, d.label AS bed_label,
+           r.room_number, b.name AS block_name, a.status, a.allocated_at,
+           a.check_in_date, a.check_out_date, a.released_at
+      FROM allocations a
+      JOIN users u ON u.id = a.student_id
+      JOIN beds d ON d.id = a.bed_id
+      JOIN rooms r ON r.id = d.room_id
+      JOIN blocks b ON b.id = r.block_id
+     ORDER BY a.id DESC
+     LIMIT 1000`);
+  res.json(rows.map((row) => ({
+    id: row.allocation_id,
+    studentId: row.student_id,
+    studentName: row.student_name,
+    bedId: row.bed_id,
+    bedLabel: row.bed_label,
+    roomNumber: row.room_number,
+    blockName: row.block_name,
+    status: row.status,
+    allocatedAt: row.allocated_at,
+    checkInDate: row.check_in_date,
+    checkOutDate: row.check_out_date,
+    releasedAt: row.released_at,
+  })));
+}));
+
 router.get('/me/room', requireRole('student'), run(async (req, res) => {
   const studentId = req.session.user.id;
-  const [[allocation]] = await pool.query(`
-    SELECT a.id AS allocation_id, a.status, a.allocated_at,
+  const [historyRows] = await pool.query(`
+    SELECT a.id AS allocation_id, a.status, a.allocated_at, a.check_in_date, a.check_out_date, a.released_at,
            d.id AS bed_id, d.label AS bed_label,
            r.id AS room_id, r.room_number, r.floor,
            b.id AS block_id, b.name AS block_name
@@ -105,19 +150,27 @@ router.get('/me/room', requireRole('student'), run(async (req, res) => {
       JOIN beds d ON d.id = a.bed_id
       JOIN rooms r ON r.id = d.room_id
       JOIN blocks b ON b.id = r.block_id
-     WHERE a.student_id = ? AND a.released_at IS NULL
-     LIMIT 1`, [studentId]);
+     WHERE a.student_id = ?
+     ORDER BY a.id DESC
+     LIMIT 100`, [studentId]);
 
-  if (!allocation) return res.json({ allocation: null });
+  const mapAllocation = (row) => ({
+    id: row.allocation_id,
+    status: row.status,
+    allocatedAt: row.allocated_at,
+    checkInDate: row.check_in_date,
+    checkOutDate: row.check_out_date,
+    releasedAt: row.released_at,
+    block: { id: row.block_id, name: row.block_name },
+    room: { id: row.room_id, roomNumber: row.room_number, floor: row.floor },
+    bed: { id: row.bed_id, label: row.bed_label },
+  });
+  const history = historyRows.map(mapAllocation);
+  const allocation = historyRows.find((row) => row.released_at === null);
+  if (!allocation) return res.json({ allocation: null, history });
   res.json({
-    allocation: {
-      id: allocation.allocation_id,
-      status: allocation.status,
-      allocatedAt: allocation.allocated_at,
-      block: { id: allocation.block_id, name: allocation.block_name },
-      room: { id: allocation.room_id, roomNumber: allocation.room_number, floor: allocation.floor },
-      bed: { id: allocation.bed_id, label: allocation.bed_label },
-    },
+    allocation: mapAllocation(allocation),
+    history,
   });
 }));
 
@@ -279,6 +332,91 @@ router.post('/allocations/:id/transfer', requireRole('admin', 'warden'), run(asy
   });
 
   res.json(transfer);
+}));
+
+router.post('/allocations/:id/check-in', requireRole('admin', 'warden'), run(async (req, res) => {
+  const allocationId = parseId(req.params.id, 'allocationId');
+  const { checkInDate: requestedDate } = validate(req.body || {}, {
+    checkInDate: { type: 'date' },
+  });
+  const checkInDate = requestedDate || todayUtc();
+  assertCalendarDate(checkInDate, 'checkInDate');
+  const actor = req.session.user;
+
+  const result = await withTransaction(async (conn) => {
+    const [rows] = await conn.query(
+      `SELECT id, student_id, status, check_in_date, allocated_at, released_at
+         FROM allocations WHERE id = ? FOR UPDATE`, [allocationId]
+    );
+    if (!rows.length) throw E.notFound('Allocation');
+    const current = rows[0];
+    if (current.status === 'checked_in') throw E.conflict('Allocation is already checked in', 'ALREADY_CHECKED_IN');
+    if (current.status !== 'allocated' || current.released_at !== null) {
+      throw E.conflict('Only a current allocated bed can be checked in', 'ALLOCATION_NOT_ACTIVE');
+    }
+    assertCalendarDate(checkInDate, 'checkInDate', { notBefore: String(current.allocated_at).slice(0, 10) });
+
+    const [updated] = await conn.query(
+      `UPDATE allocations SET status = 'checked_in', check_in_date = ?
+        WHERE id = ? AND status = 'allocated' AND released_at IS NULL`, [checkInDate, allocationId]
+    );
+    if (updated.affectedRows !== 1) throw E.conflict('Allocation changed during check-in', 'ALLOCATION_CHANGED');
+    await audit({
+      user_id: actor.id,
+      role: actor.role,
+      action: 'ALLOCATION_CHECK_IN',
+      entity: 'allocation',
+      entity_id: allocationId,
+      details: { studentId: current.student_id, checkInDate },
+      ip: req.ip,
+    }, conn);
+    return { allocationId, studentId: current.student_id, status: 'checked_in', checkInDate };
+  });
+
+  res.json(result);
+}));
+
+router.post('/allocations/:id/check-out', requireRole('admin', 'warden'), run(async (req, res) => {
+  const allocationId = parseId(req.params.id, 'allocationId');
+  const { checkOutDate: requestedDate } = validate(req.body || {}, {
+    checkOutDate: { type: 'date' },
+  });
+  const checkOutDate = requestedDate || todayUtc();
+  assertCalendarDate(checkOutDate, 'checkOutDate');
+  const actor = req.session.user;
+
+  const result = await withTransaction(async (conn) => {
+    const [rows] = await conn.query(
+      `SELECT id, student_id, status, check_in_date, released_at
+         FROM allocations WHERE id = ? FOR UPDATE`, [allocationId]
+    );
+    if (!rows.length) throw E.notFound('Allocation');
+    const current = rows[0];
+    if (current.status !== 'checked_in' || current.released_at !== null || !current.check_in_date) {
+      throw E.conflict('Allocation must be checked in before check-out', 'NOT_CHECKED_IN');
+    }
+    if (checkOutDate < String(current.check_in_date).slice(0, 10)) {
+      throw E.validation({ checkOutDate: 'Check-out date cannot be before check-in date' });
+    }
+
+    const [updated] = await conn.query(
+      `UPDATE allocations SET status = 'checked_out', check_out_date = ?, released_at = NOW()
+        WHERE id = ? AND status = 'checked_in' AND released_at IS NULL`, [checkOutDate, allocationId]
+    );
+    if (updated.affectedRows !== 1) throw E.conflict('Allocation changed during check-out', 'ALLOCATION_CHANGED');
+    await audit({
+      user_id: actor.id,
+      role: actor.role,
+      action: 'ALLOCATION_CHECK_OUT',
+      entity: 'allocation',
+      entity_id: allocationId,
+      details: { studentId: current.student_id, checkOutDate },
+      ip: req.ip,
+    }, conn);
+    return { allocationId, studentId: current.student_id, status: 'checked_out', checkOutDate };
+  });
+
+  res.json(result);
 }));
 
 module.exports = router;
