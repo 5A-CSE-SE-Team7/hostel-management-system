@@ -42,7 +42,7 @@ function createApp() {
   // mounted by M1 PR: app.use('/api', require('./routes/profile'));
   // mounted by M1 PR: app.use('/api/admin', require('./routes/admin'));
   app.use('/api', require('./routes/inventory'));
-  // mounted by M2 PR: app.use('/api', require('./routes/allocations'));
+  app.use('/api', require('./routes/allocations'));
   // mounted by M3 PR: app.use('/api', require('./routes/complaints'));
   // mounted by M3 PR: app.use('/api', require('./routes/notifications'));
   // mounted by M4 PR: app.use('/api', require('./routes/fees'));
