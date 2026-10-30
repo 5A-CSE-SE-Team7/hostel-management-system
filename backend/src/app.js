@@ -37,10 +37,9 @@ function createApp() {
     catch (e) { res.status(503).json({ status: 'degraded' }); }
   });
 
-  // Route mounts are enabled by their owning module PRs.
-  // mounted by M1 PR: app.use('/api/auth', require('./routes/auth'));
-  // mounted by M1 PR: app.use('/api', require('./routes/profile'));
-  // mounted by M1 PR: app.use('/api/admin', require('./routes/admin'));
+  app.use('/api/auth', require('./routes/auth'));
+  app.use('/api', require('./routes/profile'));
+  app.use('/api/admin', require('./routes/admin'));
   // mounted by M2 PR: app.use('/api', require('./routes/inventory'));
   // mounted by M2 PR: app.use('/api', require('./routes/allocations'));
   app.use('/api', require('./routes/complaints')); // HMS-F-009; requires real M1/M2 modules
