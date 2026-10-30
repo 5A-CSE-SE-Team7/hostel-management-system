@@ -37,17 +37,19 @@ function createApp() {
     catch (e) { res.status(503).json({ status: 'degraded' }); }
   });
 
-  // Route mounts:
-  // Required auth/profile/admin routes (M1)
-  try { app.use('/api/auth', require('./routes/auth')); } catch (_) {}
-  try { app.use('/api', require('./routes/profile')); } catch (_) {}
-  try { app.use('/api/admin', require('./routes/admin')); } catch (_) {}
-
-  // M4 Sprint 1 routes: Fees, Visitors, Leave
+  // Require the real M1 modules: never swallow import or initialization errors.
+  app.use('/api/auth', require('./routes/auth'));
+  app.use('/api', require('./routes/profile'));
+  app.use('/api/admin', require('./routes/admin'));
+  // mounted by M2 PR: app.use('/api', require('./routes/inventory'));
+  // mounted by M2 PR: app.use('/api', require('./routes/allocations'));
+  // mounted by M3 PR: app.use('/api', require('./routes/complaints'));
+  // mounted by M3 PR: app.use('/api', require('./routes/notifications'));
+  // M4 Sprint 1 routes. Reports are added by the existing Sprint 2 PR #51.
   app.use('/api', require('./routes/fees'));
   app.use('/api', require('./routes/visitors'));
   app.use('/api', require('./routes/leave'));
-  // Reports route is mounted by Sprint 2: app.use('/api/reports', require('./routes/reports'));
+  // mounted by M4 PR: app.use('/api/reports', require('./routes/reports'));
 
   app.use(common.notFound);
   app.use(common.errorHandler);

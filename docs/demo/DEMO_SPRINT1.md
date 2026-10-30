@@ -38,3 +38,11 @@ Demo Credentials:
 | **0:29 - 0:42** | Sign out. Log in as `warden@hms.test`. Navigate to **Hostel Inventory / Allocations**. Select Student 1, allocate Bed 1 in Block A Room 102. Show success and updated bed occupancy. | *"Switching to the Warden role, the interface adapts to administrative services. We allocate an available bed to an eligible student with strict concurrency protection."* |
 | **0:43 - 0:53** | Click **Fees**. Select Student 1. Record an assessment: "Term 1 Hostel Fee", Amount: ₹50,000, Due Date: Nov 1. Show live ledger update and outstanding dues. | *"The warden manages fee assessments and records receipts, automatically updating real-time student dues."* |
 | **0:54 - 1:00** | Log out. Show health check endpoint `/api/health` in browser returning `{"status":"ok"}`. | *"All critical operations are written to our SHA-256 tamper-evident audit trail, and backend health is verified. Thank you."* |
+
+## Integration prerequisites and evidence status
+
+This is a Sprint 1 **API** branch and a demonstration storyboard. It is not a standalone frontend distribution or a recorded video. Use the owner-reviewed integrated workspace with genuine M1 authentication/profile/admin, M2 audit/inventory/allocation, #40's frontend shell, #43 complaint UI and #48 fee UI before following the visual sequence. Do not install placeholder modules or suppress missing imports to run the demo.
+
+Visitor/leave/report screens are preserved in the additive full M4 PR #51; #52 intentionally adds no second fee UI. A menu item or screen must be present and tested in the actual integrated build before showing it in a recording. The complaint submission status is `submitted`, not `pending`.
+
+`docs/demo/sprint1.mp4` (or an actual published recording link) is still required by issue #35. This guide alone is not evidence that the video acceptance criterion is complete. No recording or screenshot is claimed here.
