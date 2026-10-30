@@ -31,4 +31,3 @@ test('TC-Admin-04 reports match underlying records for the selected period', asy
   assert.equal((await student.get('/api/reports/occupancy')).status, 403);
   assert.equal((await warden.get('/api/reports/nope')).status, 404);
 });
-

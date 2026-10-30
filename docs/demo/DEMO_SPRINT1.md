@@ -1,9 +1,9 @@
 # Sprint 1 Demonstration Guide
 
-**Project:** Hostel Management System (Team 7)  
-**Lead:** Aadi Basal (`aadi-basal-06`, PES2UG24CS005)  
-**Assignment Reference:** Assignment 2g-2h (Sprint 1, Issue #35)  
-**Target Video Location:** `docs/demo/sprint1.mp4` (Duration: <= 60 seconds)  
+**Project:** Hostel Management System (Team 7)
+**Lead:** Aadi Basal (`aadi-basal-06`, PES2UG24CS005)
+**Assignment Reference:** Assignment 2g-2h (Sprint 1, Issue #35)
+**Target Video Location:** `docs/demo/sprint1.mp4` (Duration: <= 60 seconds)
 
 ---
 
