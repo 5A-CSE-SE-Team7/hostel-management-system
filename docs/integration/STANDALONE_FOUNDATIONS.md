@@ -11,8 +11,8 @@ PR42 already supplies real authentication **and a genuine audit helper**. PR53 i
 ## Verified current refs
 
 - PR40: `7dfc2c42f87722dc5044c6524f9c2493da10a27e`; includes normal PR39 and PR42 merges.
-- PR53: `30f58383231b627729ecb05f117f4f3d809d584f`; includes the protected real Audit page, compatibility regression tests, PR42/40 ancestry.
-- Full frontend merge candidate: `bc7d60af83fa8ebf5393507ef77a5be800751514`, on the pre-existing integration branch; all complaint, fee, M4, notification and account routes retained.
+- PR53: `aa398729039e6ef3acce89b947c2285101cbda47`; includes the protected real Audit page, compatibility regression tests, PR42/40 ancestry.
+- Full frontend merge candidate: `5cccf7462100bddcc8e8324a442db7a159e9bef5`, on the pre-existing integration branch; all complaint, fee, M4, notification and account routes retained.
 - Other exact tested owner refs are in refs.json. M2 fixture routes are explicitly pinned to the existing integrated M2 branch; newer split M2 branch implementations are not claimed validated by this fixture.
 
 The CI composition uses PR53's actual admin/helper/tests; M2 no longer overwrites that audit helper. The original PR53 endpoint/tamper test is preserved under `audit-endpoints.test.js` to avoid colliding with M4's `admin.test.js`. Live browser-component tests use genuine M1 sessions, HTTP and MySQL, including actual audit listing and chain verification.
@@ -26,10 +26,10 @@ Node22.23.4 / real MySQL8:
 | Candidate | Backend | Frontend | Build | Independent audits |
 |---|---|---|---|---|
 | PR40 foundation | 20 PASS | 22 PASS | PASS | Both 0 vulnerabilities |
-| PR53 audit foundation | 25 PASS | 26 PASS | PASS | Both 0 vulnerabilities |
-| Detached normal merges: PR53 + PR41 + PR47 + PR49 + PR50 | 4 unit + 28 integration PASS | 26 PASS | PASS | Both 0 vulnerabilities |
-| Full actual owner-contract composition, including PR52/51 M4, complaint/fee stack | 91 PASS | 54 PASS | PASS | Both 0 vulnerabilities |
-| Additional M4 Sprint1 API scope (reports unmounted) | 88 PASS | 12 fee/core/live PASS | PASS | Both 0 vulnerabilities |
+| PR53 audit foundation | 26 PASS | 26 PASS | PASS | Both 0 vulnerabilities |
+| Detached normal merges: PR53 + PR41 + PR47 + PR49 + PR50 | 4 unit + 29 integration PASS | 26 PASS | PASS | Both 0 vulnerabilities |
+| Full actual owner-contract composition, including PR52/51 M4, complaint/fee stack | 92 PASS | 54 PASS | PASS | Both 0 vulnerabilities |
+| Additional M4 Sprint1 API scope (reports unmounted) | 89 PASS | 12 fee/core/live PASS | PASS | Both 0 vulnerabilities |
 
 Dependency smoke, actionlint, and all 14 CI utility tests PASS. No test was removed or vulnerability threshold changed. These counts are executed local results; GitHub job conclusions are verified separately. No production performance/TLS or month-long availability achievement is claimed.
 

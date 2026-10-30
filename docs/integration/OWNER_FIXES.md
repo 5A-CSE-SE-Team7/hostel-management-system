@@ -1,6 +1,6 @@
 # Current audit foundation update
 
-PR53 now exists and supplies its genuine audit feature. Its normal merges inherit PR42 authentication and PR40 frontend (including PR39 ancestry); event/request audit calls share the established persisted hash format, both admin list contracts and all users/RBAC routes remain, and the real protected audit screen is mounted. Current combined CI pins it: 91 backend/54 frontend PASS; extra Sprint1 88 backend/12 frontend PASS. The runner resets isolated test fixtures before live UI checks because tamper tests deliberately corrupt them. Earlier "no M2/audit PR" and audit proposal notes below are historical, superseded by PR53. Main is still unchanged; standalone prerequisites must be merged by the owner before raw main-based checks pass.
+PR53 now exists and supplies its genuine audit feature. Its normal merges inherit PR42 authentication and PR40 frontend (including PR39 ancestry); event/request audit calls share the established persisted hash format, both admin list contracts and all users/RBAC routes remain, and the real protected audit screen is mounted. Current combined CI pins it: 92 backend/54 frontend PASS; extra Sprint1 89 backend/12 frontend PASS. The runner resets isolated test fixtures before live UI checks because tamper tests deliberately corrupt them. Earlier "no M2/audit PR" and audit proposal notes below are historical, superseded by PR53. Main is still unchanged; standalone prerequisites must be merged by the owner before raw main-based checks pass.
 
 # Current M4 integration follow-up
 
