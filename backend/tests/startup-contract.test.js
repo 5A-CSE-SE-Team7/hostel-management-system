@@ -9,8 +9,8 @@ test('required auth initialization errors propagate instead of silently disablin
     const expected=new Error('intentional auth initialization failure');
     Module._load=function(name,...args){if(name==='./routes/auth')throw expected;return load.call(this,name,...args);};
     try { require('./src/app').createApp(); process.exit(2); }
-    catch(error) { if(error!==expected)throw error; }
+    catch(error) { if(error!==expected)throw error; process.exit(0); }
   `;
-  const result = spawnSync(process.execPath,['-e',script], {cwd:path.resolve(__dirname,'..'),env:{...process.env,NODE_ENV:'test'},encoding:'utf8'});
+  const result = spawnSync(process.execPath,['-e',script], {cwd:path.resolve(__dirname,'..'),env:{...process.env,NODE_ENV:'test'},encoding:'utf8',timeout:10000});
   assert.equal(result.status,0,result.stderr);
 });
