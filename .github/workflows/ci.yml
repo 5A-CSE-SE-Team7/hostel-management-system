@@ -3,13 +3,21 @@ name: CI
 on:
   push:
     branches: [main]
-  pull_request:
-    branches: [main]
+  pull_request: # Include feature-base PRs in the documented stacked workflow.
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   backend:
     name: Backend unit + integration tests
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     services:
       mysql:
         image: mysql:8.0
@@ -32,41 +40,124 @@ jobs:
       DB_PASSWORD: hms_pass
       DB_NAME: hms_test
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
         with:
           node-version: 22
           cache: npm
           cache-dependency-path: backend/package-lock.json
       - run: npm ci
+        id: install
+      - name: Database and upgraded dependency smoke checks
+        run: |
+          npm run db:init
+          node ../scripts/ci/dependency-smoke.cjs
       - name: Unit tests
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
         run: npm run test:unit
       - name: Integration tests (TC-Auth, TC-Room, TC-Comp, TC-Admin, TC-Sec)
-        run: npm test
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        run: node ../scripts/ci/integration-tests.mjs
 
   frontend:
     name: Frontend build
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     defaults:
       run:
         working-directory: frontend
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
         with:
           node-version: 22
           cache: npm
           cache-dependency-path: frontend/package-lock.json
       - run: npm ci
-      - run: npm run build
+        id: install
+      - name: Frontend automated tests
+        run: npm test
+      - name: Production build
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        run: npm run build
 
   audit:
-    name: Dependency audit (high+)
+    name: Dependency audit (${{ matrix.component }}, high+)
     runs-on: ubuntu-latest
+    timeout-minutes: 10
+    # HMS-S04 specifies advisory audits. Preserve nonzero audit results and
+    # report each graph independently; required tests remain blocking.
     continue-on-error: true
+    strategy:
+      fail-fast: false
+      matrix:
+        component: [backend, frontend]
+    defaults:
+      run:
+        working-directory: ${{ matrix.component }}
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with: { node-version: 22 }
-      - run: cd backend && npm ci && npm audit --audit-level=high
-      - run: cd frontend && npm ci && npm audit --audit-level=high
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: ${{ matrix.component }}/package-lock.json
+      - run: npm ci
+      - run: npm audit --audit-level=high
+
+  workflow-validation:
+    name: Workflow validation
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version: 22
+      - run: bash scripts/ci/lint-workflows.sh
+      - run: node --test tests/ci/*.test.mjs
+
+  combined-integration:
+    name: Combined PR integration (owner contracts)
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      NODE_ENV: test
+      DB_NAME: hms_test
+      DB_HOST: 127.0.0.1
+      DB_USER: hms
+      DB_PASSWORD: hms_pass
+    services:
+      mysql:
+        image: mysql:8.0
+        env:
+          MYSQL_ROOT_PASSWORD: root_pass
+          MYSQL_DATABASE: hms_test
+          MYSQL_USER: hms
+          MYSQL_PASSWORD: hms_pass
+        ports: ["3306:3306"]
+        options: >-
+          --health-cmd="mysqladmin ping -h 127.0.0.1 -uroot -proot_pass"
+          --health-interval=5s --health-timeout=5s --health-retries=20
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          fetch-depth: 0 # pinned candidate commits from the same repository
+          persist-credentials: false
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version: 22
+      - name: Verify actual combined owner contracts
+        id: actual-contracts
+        run: bash scripts/ci/combined-integration.sh
+      - name: Diagnose proposed STAFF export without masking actual failures
+        if: ${{ !cancelled() && steps.actual-contracts.outcome == 'failure' }}
+        run: bash scripts/ci/combined-integration.sh --with-proposed-staff-export
