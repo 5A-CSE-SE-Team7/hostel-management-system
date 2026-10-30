@@ -12,6 +12,7 @@ import Register from '../pages/Register';
 import Profile from '../pages/Profile';
 import Students from '../pages/Students';
 import Users from '../pages/Users';
+import Audit from '../pages/Audit';
 const nativeFetch=globalThis.fetch;
 let lastComplaint;
 beforeEach(()=>{
@@ -25,7 +26,7 @@ beforeEach(()=>{
     return response;
   });
 });
-function mount(path='/login'){render(<MemoryRouter initialEntries={[path]}><AuthProvider><App loginPage={<Login />} registrationPage={<Register />} accountPages={{ Profile: <Profile />, Students: <Students />, Users: <Users /> }} /></AuthProvider></MemoryRouter>);}
+function mount(path='/login'){render(<MemoryRouter initialEntries={[path]}><AuthProvider><App loginPage={<Login />} registrationPage={<Register />} accountPages={{ Profile: <Profile />, Students: <Students />, Users: <Users />, Audit: <Audit /> }} /></AuthProvider></MemoryRouter>);}
 async function login(user,email,password='Hostel@123'){
   await user.type(await screen.findByLabelText('Institutional email'),email);
   await user.type(screen.getByLabelText('Password'),password);
@@ -79,4 +80,16 @@ it('warden fee transactions refresh real balances, payments and the student ledg
   expect(form.getByLabelText('Payment amount (₹)')).toBeInvalid();expect(screen.getByRole('table',{name:'Payments received'}).querySelectorAll('tbody tr')).toHaveLength(1);
   await logout(user);await login(user,'student2@hms.test');await screen.findByRole('heading',{name:'Dashboard'});await user.click(screen.getByRole('link',{name:'Fees'}));
   expect(await screen.findByRole('table',{name:'Fee assessments'})).toHaveTextContent('234.56');expect(screen.getByRole('table',{name:'Fee assessments'})).toHaveTextContent('200.05');expect(screen.getByRole('table',{name:'Payments received'})).toHaveTextContent('WARDEN-RECEIPT');expect(screen.queryByRole('form',{name:'Record payment'})).toBeNull();
+},30000);
+
+it('real PR53 audit page lists actual M1 events and verifies their genuine chain', async () => {
+  const user=userEvent.setup();mount();await login(user,'admin@hms.test');await screen.findByRole('heading',{name:'Dashboard'});
+  await user.click(screen.getByRole('link',{name:'Audit log'}));
+  await screen.findByRole('heading',{name:'Audit log'});
+  await waitFor(()=>expect(screen.getByRole('table')).toHaveTextContent('LOGIN'));
+  expect(screen.getAllByRole('main')).toHaveLength(1);
+  await user.click(screen.getByRole('button',{name:'Verify integrity'}));
+  expect(await screen.findByText(/Integrity verified across \d+ audit events/)).toBeVisible();
+  await logout(user);await login(user,'student1@hms.test');await screen.findByRole('heading',{name:'Dashboard'});
+  expect(screen.queryByRole('link',{name:'Audit log'})).toBeNull();
 },30000);

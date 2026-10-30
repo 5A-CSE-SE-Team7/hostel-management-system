@@ -21,6 +21,9 @@ if ! node -e 'const auth=require(process.argv[1]);process.exit(Array.isArray(aut
 fi
 result=0
 (cd "$root/backend" && NODE_ENV=test DB_NAME=hms_test node --test --test-concurrency=1 tests/*.test.js) || result=1
+# Backend tamper-detection tests deliberately corrupt rows. Start the live UI
+# phase from a fresh isolated schema, not those expected corrupt fixtures.
+(cd "$root/backend" && DB_NAME=hms_test node -e 'const h=require("./tests/helpers");h.resetDb().finally(h.closeAll).catch(e=>{console.error(e);process.exitCode=1;});')
 (cd "$root/backend" && DB_NAME=hms_test npm run db:seed)
 NODE_ENV=test DB_NAME=hms_test node -e 'const fs=require("fs");const app=require(process.argv[1]+"/src/app").createApp();const server=require("http").createServer(app);server.listen(0,"127.0.0.1",()=>fs.writeFileSync(process.argv[2],String(server.address().port)));process.on("SIGTERM",()=>server.close(()=>process.exit(0)));' "$root/backend" "$root/port" > "$root/api.log" 2>&1 &
 server_pid=$!

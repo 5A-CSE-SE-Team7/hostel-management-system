@@ -19,7 +19,10 @@ for prefix in ['backend/src/routes/complaints.js','backend/src/routes/notificati
 for prefix in ['frontend/src','frontend/index.html','frontend/vite.config.js','frontend/vitest.config.js']:
  copy('frontendIntegration',prefix)
 for prefix in ['backend/src/routes/auth.js','backend/src/routes/profile.js','backend/src/routes/admin.js','backend/src/middleware/auth.js','backend/src/utils/errors.js','backend/tests','frontend/src/pages/Login.jsx','frontend/src/pages/Register.jsx','frontend/src/tests']:copy('m1',prefix)
-for prefix in ['backend/src/routes/inventory.js','backend/src/routes/allocations.js','backend/src/utils/audit.js','backend/tests/room.test.js']:copy('m2',prefix)
+for prefix in ['backend/src/routes/inventory.js','backend/src/routes/allocations.js','backend/tests/room.test.js']:copy('m2',prefix)
+# PR53 normally inherits M1 and preserves both real audit API contracts.
+for prefix in ['backend/src/routes/admin.js','backend/src/utils/audit.js','backend/tests/audit-endpoints.test.js','backend/tests/audit-integration.test.js','frontend/src/pages/Audit.jsx','frontend/src/tests/audit-navigation.test.jsx']:
+ copy('audit',prefix)
 m4 = 'm4Sprint1' if sprint1 else 'm4'
 for prefix in ['backend/src/routes/fees.js','backend/src/routes/visitors.js','backend/src/routes/leave.js','backend/src/utils/validate.js','backend/tests/sprint1.test.js','backend/tests/fee-contract.test.js','backend/tests/calendar-validation.test.js','backend/tests/calendar-api.test.js','backend/tests/startup-contract.test.js']:
  copy(m4,prefix)
