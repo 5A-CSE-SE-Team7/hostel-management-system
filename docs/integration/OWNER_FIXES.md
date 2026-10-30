@@ -1,3 +1,18 @@
+# Dependency integration status
+
+The administrator explicitly authorized repairs to existing teammate PRs on 2026-10-30. The former proposals are now actual, separately authored Aayaan commits on the existing PR42 and PR51 branches; PR authors/ownership/base/review states are unchanged.
+
+- PR42 commit 27413dd8ba29743ee96c2c2d977a107dd5babf16 restores STAFF=[warden,admin], strictly audited student-detail reads and protected bounded/parameterized audit list/verify route integration using the existing genuine helper. The hash-chain implementation was not changed. Four regression tests preserve 401/403 and test real SQL tampering. Standalone M1 suite: 20 PASS.
+- PR51 commit 918fc0e7ec83f5ec7335a43df585a89851656270 adds fee-route calendar checks before MySQL writes and 12 real fee regression cases. No other lead functionality, including the new notify utility, was overwritten.
+- No new M2/audit PR exists. The existing M2 branch supplies genuine inventory/allocation/audit code in the isolated candidate. This restores existing integration contracts; it does not claim completion of Abhishek's full audit issue, UI, review or submission.
+- The complaint stack was normally updated in order #43→#44→#45→#46. The pinned frontend candidate retains real M1 account pages, complaint lifecycle/notifications and the fee frontend.
+
+Default actual combined validation now passes 70 backend and 41 frontend tests, build and both full audits. It applies no temporary STAFF/calendar patch. Historical proposal flags/scripts are retained only for older snapshots and are not used for this result; the actual-contract check remains mandatory and nonzero on a missing contract.
+
+Repository-owner Project configuration, private protection verification, main integration and operational deployment/observation acceptance remain external dependencies. Full issue15 ownership and acceptance remain with its assignee.
+
+## Historical proposal record (superseded by the commits above)
+
 # Proposed owner fixes — not applied to teammate branches
 
 Actual PR #42 head 14cc4cc7d8a5a830e637338806d6c96bc34c5473 exports requireAuth/requireRole but no STAFF. Genuine M2 inventory/allocations and M4 fees/visitors/leave/reports use `const { requireRole, STAFF } = require('../middleware/auth')` and spread STAFF while importing. Combined startup throws before serving requests.
