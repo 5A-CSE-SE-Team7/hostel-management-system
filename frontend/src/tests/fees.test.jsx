@@ -1,6 +1,6 @@
 import React from 'react';
 import { it, expect, vi } from 'vitest';
-import { render, screen, within } from '@testing-library/react';
+import { render, screen, within, fireEvent, act } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import Fees, { money } from '../pages/Fees';
 vi.mock('../auth', () => ({ useAuth: vi.fn() }));
@@ -46,4 +46,23 @@ it('sends the current M1 search contract while retaining original q compatibilit
   useAuth.mockReturnValue({ user: { role: 'warden' } }); const fetch = fixture(); render(<Fees />); const user = userEvent.setup();
   await screen.findByLabelText('Student'); await user.type(screen.getByLabelText('Search students by name or SRN'),'PES 017'); await user.click(screen.getByRole('button',{name:'Search students'}));
   expect(fetch.mock.calls.some(([path]) => path === '/api/students?search=PES%20017&q=PES%20017')).toBe(true);
+});
+
+it('an older search cannot overwrite the latest student picker and dues', async () => {
+  useAuth.mockReturnValue({ user: { role: 'warden' } });
+  const fetch = fixture();
+  render(<Fees />); const user = userEvent.setup();
+  await screen.findByLabelText('Student');
+  let finishOld;
+  fetch.mockImplementation((path) => {
+    if (path.startsWith('/api/students?search=old')) return new Promise(resolve => { finishOld = resolve; });
+    return Promise.resolve(json(path.startsWith('/api/students') ? [{ id: 6, srn: 'NEW', name: 'Latest Student' }] : []));
+  });
+  const query = screen.getByLabelText('Search students by name or SRN');
+  await user.type(query, 'old'); fireEvent.submit(query.closest('form'));
+  fireEvent.change(query, { target: { value: 'new' } }); fireEvent.submit(query.closest('form'));
+  expect(await screen.findByRole('option', { name: 'NEW — Latest Student' })).toBeVisible();
+  await act(async () => finishOld(json([{ id: 5, srn: 'OLD', name: 'Stale Student' }])));
+  expect(screen.queryByRole('option', { name: 'OLD — Stale Student' })).toBeNull();
+  expect(screen.getByRole('option', { name: 'NEW — Latest Student' })).toBeVisible();
 });

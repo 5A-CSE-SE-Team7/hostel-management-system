@@ -1,4 +1,4 @@
-import { useEffect, useId, useState } from 'react';
+import { useEffect, useId, useRef, useState } from 'react';
 import { api } from '../api';
 import { useAuth } from '../auth';
 import { Alert, DataTable, Field } from '../components/ui';
@@ -39,13 +39,15 @@ function StaffFees() {
   const [ledger, setLedger] = useState(null); const [error, setError] = useState(''); const [ledgerError, setLedgerError] = useState(''); const [success, setSuccess] = useState('');
   const [loading, setLoading] = useState(true); const [ledgerLoading, setLedgerLoading] = useState(false); const [version, setVersion] = useState(0); const [query, setQuery] = useState('');
   const picker = useId();
+  const requestGeneration = useRef(0);
   async function refreshStaff(q = '') {
+    const current = ++requestGeneration.current;
     setLoading(true); setError('');
-    try { const [people, balances] = await Promise.all([api(`/api/students?search=${encodeURIComponent(q)}&q=${encodeURIComponent(q)}`), api('/api/fees/dues')]); setStudents(people); setDues(balances); }
-    catch (e) { setError(e.message); }
-    finally { setLoading(false); }
+    try { const [people, balances] = await Promise.all([api(`/api/students?search=${encodeURIComponent(q)}&q=${encodeURIComponent(q)}`), api('/api/fees/dues')]); if (current === requestGeneration.current) { setStudents(people); setDues(balances); } }
+    catch (e) { if (current === requestGeneration.current) setError(e.message); }
+    finally { if (current === requestGeneration.current) setLoading(false); }
   }
-  useEffect(() => { refreshStaff(); }, []);
+  useEffect(() => { refreshStaff(); return () => { requestGeneration.current += 1; }; }, []);
   useEffect(() => {
     const controller = new AbortController(); setLedger(null); setLedgerError('');
     if (!studentId) { setLedgerLoading(false); return () => controller.abort(); }
