@@ -25,7 +25,7 @@ function accessLog(req, res, next) {
 
 /** HMS-SR-001: refuse plain HTTP when REQUIRE_HTTPS=true (app sits behind a TLS terminator). */
 function enforceHttps(req, res, next) {
-  if (!config.requireHttps || req.secure || req.path === '/api/health') return next();
+  if (!config.requireHttps || req.secure) return next();
   return res.status(426).json({ errorCode: 'HTTPS_REQUIRED', message: 'HTTPS is required', requestId: req.id });
 }
 
