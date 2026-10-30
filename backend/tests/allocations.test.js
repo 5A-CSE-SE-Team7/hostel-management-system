@@ -1,4 +1,4 @@
-// Integration coverage for HMS-F-006 (uses the isolated hms_test database).
+// Integration coverage for HMS-F-006/007 (uses the isolated hms_test database).
 process.env.NODE_ENV = 'test';
 process.env.DB_NAME = process.env.DB_NAME || 'hms_test';
 
@@ -99,6 +99,74 @@ test('allocations enforce eligibility, audit, notify, and serialize concurrent r
     .send({ studentId: student.id, bedId: inactiveBedId });
   assert.equal(inactiveAllocation.status, 409);
   assert.equal(inactiveAllocation.body.errorCode, 'INACTIVE_BED');
+});
+
+test('allocation transfer is atomic, keeps history, and rejects unavailable targets (TC-Room-03)', async () => {
+  await resetDb();
+  const app = createTestApp();
+  const warden = userClient(app, await mkUser('warden', 1));
+  const student = await mkUser('student', 1);
+  const otherStudent = await mkUser('student', 2);
+  const studentClient = userClient(app, student);
+  const { bedIds } = await mkInventory(warden, 4, 'transfer');
+
+  const original = await warden.post('/api/allocations').send({ studentId: student.id, bedId: bedIds[0] });
+  assert.equal(original.status, 201);
+  assert.equal((await warden.post('/api/allocations').send({ studentId: otherStudent.id, bedId: bedIds[1] })).status, 201);
+
+  assert.equal((await studentClient.post(`/api/allocations/${original.body.id}/transfer`)
+    .send({ targetBedId: bedIds[3] })).status, 403);
+
+  const occupiedTransfer = await warden.post(`/api/allocations/${original.body.id}/transfer`)
+    .send({ targetBedId: bedIds[1] });
+  assert.equal(occupiedTransfer.status, 409);
+  assert.equal(occupiedTransfer.body.errorCode, 'OCCUPIED');
+
+  await warden.patch(`/api/beds/${bedIds[2]}`).send({ isActive: false });
+  const inactiveTransfer = await warden.post(`/api/allocations/${original.body.id}/transfer`)
+    .send({ targetBedId: bedIds[2] });
+  assert.equal(inactiveTransfer.status, 409);
+  assert.equal(inactiveTransfer.body.errorCode, 'INACTIVE_BED');
+
+  const [[unchanged]] = await pool.query(
+    'SELECT id, bed_id, status, released_at FROM allocations WHERE id = ?', [original.body.id]
+  );
+  assert.equal(unchanged.bed_id, bedIds[0]);
+  assert.equal(unchanged.status, 'allocated');
+  assert.equal(unchanged.released_at, null);
+
+  const transfer = await warden.post(`/api/allocations/${original.body.id}/transfer`)
+    .send({ targetBedId: bedIds[3] });
+  assert.equal(transfer.status, 200);
+  assert.equal(transfer.body.previousAllocationId, original.body.id);
+  assert.equal(transfer.body.previousBedId, bedIds[0]);
+  assert.equal(transfer.body.bedId, bedIds[3]);
+
+  const [history] = await pool.query(
+    'SELECT id, bed_id, status, released_at FROM allocations WHERE student_id = ? ORDER BY id', [student.id]
+  );
+  assert.equal(history.length, 2);
+  assert.equal(history[0].status, 'transferred');
+  assert.ok(history[0].released_at);
+  assert.equal(history[1].id, transfer.body.allocationId);
+  assert.equal(history[1].bed_id, bedIds[3]);
+  assert.equal(history[1].status, 'allocated');
+  assert.equal(history[1].released_at, null);
+
+  const [[{ total: notificationCount }]] = await pool.query(
+    "SELECT COUNT(*) AS total FROM notifications WHERE user_id = ? AND type = 'allocation_transfer'", [student.id]
+  );
+  const [[{ total: auditCount }]] = await pool.query(
+    "SELECT COUNT(*) AS total FROM audit_logs WHERE action = 'ALLOCATION_TRANSFER' AND entity_id = ?",
+    [String(transfer.body.allocationId)]
+  );
+  assert.equal(Number(notificationCount), 1);
+  assert.equal(Number(auditCount), 1);
+
+  const active = await warden.get('/api/allocations');
+  assert.equal(active.status, 200);
+  assert.equal(active.body.some((allocation) => allocation.id === original.body.id), false);
+  assert.equal(active.body.some((allocation) => allocation.id === transfer.body.allocationId), true);
 });
 
 test.after(async () => {

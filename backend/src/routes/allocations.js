@@ -1,7 +1,7 @@
 const express = require('express');
 const { pool, withTransaction } = require('../db');
 const { E } = require('../utils/errors');
-const { validate } = require('../utils/validate');
+const { validate, parseId } = require('../utils/validate');
 const { audit } = require('../utils/audit');
 
 const router = express.Router();
@@ -67,6 +67,31 @@ router.get('/occupancy', requireRole('admin', 'warden'), run(async (_req, res) =
     occupancyPercent: totalBeds ? Math.round((occupiedBeds / totalBeds) * 10000) / 100 : 0,
     blocks,
   });
+}));
+
+router.get('/allocations', requireRole('admin', 'warden'), run(async (_req, res) => {
+  const [rows] = await pool.query(`
+    SELECT a.id AS allocation_id, a.student_id, u.name AS student_name, a.bed_id, d.label AS bed_label,
+           r.room_number, b.name AS block_name, a.status, a.allocated_at
+      FROM allocations a
+      JOIN users u ON u.id = a.student_id
+      JOIN beds d ON d.id = a.bed_id
+      JOIN rooms r ON r.id = d.room_id
+      JOIN blocks b ON b.id = r.block_id
+     WHERE a.released_at IS NULL
+     ORDER BY b.name, r.room_number, d.label
+     LIMIT 500`);
+  res.json(rows.map((row) => ({
+    id: row.allocation_id,
+    studentId: row.student_id,
+    studentName: row.student_name,
+    bedId: row.bed_id,
+    bedLabel: row.bed_label,
+    roomNumber: row.room_number,
+    blockName: row.block_name,
+    status: row.status,
+    allocatedAt: row.allocated_at,
+  })));
 }));
 
 router.get('/me/room', requireRole('student'), run(async (req, res) => {
@@ -176,6 +201,84 @@ router.post('/allocations', requireRole('admin', 'warden'), run(async (req, res)
     allocatedAt: allocation.allocated_at,
     allocatedBy: allocation.allocated_by,
   });
+}));
+
+router.post('/allocations/:id/transfer', requireRole('admin', 'warden'), run(async (req, res) => {
+  const allocationId = parseId(req.params.id, 'allocationId');
+  const { targetBedId } = validate(req.body, {
+    targetBedId: { required: true, type: 'int', min: 1 },
+  });
+  const actor = req.session.user;
+
+  const transfer = await withTransaction(async (conn) => {
+    const [currentRows] = await conn.query(
+      `SELECT id, student_id, bed_id, status, check_in_date FROM allocations
+        WHERE id = ? AND released_at IS NULL FOR UPDATE`, [allocationId]
+    );
+    if (!currentRows.length) throw E.notFound('Current allocation');
+    const current = currentRows[0];
+    if (!['allocated', 'checked_in'].includes(current.status)) {
+      throw E.conflict('Only an active allocation can be transferred', 'ALLOCATION_NOT_ACTIVE');
+    }
+    if (Number(current.bed_id) === targetBedId) {
+      throw E.conflict('The student is already assigned to this bed', 'SAME_BED');
+    }
+
+    const [targetChainRows] = await conn.query(`
+      SELECT d.id AS bed_id, d.is_active AS bed_active,
+             r.is_active AS room_active, b.is_active AS block_active
+        FROM beds d
+        JOIN rooms r ON r.id = d.room_id
+        JOIN blocks b ON b.id = r.block_id
+       WHERE d.id = ? FOR UPDATE`, [targetBedId]);
+    if (!targetChainRows.length) throw E.notFound('Target bed');
+    const target = targetChainRows[0];
+    if (!target.block_active || !target.room_active || !target.bed_active) {
+      throw E.conflict('Target bed, room, and block must all be active', 'INACTIVE_BED');
+    }
+
+    const [targetAllocations] = await conn.query(
+      'SELECT id FROM allocations WHERE bed_id = ? AND released_at IS NULL LIMIT 1 FOR UPDATE', [targetBedId]
+    );
+    if (targetAllocations.length) throw E.conflict('Target bed is already allocated', 'OCCUPIED');
+
+    const [released] = await conn.query(
+      `UPDATE allocations SET status = 'transferred', released_at = NOW()
+        WHERE id = ? AND released_at IS NULL`, [allocationId]
+    );
+    if (released.affectedRows !== 1) throw E.conflict('Allocation changed during transfer', 'ALLOCATION_CHANGED');
+
+    const [insert] = await conn.query(
+      `INSERT INTO allocations (student_id, bed_id, status, check_in_date, allocated_by)
+       VALUES (?, ?, ?, ?, ?)`,
+      [current.student_id, targetBedId, current.status, current.status === 'checked_in' ? current.check_in_date : null, actor.id]
+    );
+    await conn.query(
+      `INSERT INTO notifications (user_id, type, message, ref_type, ref_id)
+       VALUES (?, 'allocation_transfer', ?, 'allocation', ?)`,
+      [current.student_id, 'Your room assignment has been transferred to a new bed.', insert.insertId]
+    );
+    await audit({
+      user_id: actor.id,
+      role: actor.role,
+      action: 'ALLOCATION_TRANSFER',
+      entity: 'allocation',
+      entity_id: insert.insertId,
+      details: { previousAllocationId: allocationId, studentId: current.student_id, previousBedId: current.bed_id, targetBedId },
+      ip: req.ip,
+    }, conn);
+
+    return {
+      previousAllocationId: allocationId,
+      allocationId: insert.insertId,
+      studentId: current.student_id,
+      previousBedId: current.bed_id,
+      bedId: targetBedId,
+      status: current.status,
+    };
+  });
+
+  res.json(transfer);
 }));
 
 module.exports = router;
