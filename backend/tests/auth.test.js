@@ -226,6 +226,47 @@ test('TC-Auth-04 admin endpoints return 401 when signed out and 403 for non-admi
   assert.equal((await warden.post('/api/admin/users').send({})).status, 403);
 });
 
+test('TC-Sec-03 every protected M1 endpoint enforces its server-side role policy', async () => {
+  const studentUser = await h.mkUser('student', 31);
+  const users = {
+    student: studentUser,
+    warden: await h.mkUser('warden', 31),
+    maintenance: await h.mkUser('maintenance', 31),
+    admin: await h.mkUser('admin', 31),
+  };
+  const routes = [
+    { method: 'get', path: '/api/auth/me', access: ['student', 'warden', 'maintenance', 'admin'] },
+    { method: 'post', path: '/api/auth/logout', body: {}, access: ['student', 'warden', 'maintenance', 'admin'] },
+    { method: 'get', path: '/api/profile', access: ['student', 'warden', 'maintenance', 'admin'] },
+    { method: 'put', path: '/api/profile', body: {}, access: ['student', 'warden', 'maintenance', 'admin'] },
+    { method: 'get', path: '/api/students', access: ['warden', 'admin'] },
+    { method: 'get', path: `/api/students/${studentUser.id}`, access: ['warden', 'admin'] },
+    { method: 'put', path: `/api/students/${studentUser.id}`, body: {}, access: ['warden', 'admin'] },
+    { method: 'get', path: '/api/admin/users', access: ['admin'] },
+    { method: 'post', path: '/api/admin/users', body: {}, access: ['admin'] },
+    { method: 'patch', path: `/api/admin/users/${studentUser.id}`, body: {}, access: ['admin'] },
+  ];
+
+  for (const route of routes) {
+    let guestRequest = h.request(h.app)[route.method](route.path);
+    if (route.body) guestRequest = guestRequest.send(route.body);
+    assert.equal((await guestRequest).status, 401, `signed-out ${route.method.toUpperCase()} ${route.path} must return 401`);
+
+    for (const [role, user] of Object.entries(users)) {
+      const agent = await h.login(user);
+      let request = agent[route.method](route.path);
+      if (route.body) request = request.send(route.body);
+      const result = await request;
+      if (!route.access.includes(role)) {
+        assert.equal(result.status, 403, `${role} must be denied ${route.method.toUpperCase()} ${route.path}`);
+      } else {
+        assert.notEqual(result.status, 401, `${role} must pass authentication for ${route.method.toUpperCase()} ${route.path}`);
+        assert.notEqual(result.status, 403, `${role} must pass authorization for ${route.method.toUpperCase()} ${route.path}`);
+      }
+    }
+  }
+});
+
 test('TC-Sec-02 every stored password is a unique bcrypt hash, never a known plaintext', async () => {
   const { bcryptRounds } = require('../src/config');
   const knownPlaintextPasswords = new Set([registration.password, h.PASSWORD, 'Warden123']);

@@ -28,8 +28,13 @@ Demo accounts (synthetic, password `Hostel@123`): `admin@hms.test`, `warden@hms.
 cd backend
 npm run test:unit      # no database needed
 npm test               # integration tests against DB "hms_test" (needs MySQL; set DB_* env vars, user needs rights on hms_test)
+
+cd ../frontend
+npm ci
+npm run test:e2e       # Chrome + Firefox browser smoke and axe checks
 ```
 Test names carry the Test Plan IDs (TC-Auth-01..04, TC-Room-01..04, TC-Comp-01..04, TC-Admin-01..04, TC-Sec-02/03/04/05).
+The current browser suite checks registration, login/profile/logout, keyboard focus, and axe WCAG 2.1 A/AA on available role pages at 375 px, 768 px, and desktop widths. The full complaint and bed-allocation journey is pending integration of those module screens.
 Not covered by code tests and still to be evidenced: TC-Perf-01/02, TC-Rel-01/02, TC-UX-01, TC-Sec-01 (see `docs/OPERATIONS.md`).
 
 ## Design notes
