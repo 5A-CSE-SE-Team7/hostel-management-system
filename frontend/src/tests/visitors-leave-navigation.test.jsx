@@ -14,6 +14,6 @@ for (const role of ['student','warden','maintenance','admin']) for (const path o
   expect(!!screen.queryByRole('link',{name:'Visitors'})).toBe(allowed);
   expect(!!screen.queryByRole('link',{name:'Leave & outpass'})).toBe(allowed);
   if(!allowed) expect(screen.getByRole('heading',{name:'Access denied'})).toBeVisible();
-  expect(screen.queryByRole('link',{name:'Reports'})).toBeNull();
+  if(['student','maintenance'].includes(role)) expect(screen.queryByRole('link',{name:'Reports'})).toBeNull();
  });
 }

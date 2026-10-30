@@ -48,3 +48,32 @@ it('rejects direct navigation to restricted account extensions', async () => {
   expect(await screen.findByRole('heading', { name: 'Access denied' })).toBeVisible();
   expect(screen.queryByText('Restricted account management')).toBeNull();
 });
+
+it('keeps complaint submission and tracking reachable beside account pages after the base merge', async () => {
+  let submitted = false;
+  vi.stubGlobal('fetch', vi.fn(async (path, options = {}) => {
+    if (path === '/api/auth/me') return reply({ role: 'student', name: 'Student' });
+    if (path === '/api/complaint-categories') return reply([{ id: 1, name: 'Electrical' }]);
+    if (path === '/api/complaints' && options.method === 'POST') {
+      expect(JSON.parse(options.body)).toMatchObject({ categoryId: 1, location: 'A101', description: 'Fan broken after merge' });
+      submitted = true;
+      return reply({ complaintId: 23, status: 'submitted' });
+    }
+    if (path === '/api/complaints?limit=100') return reply(submitted ? [{ id: 23, category: 'Electrical', description: 'Fan broken after merge', status: 'submitted' }] : []);
+    throw new Error(`Unexpected request: ${path}`);
+  }));
+  const user = userEvent.setup();
+  render(<MemoryRouter initialEntries={['/profile']}><AuthProvider><App accountPages={{ Profile: <main><h1>Account profile extension</h1></main> }} /></AuthProvider></MemoryRouter>);
+  await screen.findByRole('heading', { name: 'Account profile extension' });
+  await user.click(screen.getByRole('link', { name: 'Complaints' }));
+  await screen.findByRole('heading', { name: 'My complaints' });
+  await user.selectOptions(await screen.findByRole('combobox', { name: 'Category' }), '1');
+  await user.type(screen.getByLabelText('Location (block/room)'), 'A101');
+  await user.type(screen.getByLabelText('Description'), 'Fan broken after merge');
+  await user.click(screen.getByRole('button', { name: 'Submit complaint' }));
+  expect(await screen.findByText('Complaint #23 submitted.')).toBeVisible();
+  expect(await screen.findByRole('table', { name: 'Complaint history' })).toHaveTextContent('Fan broken after merge');
+  await user.click(screen.getByRole('link', { name: 'My profile' }));
+  expect(await screen.findByRole('heading', { name: 'Account profile extension' })).toBeVisible();
+  expect(screen.getAllByRole('main')).toHaveLength(1);
+});
