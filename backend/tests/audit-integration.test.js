@@ -46,3 +46,13 @@ test('both list representations retain filters and reject unsafe pagination', as
   assert.equal((await h.request(h.app).get('/api/admin/audit?page=1')).status, 401);
   assert.equal((await student.get('/api/admin/audit?page=1')).status, 403);
 });
+
+test('invalid event-object calls reject without appending or advancing the chain', async () => {
+  const [[before]] = await h.pool.query('SELECT last_hash FROM audit_head WHERE id = 1');
+  for (const event of [undefined, null, {}, { action: 1 }, { action: ' ' }]) {
+    await assert.rejects(audit(event), /Audit event action is required/);
+  }
+  const [[after]] = await h.pool.query('SELECT last_hash FROM audit_head WHERE id = 1');
+  assert.equal(after.last_hash, before.last_hash);
+  assert.equal((await verifyChain()).valid, true);
+});
