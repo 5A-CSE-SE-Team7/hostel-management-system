@@ -26,3 +26,10 @@ test('datetime preserves UTC conversion while rejecting out-of-range normalized 
     assert.throws(() => validate({at},{at:{type:'datetime'}}),e=>e.status===400);
   }
 });
+
+for (const type of ['int','number']) {
+  test(`${type} rejects JSON boolean/array coercion but preserves numeric strings`, () => {
+    for (const at of [true,false,[1],[],{}]) assert.throws(() => validate({at},{at:{type}}),e=>e.status===400);
+    assert.equal(validate({at:'5'},{at:{type}}).at,5);
+  });
+}

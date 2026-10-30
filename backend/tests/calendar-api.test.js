@@ -29,3 +29,12 @@ test('leave datetime validation rejects malformed calendars and retains valid tr
   const result=await student.post('/api/leave').send({type:'outpass',fromAt:'2028-02-29T10:00:00Z',toAt:'2028-02-29T12:00:00Z',reason:'Leap day'});
   assert.equal(result.status,201); assert.equal(result.body.status,'pending');
 });
+
+test('fee amounts reject boolean and array coercion before creating assessments', async () => {
+  const [[before]] = await h.pool.query('SELECT COUNT(*) n FROM fee_assessments');
+  for (const amount of [true,[10]]) {
+    const r=await warden.post('/api/fees/assessments').send({studentId:user.id,description:'Invalid amount type',amount,dueDate:'2026-12-01'});
+    assert.equal(r.status,400);assert.ok(r.body.details.amount);
+  }
+  const [[after]] = await h.pool.query('SELECT COUNT(*) n FROM fee_assessments');assert.equal(after.n,before.n);
+});
