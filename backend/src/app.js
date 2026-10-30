@@ -37,7 +37,6 @@ function createApp() {
     catch (e) { res.status(503).json({ status: 'degraded' }); }
   });
 
-  // Require the real M1 modules: never swallow import or initialization errors.
   app.use('/api/auth', require('./routes/auth'));
   app.use('/api', require('./routes/profile'));
   app.use('/api/admin', require('./routes/admin'));
