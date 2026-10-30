@@ -1,26 +1,9 @@
 {
-  "observedAt": "2026-10-30T16:05:52.515902+00:00",
+  "observedAt": "2026-10-30T16:47:41.227829+00:00",
   "node": "22.23.4",
-  "actualCurrentSubmittedPrs": {
-    "backend": {
-      "passed": 89,
-      "failed": 0
-    },
-    "frontendUnit": {
-      "passed": 67,
-      "failed": 0
-    },
-    "frontendLive": {
-      "passed": 9,
-      "failed": 0
-    },
-    "build": "PASS",
-    "backendAudit": "PASS: 0 vulnerabilities",
-    "frontendAudit": "PASS: 0 vulnerabilities"
-  },
   "strictSprint1": {
     "backend": {
-      "passed": 71,
+      "passed": 75,
       "failed": 0
     },
     "frontendUnit": {
@@ -44,5 +27,29 @@
   },
   "workflowLint": "PASS",
   "productionValidation": "NOT RUN",
-  "remainingM2Sprint2TransferCheckIn": "BLOCKED: not delivered by current PR55; no claim based on obsolete M2 integration fixture"
+  "remainingM2Sprint2TransferCheckIn": "BLOCKED: not delivered by current PR55; no claim based on obsolete M2 integration fixture",
+  "historicalFullBeforeS05": {
+    "backend": {
+      "passed": 89,
+      "failed": 0
+    },
+    "frontendUnit": {
+      "passed": 67,
+      "failed": 0
+    },
+    "frontendLive": {
+      "passed": 9,
+      "failed": 0
+    },
+    "build": "PASS",
+    "backendAudit": "PASS: 0 vulnerabilities",
+    "frontendAudit": "PASS: 0 vulnerabilities",
+    "note": "Historical before PR56; not a local rerun for this seed/helper change"
+  },
+  "seedHelperFocused": {
+    "passed": 4,
+    "failed": 0,
+    "usesRealMysql": true
+  },
+  "localSprint2Rerun": "NOT RUN; final current Sprint1 was run once; the existing automatic full CI job remains enabled"
 }

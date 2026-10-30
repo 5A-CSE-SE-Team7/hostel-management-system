@@ -1,3 +1,11 @@
+# PR56 shared seed/helper integration
+
+The new S05 PR56 is placed after PR53 and before PR41: it normally inherits the genuine authentication/audit/frontend foundation. PR52 and this CI branch normally inherit PR56. Both CI scopes explicitly copy seed.js, helpers.js and the seed/helper regression file from the recorded seedHelpers commit; copying only the new tests alongside an obsolete seed script is not a valid integration candidate.
+
+The focused new real-MySQL regression exposed a synthetic SRN collision incorrectly handled by ON DUPLICATE KEY UPDATE. PR56 now rejects ownership collisions and rolls back all seed writes, preserving unrelated profiles. Four focused cases pass for repeatability, real seeded login/foreign-key preservation, collision rollback and safe repeated reset. One fresh final Sprint1 candidate passes 75 backend, 53 frontend and 3 live tests, production build and both zero-vulnerability audits. Unchanged frontend/dependency/Sprint2 code was not manually reaudited or retested beyond that final Sprint1 pass. Existing automatic full CI coverage remains enabled; historical full89/67/9 counts are not asserted as a current local run.
+
+All original sprint assignments, PR bases/review states and owners remain. Project board credentials and success, required approvals/protection verification, and the actual Sprint1 video remain human acceptance actions. Main remains unmerged.
+
 # Final standalone and merge-order synchronization
 
 The CI branch now normally inherits the genuine PR53 foundation (which contains PR42 and PR40/39); missing auth/audit/main.jsx imports are corrected through actual prerequisite ancestry, never stubs. Other feature branches normally inherit only earlier sprint prerequisites. A Git object-only simulation of the approved 16-PR Sprint1-then-Sprint2 sequence is clean after the inventory, complaint, notification, canonical fee and frontend package-script resolutions. It does not merge main or authorize bypassing reviews, draft status or fresh required merge-ref checks.

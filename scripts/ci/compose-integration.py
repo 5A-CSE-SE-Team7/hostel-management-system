@@ -16,6 +16,10 @@ def copy(key, prefix):
 # Sprint1 sources, manifests and all owner tests, including actual new M2 tests.
 for prefix in ['backend/src','backend/tests','frontend','scripts/verify-sprint1.sh']:
     copy('m4Sprint1',prefix)
+# Select the real S05 seed/helper module in both scopes; do not inherit an old
+# runner seed script while copying the new owner's helper tests.
+for prefix in ['backend/scripts/seed.js','backend/tests/helpers.js','backend/tests/seed-helpers.test.js']:
+    copy('seedHelpers',prefix)
 # Explicitly select submitted current M2 refs; never silently use old M2 fixtures.
 for prefix in ['backend/src/routes/inventory.js','backend/tests/room.test.js','frontend/src/pages/Inventory.jsx','frontend/src/tests/inventory-navigation.test.jsx']:
     copy('inventory',prefix)
