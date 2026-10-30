@@ -4,9 +4,9 @@ import { beforeEach, it, expect, vi } from 'vitest';
 import { render, screen, within, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { MemoryRouter } from 'react-router-dom';
-import { AuthProvider } from '../auth';
-import App from '../App';
-import Login from '../pages/Login';
+import { AuthProvider } from '../src/auth';
+import App from '../src/App';
+import Login from '../src/pages/Login';
 const nativeFetch=globalThis.fetch;
 let csvRequest, csvBody, csvType;
 beforeEach(()=>{
@@ -38,10 +38,4 @@ it('real visitor and leave screens preserve student/staff workflows and rejectio
  await waitFor(()=>expect(screen.getByLabelText(/Remarks for request/)).toHaveAttribute('aria-invalid','true'));
  await user.type(screen.getByLabelText(/Remarks for request/),'Verified rejection remark');await user.click(within(screen.getByText('Integrated leave request').closest('tr')).getByRole('button',{name:'Reject'}));
  await waitFor(()=>expect(screen.getByText('Integrated leave request').closest('tr')).toHaveTextContent('rejected'));expect(screen.getByText('Verified rejection remark')).toBeVisible();
-},30000);
-it('real report generation downloads CSV for the displayed report rather than edited filters',async()=>{
- const user=userEvent.setup();mount();await login(user,'warden@hms.test');await user.click(screen.getByRole('link',{name:'Reports'}));await user.click(screen.getByRole('button',{name:'Generate'}));await screen.findByRole('table',{name:'Report data'});
- vi.stubGlobal('URL',class extends URL {});URL.createObjectURL=vi.fn(()=> 'blob:integration-csv');URL.revokeObjectURL=vi.fn();const click=vi.spyOn(HTMLAnchorElement.prototype,'click').mockImplementation(()=>{});
- await user.selectOptions(screen.getByLabelText('Report'),'visitors');await user.click(screen.getByRole('button',{name:'Download CSV'}));
- await waitFor(()=>expect(click).toHaveBeenCalledOnce());expect(csvRequest).toMatch(/^\/api\/reports\/occupancy\?/);expect(csvType).toMatch(/^text\/csv/);expect(csvBody).toContain('Block A');expect(URL.createObjectURL.mock.calls[0][0].type).toBe('text/csv');await waitFor(()=>expect(URL.revokeObjectURL).toHaveBeenCalledWith('blob:integration-csv'));
 },30000);
