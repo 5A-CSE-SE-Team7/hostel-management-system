@@ -84,14 +84,15 @@ test('combined validation preserves real failures and isolates proposed owner ch
   assert.match(ci,/Verify actual combined owner contracts/);
   assert.match(ci,/run: bash scripts\/ci\/combined-integration.sh\n/);
   const script=readFileSync(new URL('../../scripts/ci/combined-integration.sh',import.meta.url),'utf8');
-  assert.match(script,/exit 2/); assert.match(script,/--with-proposed-staff-export/);
-  assert.match(script,/exit "\$result"/); assert.match(script,/No teammate source was changed/);
+  assert.match(script,/genuine M1 STAFF contract missing/); assert.doesNotMatch(script,/module.exports.STAFF =/);
+  assert.match(script,/exit "\$result"/); assert.match(script,/npm run test:integration/);
 });
 test('combined fixture preserves the complete real frontend and fee contracts', () => {
   const compose = readFileSync(new URL('../../scripts/ci/compose-integration.py', import.meta.url), 'utf8');
-  assert.match(compose, /copy\('frontendIntegration',prefix\)/);
-  assert.match(compose, /fee-contract\.test/);
-  assert.match(compose, /'backend\/tests'.*copy\('m1',prefix\)/);
+  assert.match(compose, /copy\('frontendIntegration','frontend'\)/);
+  assert.match(compose, /'backend\/tests'/);
+  assert.match(compose, /copy\('m4Sprint1',prefix\)/);
+  assert.match(compose,/backend\/tests\/allocations\.test\.js/);
   assert.doesNotMatch(compose, /s\.replace.*Pending title/);
   const refs = JSON.parse(readFileSync(new URL('../../docs/integration/refs.json', import.meta.url)));
   assert.match(refs.frontendIntegration, /^[a-f0-9]{40}$/);

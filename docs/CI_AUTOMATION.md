@@ -1,3 +1,13 @@
+# Current Sprint1 repair verification
+
+CI now composes actual PR54/55 inventory/allocation and original owner tests, with the genuine PR52 Sprint1 branch as the exact production source boundary. PR52 normally inherits PR53/54/55 and PR43/44, delivers Visitors/Leave and their role-guarded routing, and contains no fee frontend, Reports, resolution or complaint-notification controllers. Additional --m4-sprint1 verification runs **all** Sprint1 unit and live suites, no selected subset masking missing screens.
+
+Current executed full owner candidate: 89 backend + 67 frontend component + 9 genuine HTTP/session/MySQL journeys PASS. Strict Sprint1: 71 backend + 53 frontend component + 3 live journeys PASS. Both builds and both independent full-graph high+ audits PASS with zero vulnerabilities. The change in case count reflects replacing the unsubmitted obsolete M2 aggregate fixture with the current submitted PR54/55 tests; every current owner test is retained. The old unsubmitted fixture is not evidence that current PR55 delivers Sprint2 transfer/check-in/history. Those remaining M2 requirements are BLOCKED until their real implementation is submitted/integrated, not claimed passing.
+
+Live tests are a separate explicit vitest.integration.config.js suite. Missing HMS_API_BASE fails visibly; tests are never skipped. Frontend-only CI runs component tests/build; combined CI starts the genuine API after a fresh isolated schema/seed and runs both suites. Original PR51 visitor/leave assertions now live in PR52, while report assertions remain PR51. The legacy temporary STAFF mutation diagnostic has been removed because genuine M1 is available: missing M1 exports now fail closed and no fixture modifies auth code. Security thresholds/permissions and original mandatory checks remain.
+
+The following historical snapshot is superseded where it describes old M2 pins, smaller frontend scopes or proposal-only fixes. Main, PR bases/states and owner approvals remain unchanged. Do not replace individual current merge-ref checks with combined PASS. Human Project credentials/board verification, code-owner reviews and the actual Sprint1 recording remain outstanding.
+
 # HMS-S04 — CI and GitHub automation
 
 Owner: Aayaan Kamil (PES2UG24CS017). Verified issue: https://github.com/5A-CSE-SE-Team7/hostel-management-system/issues/4.
