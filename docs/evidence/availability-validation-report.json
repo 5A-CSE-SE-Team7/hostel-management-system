@@ -1,0 +1,18 @@
+{
+  "purpose": "Synthetic fixture lifecycle validation; intentional server shutdowns, not production availability",
+  "healthyProbes": 2,
+  "expectedFailedProbes": 2,
+  "report": {
+    "start": "2026-10-01T00:00:00.000Z",
+    "end": "2026-11-01T00:00:00.000Z",
+    "intervalMs": 60000,
+    "upMs": 60000,
+    "downMs": 120000,
+    "unknownMs": 2678220000,
+    "excludedMs": 0,
+    "coveragePercent": 0.006720430107526882,
+    "observedAvailabilityPercent": 33.333333333333336,
+    "fullCalendarMonth": true,
+    "monthlyTargetVerified": false
+  }
+}

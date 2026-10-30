@@ -11,5 +11,5 @@ if (config.tls.key && config.tls.cert) {
 } else {
   server = http.createServer(app);
 }
-server.listen(config.port, () => console.log(`HMS API listening on ${config.tls.key ? 'https' : 'http'}://0.0.0.0:${config.port}`));
+server.listen(config.port, config.host, () => console.log(`HMS API listening on ${config.tls.key ? 'https' : 'http'}://${config.host}:${server.address().port}`));
 process.on('SIGTERM', () => server.close(() => process.exit(0)));
