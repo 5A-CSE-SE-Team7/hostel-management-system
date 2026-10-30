@@ -22,11 +22,11 @@ function computeHash(previous, row) {
 }
 
 async function audit(req, action, entity, entityId, details, options = {}) {
-  const eventCall = req && Object.hasOwn(req, 'action') && typeof action !== 'string';
+  const eventCall = arguments.length <= 2 && typeof action !== 'string';
   let event;
   if (eventCall) {
     event = req;
-    if (typeof event.action !== 'string' || !event.action.trim()) throw new TypeError('Audit event action is required');
+    if (!event || typeof event.action !== 'string' || !event.action.trim()) throw new TypeError('Audit event action is required');
     options = { conn: action, strict: true };
     action = event.action.trim(); entity = event.entity; entityId = event.entity_id;
     details = event.details;
