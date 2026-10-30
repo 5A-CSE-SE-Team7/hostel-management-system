@@ -37,6 +37,7 @@ function createApp() {
     catch (e) { res.status(503).json({ status: 'degraded' }); }
   });
 
+  // Require the real M1 modules: never swallow import or initialization errors.
   app.use('/api/auth', require('./routes/auth'));
   app.use('/api', require('./routes/profile'));
   app.use('/api/admin', require('./routes/admin'));
@@ -44,10 +45,11 @@ function createApp() {
   // mounted by M2 PR: app.use('/api', require('./routes/allocations'));
   app.use('/api', require('./routes/complaints')); // HMS-F-009; requires real M1/M2 modules
   app.use('/api', require('./routes/notifications'));
-  // mounted by M4 PR: app.use('/api', require('./routes/fees'));
-  // mounted by M4 PR: app.use('/api', require('./routes/visitors'));
-  // mounted by M4 PR: app.use('/api', require('./routes/leave'));
-  // mounted by M4 PR: app.use('/api/reports', require('./routes/reports'));
+  // Shared Sprint 1 routes plus the additive Sprint 2 reports API.
+  app.use('/api', require('./routes/fees'));
+  app.use('/api', require('./routes/visitors'));
+  app.use('/api', require('./routes/leave'));
+  app.use('/api/reports', require('./routes/reports'));
 
   app.use(common.notFound);
   app.use(common.errorHandler);

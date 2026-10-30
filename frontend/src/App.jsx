@@ -2,6 +2,9 @@ import { useState } from 'react';
 import Complaints from './pages/Complaints';
 import Dashboard from './pages/Dashboard';
 import Fees from './pages/Fees';
+import Visitors from './pages/Visitors';
+import Leave from './pages/Leave';
+import Reports from './pages/Reports';
 import Notifications from './pages/Notifications';
 import NotificationCount from './components/NotificationCount';
 import { Navigate, NavLink, Outlet, Route, Routes, useLocation } from 'react-router-dom';
@@ -12,6 +15,9 @@ export const navigation = [
   { path: '/complaints', label: 'Complaints', roles: ['student', 'warden', 'maintenance', 'admin'] },
   { path: '/notifications', label: 'Notifications', roles: ['student', 'warden', 'maintenance', 'admin'] },
   { path: '/fees', label: 'Fees', roles: ['student', 'warden', 'admin'] },
+  { path: '/visitors', label: 'Visitors', roles: ['student', 'warden', 'admin'] },
+  { path: '/leave', label: 'Leave & outpass', roles: ['student', 'warden', 'admin'] },
+  { path: '/reports', label: 'Reports', roles: ['warden', 'admin'] },
 ];
 function Login({ registrationEnabled = false }) {
   const { login, user, error: serviceError } = useAuth();
@@ -46,5 +52,5 @@ export default function App({ registrationPage = null, loginPage = null, account
   const extensions = accountRoutes.filter(route => accountPages[route.key]);
   // Teammate pages own their main landmark; the shared shell uses a container.
   const Content = (!user && (registrationPage || loginPage)) || extensions.some(route => route.path === pathname) ? 'div' : 'main';
-  return <><a className="skip" href="#content">Skip to content</a><header><strong>Hostel Management System</strong>{user && <div><Badge>{user.role}</Badge><button onClick={async () => { try { await logout(); } catch (e) { setLogoutError(e.message); } }}>Sign out</button></div>}</header><div className="layout">{user && <nav aria-label="Main navigation">{[...navigation, ...extensions].filter(n => n.roles.includes(user.role)).map(n => <NavLink key={n.path} to={n.path} end={n.path === '/'}>{n.label}{n.path === '/notifications' && <NotificationCount />}</NavLink>)}</nav>}<Content id="content" tabIndex="-1"><Alert error>{logoutError}</Alert>{loading ? <Alert>Checking your session…</Alert> : <Routes><Route path="/login" element={user ? <Navigate to="/" replace /> : loginPage || <Login registrationEnabled={!!registrationPage} />} />{registrationPage && <Route path="/register" element={user ? <Navigate to="/" replace /> : registrationPage} />}<Route element={<Protected />}>{extensions.map(route => <Route key={route.key} element={<Protected roles={route.roles} />}><Route path={route.path} element={accountPages[route.key]} /></Route>)}<Route index element={<Dashboard />} /><Route path="complaints" element={<Complaints />} /><Route path="notifications" element={<Notifications />} /><Route element={<Protected roles={['student', 'warden', 'admin']} />}><Route path="fees" element={<Fees />} /></Route></Route><Route path="*" element={<><h1>Page not found</h1><NavLink to="/">Go to dashboard</NavLink></>} /></Routes>}{!loading && !user && error && <button onClick={() => window.location.reload()}>Retry connection</button>}</Content></div></>;
+  return <><a className="skip" href="#content">Skip to content</a><header><strong>Hostel Management System</strong>{user && <div><Badge>{user.role}</Badge><button onClick={async () => { try { await logout(); } catch (e) { setLogoutError(e.message); } }}>Sign out</button></div>}</header><div className="layout">{user && <nav aria-label="Main navigation">{[...navigation, ...extensions].filter(n => n.roles.includes(user.role)).map(n => <NavLink key={n.path} to={n.path} end={n.path === '/'}>{n.label}{n.path === '/notifications' && <NotificationCount />}</NavLink>)}</nav>}<Content id="content" tabIndex="-1"><Alert error>{logoutError}</Alert>{loading ? <Alert>Checking your session…</Alert> : <Routes><Route path="/login" element={user ? <Navigate to="/" replace /> : loginPage || <Login registrationEnabled={!!registrationPage} />} />{registrationPage && <Route path="/register" element={user ? <Navigate to="/" replace /> : registrationPage} />}<Route element={<Protected />}>{extensions.map(route => <Route key={route.key} element={<Protected roles={route.roles} />}><Route path={route.path} element={accountPages[route.key]} /></Route>)}<Route index element={<Dashboard />} /><Route path="complaints" element={<Complaints />} /><Route path="notifications" element={<Notifications />} /><Route element={<Protected roles={['student', 'warden', 'admin']} />}><Route path="fees" element={<Fees />} /><Route path="visitors" element={<Visitors />} /><Route path="leave" element={<Leave />} /></Route><Route element={<Protected roles={['warden', 'admin']} />}><Route path="reports" element={<Reports />} /></Route></Route><Route path="*" element={<><h1>Page not found</h1><NavLink to="/">Go to dashboard</NavLink></>} /></Routes>}{!loading && !user && error && <button onClick={() => window.location.reload()}>Retry connection</button>}</Content></div></>;
 }
