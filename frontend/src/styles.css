@@ -15,7 +15,12 @@ body { margin: 0; min-width: 320px; min-height: 100vh; }
 .card { display: grid; gap: 1rem; padding: 1.5rem; background: white; border: 1px solid #d9e0eb; border-radius: .75rem; box-shadow: 0 12px 32px #20304a12; }
 .field { display: grid; gap: .4rem; font-weight: 600; }
 .field input { width: 100%; min-height: 2.75rem; padding: .65rem .75rem; border: 1px solid #aab5c5; border-radius: .4rem; font: inherit; }
-.field input:focus { outline: 3px solid #9ec5fe; border-color: #2869c7; }
+.field input:focus-visible, .field select:focus-visible,
+button:focus-visible, a:focus-visible {
+  outline: 3px solid #174ea6;
+  outline-offset: 3px;
+}
+.field input:focus-visible, .field select:focus-visible { border-color: #174ea6; }
 .field input[aria-invalid="true"] { border-color: #b42318; }
 .field-error { color: #b42318; font-weight: 400; }
 .hint { color: #566176; font-weight: 400; }
@@ -23,6 +28,8 @@ body { margin: 0; min-width: 320px; min-height: 100vh; }
 .success { margin: 0; color: #18794e; }
 button { min-height: 2.75rem; padding: .65rem 1rem; border: 0; border-radius: .4rem; background: #174ea6; color: white; font: inherit; font-weight: 700; cursor: pointer; }
 button:disabled { opacity: .65; cursor: wait; }
+button:hover:not(:disabled) { background: #103d83; }
+a { color: #174ea6; }
 .account-links { display: flex; gap: 1rem; margin: 1.25rem 0; }
 .student-results { display: grid; gap: .5rem; margin: 0; padding: 0; list-style: none; }
 .student-result { width: 100%; background: #eef3fb; color: #172033; text-align: left; font-weight: 500; }
@@ -35,5 +42,14 @@ button:disabled { opacity: .65; cursor: wait; }
 .active-toggle { display: flex; gap: .4rem; align-items: center; padding-bottom: .65rem; }
 .active-toggle input { width: 1rem; height: 1rem; }
 
-@media (max-width: 700px) { .user-row { grid-template-columns: 1fr 1fr; } }
-@media (max-width: 480px) { .registration { margin: 2rem auto; } .card { padding: 1rem; } }
+@media (max-width: 700px) { .user-row { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); } }
+@media (max-width: 480px) {
+  .registration { margin: 2rem auto; }
+  .card { padding: 1rem; }
+  .user-row { grid-template-columns: minmax(0, 1fr); }
+  .account-links { flex-wrap: wrap; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+}
