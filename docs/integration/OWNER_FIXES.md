@@ -1,3 +1,9 @@
+# Current M4 integration follow-up
+
+PR52 is the implemented Sprint1 base; PR51 now normally inherits it and adds reports. The overlap is technically resolved, not waiting for an ownership decision. Shared controllers/validators are byte-identical, #48 retains the canonical fee UI, and full M4 screens use a tested shared-kit/API/CSV boundary. Cross-merges with #42/#47/#48 are textually clean; the existing integration branch also contains a tested TLS/M4 normal merge (76 backend tests PASS). No PR base/author/review state or main was changed. Full CI composition passes 86 backend/49 frontend tests; additional Sprint1 compatibility passes 83 backend/11 fee/core UI tests. Both builds and both audits pass. Required raw-branch checks can still be blocked by genuine unmerged foundation modules.
+
+The earlier snapshot below remains historical.
+
 # Dependency integration status
 
 The administrator explicitly authorized repairs to existing teammate PRs on 2026-10-30. The former proposals are now actual, separately authored Aayaan commits on the existing PR42 and PR51 branches; PR authors/ownership/base/review states are unchanged.

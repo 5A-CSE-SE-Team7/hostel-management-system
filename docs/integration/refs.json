@@ -1,12 +1,12 @@
 {
   "m1": "416c079aff7ce8215384747ff8b93fb8b92ef8aa",
   "m2": "17ad39d1de05beef6fc23b511d64cd86635dd9bc",
-  "m4": "4a8ce1017fdec41b22b61c0cfadf6e31aec54562",
+  "m4": "e756a0502213251d8349f1bcda7924d7646cce4c",
   "complaints": "570d0d72779b18bfcc8fb9d6901687f677bc412b",
   "fees": "9c99767a1f8fd19d3c5cdade0465605f049af8af",
   "tls": "fb0b840b3a3b9976a25cb616e5150e73211f09b3",
   "performance": "64b6691491dda3bab122b3d212a7c02b5d0f8c79",
   "availability": "7e55e0880cbb18d5852e510bd13cac07a4895e25",
-  "frontendIntegration": "7ea36b4b612c8f52c39086d6a08e2e8cf08340bc",
-  "m4Sprint1": "2d7c223fb18053da5ac32e3e354f9dc335df9702"
+  "frontendIntegration": "cfd1d3e422f109d31b08ada1ebad0edfe92ef0a8",
+  "m4Sprint1": "2e6a18202f295343eb145218ce7ee0aa60514f26"
 }
