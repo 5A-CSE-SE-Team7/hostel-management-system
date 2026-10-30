@@ -20,7 +20,7 @@ test('student registration displays inline server validation and success feedbac
   });
 
   await page.goto('/register');
-  await page.getByLabel('SRN', { exact: true }).fill(student.srn);
+  await page.locator('#srn').fill(student.srn);
   await page.getByLabel('Full name').fill(student.name);
   await page.getByLabel('Institutional email').fill('ava@outside.test');
   await page.getByLabel('Password').fill('Student123');
@@ -63,6 +63,7 @@ test('student can sign in, reach profile, and sign out using keyboard navigation
   await expect(page.getByRole('heading', { name: `Welcome, ${student.name}` })).toBeVisible();
   await page.getByRole('link', { name: 'My profile' }).click();
   await expect(page.getByRole('heading', { name: 'My profile' })).toBeVisible();
+  await page.getByRole('link', { name: 'Back to dashboard' }).click();
   await page.getByRole('button', { name: 'Sign out' }).click();
   await expect(page.getByRole('heading', { name: 'Hostel Management System' })).toBeVisible();
 });

@@ -8,6 +8,8 @@ export default defineConfig({
   use: {
     baseURL: 'http://127.0.0.1:5173',
     trace: 'retain-on-failure',
+    actionTimeout: 15_000,
+    navigationTimeout: 15_000,
   },
   projects: [
     { name: 'chrome', use: { browserName: 'chromium', channel: 'chrome' } },
