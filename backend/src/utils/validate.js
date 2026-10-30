@@ -40,6 +40,7 @@ function validate(body, rules) {
         break;
       case 'int':
       case 'number': {
+        if (!['string', 'number'].includes(typeof v)) { errors[field] = `${label} must be a number`; continue; }
         const n = Number(v);
         if (!Number.isFinite(n) || (r.type === 'int' && !Number.isInteger(n))) { errors[field] = `${label} must be a ${r.type === 'int' ? 'whole ' : ''}number`; continue; }
         if (r.min !== undefined && n < r.min) errors[field] = `${label} must be >= ${r.min}`;
