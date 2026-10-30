@@ -1,66 +1,88 @@
 const crypto = require('crypto');
-const { withTransaction } = require('../db');
+const { pool } = require('../db');
 
-// The all-zero hash anchors the first event in the chain.
+// Keep the established M1/M2 canonical hash format for existing audit rows.
+// PR53's event-object call is an adapter into the same transaction/chain.
+
 const GENESIS = '0'.repeat(64);
-const HASHED_FIELDS = [
-  'user_id', 'role', 'action', 'entity', 'entity_id', 'details', 'ip', 'created_at',
-];
 
-/** Hash the previous link and the audit row's fields in a fixed order. */
-function computeHash(prevHash, row) {
-  const canonicalRow = {};
-  for (const field of HASHED_FIELDS) canonicalRow[field] = row[field] ?? null;
-  return crypto.createHash('sha256')
-    .update(JSON.stringify({ prev_hash: prevHash, ...canonicalRow }), 'utf8')
-    .digest('hex');
+function computeHash(previous, row) {
+  const payload = JSON.stringify([
+    previous,
+    row.user_id ?? null,
+    row.role ?? null,
+    row.action,
+    row.entity ?? null,
+    row.entity_id ?? null,
+    row.details ?? null,
+    row.ip ?? null,
+    row.created_at,
+  ]);
+  return crypto.createHash('sha256').update(payload).digest('hex');
 }
 
-function serializeDetails(details) {
-  if (details == null) return null;
-  return typeof details === 'string' ? details : JSON.stringify(details);
-}
-
-/**
- * Append one audit event. Pass the caller's transaction connection when the
- * event must commit atomically with a business change; otherwise this helper
- * opens and commits its own transaction.
- */
-async function audit(event, connection) {
-  if (!event || typeof event.action !== 'string' || !event.action.trim()) {
-    throw new TypeError('Audit event action is required');
+async function audit(req, action, entity, entityId, details, options = {}) {
+  const eventCall = req && Object.hasOwn(req, 'action') && typeof action !== 'string';
+  let event;
+  if (eventCall) {
+    event = req;
+    if (typeof event.action !== 'string' || !event.action.trim()) throw new TypeError('Audit event action is required');
+    options = { conn: action, strict: true };
+    action = event.action.trim(); entity = event.entity; entityId = event.entity_id;
+    details = event.details;
+    req = null;
   }
-
-  const append = async (conn) => {
-    const [heads] = await conn.query(
-      'SELECT last_hash FROM audit_head WHERE id = 1 FOR UPDATE'
-    );
-    if (!heads.length) throw new Error('Audit chain head is missing');
-
+  const conn = options.conn || await pool.getConnection();
+  const ownConnection = !options.conn;
+  try {
+    if (ownConnection) await conn.beginTransaction();
+    const [[head]] = await conn.query('SELECT last_hash FROM audit_head WHERE id = 1 FOR UPDATE');
+    if (!head) throw new Error('Audit chain head is missing');
     const row = {
-      user_id: event.user_id ?? null,
-      role: event.role ?? null,
-      action: event.action.trim(),
-      entity: event.entity ?? null,
-      entity_id: event.entity_id == null ? null : String(event.entity_id),
-      details: serializeDetails(event.details),
-      ip: event.ip ?? null,
-      created_at: event.created_at ?? new Date().toISOString(),
+      user_id: event?.user_id ?? options.userId ?? req?.session?.user?.id ?? null,
+      role: event?.role ?? options.role ?? req?.session?.user?.role ?? null,
+      action,
+      entity: entity ?? null,
+      entity_id: entityId == null ? null : String(entityId),
+      details: details == null ? null : typeof details === 'string' ? details : JSON.stringify(details),
+      ip: event?.ip ?? req?.ip ?? null,
+      created_at: new Date(event?.created_at ?? Date.now()).toISOString().slice(0, 23).replace('T', ' '),
     };
-    const prevHash = heads[0].last_hash || GENESIS;
-    const hash = computeHash(prevHash, row);
-
+    const hash = computeHash(head.last_hash, row);
     const [insert] = await conn.query(
-      `INSERT INTO audit_logs
-        (user_id, role, action, entity, entity_id, details, ip, created_at, prev_hash, hash)
-       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-      [...HASHED_FIELDS.map((field) => row[field]), prevHash, hash]
+      `INSERT INTO audit_logs (user_id, role, action, entity, entity_id, details, ip, created_at, prev_hash, hash)
+       VALUES (?,?,?,?,?,?,?,?,?,?)`,
+      [row.user_id, row.role, row.action, row.entity, row.entity_id, row.details, row.ip, row.created_at, head.last_hash, hash],
     );
     await conn.query('UPDATE audit_head SET last_hash = ? WHERE id = 1', [hash]);
-    return { id: insert.insertId, hash, prev_hash: prevHash, ...row };
-  };
-
-  return connection ? append(connection) : withTransaction(append);
+    if (ownConnection) await conn.commit();
+    return { id: insert.insertId, hash, prev_hash: head.last_hash, ...row };
+  } catch (err) {
+    if (ownConnection) {
+      try { await conn.rollback(); } catch (_) { /* ignore rollback errors */ }
+    }
+    console.error('[audit] failed to write audit event', action, err.message);
+    if (options.strict) throw err;
+  } finally {
+    if (ownConnection) conn.release();
+  }
 }
 
-module.exports = { audit, computeHash, GENESIS };
+async function verifyChain() {
+  const [rows] = await pool.query('SELECT * FROM audit_logs ORDER BY id ASC');
+  let previous = GENESIS;
+  for (const row of rows) {
+    if (row.prev_hash !== previous || computeHash(previous, row) !== row.hash) {
+      return { valid: false, checked: rows.length, brokenAtId: row.id, firstInvalidId: row.id };
+    }
+    previous = row.hash;
+  }
+  const [[head]] = await pool.query('SELECT last_hash FROM audit_head WHERE id = 1');
+  if (!head) throw new Error('Audit chain head is missing');
+  if (head.last_hash !== previous) {
+    return { valid: false, checked: rows.length, brokenAtId: null, headMismatch: true, reason: 'chain head mismatch' };
+  }
+  return { valid: true, checked: rows.length };
+}
+
+module.exports = { audit, verifyChain, computeHash, GENESIS };
