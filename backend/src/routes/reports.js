@@ -71,11 +71,17 @@ const REPORTS = {
   },
 };
 
-const csvCell = (v) => { const s = v == null ? '' : String(v); return /[",\n]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s; };
+const csvCell = (v) => {
+  let s = v == null ? '' : String(v);
+  // Export untrusted text as a literal cell, never a spreadsheet formula.
+  // Genuine numeric values retain their numeric representation.
+  if (typeof v === 'string' && /^\s*[=+\-@]/.test(s)) s = `'${s}`;
+  return /[",\r\n]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s;
+};
 
 router.get('/:type', async (req, res, next) => {
   try {
-    const gen = REPORTS[req.params.type];
+    const gen = Object.hasOwn(REPORTS, req.params.type) ? REPORTS[req.params.type] : null;
     if (!gen) throw E.notFound('Report type');
     const today = new Date().toISOString().slice(0, 10);
     const q = validate(req.query, { from: { type: 'date' }, to: { type: 'date' }, format: { enum: ['json', 'csv'] } });

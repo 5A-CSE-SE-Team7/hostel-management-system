@@ -31,3 +31,13 @@ test('TC-Admin-04 reports match underlying records for the selected period', asy
   assert.equal((await student.get('/api/reports/occupancy')).status, 403);
   assert.equal((await warden.get('/api/reports/nope')).status, 404);
 });
+
+test('report type lookup rejects inherited JavaScript object properties', async () => {
+  for (const type of ['toString','constructor','__proto__']) assert.equal((await warden.get(`/api/reports/${type}`)).status,404);
+});
+test('report CSV preserves student text as a literal without spreadsheet formula execution', async () => {
+  assert.equal((await student.put('/api/profile').send({name:'=1+1'})).status,200);
+  const path='/api/reports/visitors?from=2026-01-01&to=2028-12-31';
+  const json=await warden.get(path); assert.equal(json.status,200); assert.equal(json.body.rows[0].student,'=1+1');
+  const csv=await warden.get(path+'&format=csv');assert.equal(csv.status,200);assert.equal(csv.type,'text/csv');assert.ok(csv.text.includes("'=1+1"));assert.doesNotMatch(csv.text,/^\d+,=1\+1,/m);
+});
