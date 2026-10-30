@@ -26,11 +26,17 @@ async function seedDatabase(db = pool) {
     await user('maint2@hms.test', 'Maintenance Two', 'maintenance');
     for (let i = 1; i <= 6; i += 1) {
       const id = await user(`student${i}@hms.test`, `Student ${i}`, 'student');
+      const srn = `PES2UG24CS${String(100 + i)}`;
+      // ON DUPLICATE KEY must not silently update another student's SRN row.
+      const [owners] = await conn.query(
+        'SELECT user_id FROM students WHERE srn = ? AND user_id <> ? FOR UPDATE', [srn, id],
+      );
+      if (owners.length) throw new Error('Synthetic SRN is already owned by another account');
       await conn.query(
         `INSERT INTO students (user_id, srn, contact, department, year_of_study)
          VALUES (?,?,?,?,?)
          ON DUPLICATE KEY UPDATE srn = VALUES(srn), contact = VALUES(contact), department = VALUES(department), year_of_study = VALUES(year_of_study)`,
-        [id, `PES2UG24CS${String(100 + i)}`, `99000000${String(i).padStart(2, '0')}`, 'CSE', 2],
+        [id, srn, `99000000${String(i).padStart(2, '0')}`, 'CSE', 2],
       );
     }
     for (const category of ['Electrical', 'Plumbing', 'Furniture', 'Internet', 'Cleaning', 'Other']) {
