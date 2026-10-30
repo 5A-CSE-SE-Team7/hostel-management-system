@@ -46,5 +46,41 @@
     "reportFeatureIncluded": false
   },
   "auditFoundation": "PR53 real event/request adapter, protected paginated API and audit page",
-  "liveUiIsolation": "Fresh hms_test schema after backend tamper tests; no corruption carried across phases"
+  "liveUiIsolation": "Fresh hms_test schema after backend tamper tests; no corruption carried across phases",
+  "standaloneFoundationCandidate": {
+    "status": "PASS",
+    "method": "Detached temporary normal merges, never pushed or merged to main",
+    "foundationPrs": [
+      42,
+      40,
+      53
+    ],
+    "testedFeaturePrs": [
+      41,
+      47,
+      49,
+      50
+    ],
+    "backendUnit": {
+      "executed": 4,
+      "passed": 4
+    },
+    "backendIntegration": {
+      "executed": 28,
+      "passed": 28
+    },
+    "frontend": {
+      "executed": 26,
+      "passed": 26
+    },
+    "build": "PASS",
+    "backendAudit": "PASS: 0 vulnerabilities",
+    "frontendAudit": "PASS: 0 vulnerabilities",
+    "dependencySmoke": "PASS",
+    "workflowTests": {
+      "passed": 14,
+      "failed": 0
+    },
+    "workflowLint": "PASS"
+  }
 }
