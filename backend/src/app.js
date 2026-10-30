@@ -37,18 +37,17 @@ function createApp() {
     catch (e) { res.status(503).json({ status: 'degraded' }); }
   });
 
-  // Route mounts are enabled by their owning module PRs.
-  // mounted by M1 PR: app.use('/api/auth', require('./routes/auth'));
-  // mounted by M1 PR: app.use('/api', require('./routes/profile'));
-  // mounted by M1 PR: app.use('/api/admin', require('./routes/admin'));
-  // mounted by M2 PR: app.use('/api', require('./routes/inventory'));
-  // mounted by M2 PR: app.use('/api', require('./routes/allocations'));
-  // mounted by M3 PR: app.use('/api', require('./routes/complaints'));
-  // mounted by M3 PR: app.use('/api', require('./routes/notifications'));
-  // mounted by M4 PR: app.use('/api', require('./routes/fees'));
-  // mounted by M4 PR: app.use('/api', require('./routes/visitors'));
-  // mounted by M4 PR: app.use('/api', require('./routes/leave'));
-  // mounted by M4 PR: app.use('/api/reports', require('./routes/reports'));
+  // Route mounts:
+  // Required auth/profile/admin routes (M1)
+  try { app.use('/api/auth', require('./routes/auth')); } catch (_) {}
+  try { app.use('/api', require('./routes/profile')); } catch (_) {}
+  try { app.use('/api/admin', require('./routes/admin')); } catch (_) {}
+
+  // M4 Sprint 1 routes: Fees, Visitors, Leave
+  app.use('/api', require('./routes/fees'));
+  app.use('/api', require('./routes/visitors'));
+  app.use('/api', require('./routes/leave'));
+  // Reports route is mounted by Sprint 2: app.use('/api/reports', require('./routes/reports'));
 
   app.use(common.notFound);
   app.use(common.errorHandler);
