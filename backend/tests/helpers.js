@@ -11,17 +11,24 @@ const config = require('../src/config');
 const { pool } = require('../src/db');
 const { createApp } = require('../src/app');
 
-const PASSWORD = 'Passw0rd!x';
+// Keep test login credentials aligned with the documented, synthetic demo accounts.
+const PASSWORD = 'Hostel@123';
 const app = createApp();
 
 async function resetDb() {
+  if (!config.isTest || !config.db.database.endsWith('_test')) {
+    throw new Error(`Refusing to reset non-test database: ${config.db.database}`);
+  }
   const conn = await mysql.createConnection({ ...config.db, multipleStatements: true });
-  const [tables] = await conn.query('SHOW TABLES');
-  await conn.query('SET FOREIGN_KEY_CHECKS = 0');
-  for (const t of tables) await conn.query(`DROP TABLE IF EXISTS \`${Object.values(t)[0]}\``);
-  await conn.query('SET FOREIGN_KEY_CHECKS = 1');
-  await conn.query(fs.readFileSync(path.join(__dirname, '../db/schema.sql'), 'utf8'));
-  await conn.end();
+  try {
+    const [tables] = await conn.query('SHOW TABLES');
+    await conn.query('SET FOREIGN_KEY_CHECKS = 0');
+    for (const table of tables) await conn.query(`DROP TABLE IF EXISTS \`${Object.values(table)[0]}\``);
+    await conn.query('SET FOREIGN_KEY_CHECKS = 1');
+    await conn.query(fs.readFileSync(path.join(__dirname, '../db/schema.sql'), 'utf8'));
+  } finally {
+    await conn.end();
+  }
 }
 
 async function mkUser(role, n = 1) {

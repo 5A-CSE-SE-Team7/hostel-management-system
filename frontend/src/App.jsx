@@ -30,6 +30,7 @@ function Protected({ roles }) {
 }
 function Pending({ title }) { return <><h1>{title}</h1><Alert>This feature is awaiting its module integration.</Alert></>; }
 const accountRoutes = [
+  { key: 'Audit', path: '/audit', label: 'Audit log', roles: ['admin'] },
   { key: 'Profile', path: '/profile', label: 'My profile', roles: ['student', 'warden', 'maintenance', 'admin'] },
   { key: 'Students', path: '/students', label: 'Manage students', roles: ['warden', 'admin'] },
   { key: 'Users', path: '/users', label: 'Users & roles', roles: ['admin'] },
