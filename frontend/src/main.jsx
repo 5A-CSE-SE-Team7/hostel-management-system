@@ -6,10 +6,10 @@ import { AuthProvider } from './auth';
 import './styles.css';
 // Integrate genuine M1 pages when their PR is present; absent pages do not
 // create placeholder registration or replace the functional shared shell.
-const m1Pages = import.meta.glob(['./pages/Login.jsx', './pages/Register.jsx', './pages/Profile.jsx', './pages/Students.jsx', './pages/Users.jsx', './pages/Audit.jsx'], { eager: true });
+const m1Pages = import.meta.glob(['./pages/Login.jsx', './pages/Register.jsx', './pages/Profile.jsx', './pages/Students.jsx', './pages/Users.jsx', './pages/Audit.jsx', './pages/Inventory.jsx'], { eager: true });
 const M1Login = m1Pages['./pages/Login.jsx']?.default;
 const M1Register = m1Pages['./pages/Register.jsx']?.default;
-const accountPages = Object.fromEntries(['Profile', 'Students', 'Users', 'Audit'].flatMap(name => {
+const accountPages = Object.fromEntries(['Profile', 'Students', 'Users', 'Audit', 'Inventory'].flatMap(name => {
   const Page = m1Pages[`./pages/${name}.jsx`]?.default;
   return Page ? [[name, <Page />]] : [];
 }));
