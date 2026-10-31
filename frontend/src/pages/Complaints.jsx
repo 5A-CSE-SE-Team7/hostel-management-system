@@ -1,11 +1,14 @@
 import { useCallback, useEffect, useId, useState } from 'react';
 import { api } from '../api';
+import ComplaintAssignment from '../components/ComplaintAssignment';
 import { useAuth } from '../auth';
 import { Alert, Badge, DataTable, Field } from '../components/ui';
 const empty = { categoryId: '', location: '', description: '', attachmentRef: '' };
 export default function Complaints() {
   const { user } = useAuth();
   const [form, setForm] = useState(empty);
+  const isStaff = ['warden', 'admin'].includes(user.role);
+  const [staff, setStaff] = useState([]);
   const [categories, setCategories] = useState([]);
   const [rows, setRows] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -20,11 +23,11 @@ export default function Complaints() {
   const reload = useCallback(async () => {
     setLoading(true); setError('');
     try {
-      const [cats, complaints] = await Promise.all([api('/api/complaint-categories'), api('/api/complaints?limit=100')]);
-      setCategories(cats); setRows(complaints); setHasMore(complaints.length === 100);
+      const [cats, complaints, maintenance] = await Promise.all([api('/api/complaint-categories'), api('/api/complaints?limit=100'), isStaff ? api('/api/maintenance-staff') : Promise.resolve([])]);
+      setCategories(cats); setStaff(maintenance); setRows(complaints); setHasMore(complaints.length === 100);
     } catch (e) { setError(e.message); }
     finally { setLoading(false); }
-  }, []);
+  }, [isStaff]);
   useEffect(() => { reload(); }, [reload]);
   async function loadMore() {
     setBusy(true); setPageError('');
@@ -50,6 +53,7 @@ export default function Complaints() {
     { key: 'attachmentRef', label: 'Attachment reference' },
     { key: 'status', label: 'Status', render: row => <Badge>{row.status}</Badge> },
     { key: 'priority', label: 'Priority' }, { key: 'assignedToName', label: 'Assigned to' },
+    ...(isStaff ? [{ key: 'actions', label: 'Assignment / priority', render: row => <ComplaintAssignment complaint={row} staff={staff} onDone={async message => { setSuccess(message); await reload(); }} /> }] : []),
     { key: 'updatedAt', label: 'Updated' }, { key: 'resolutionDetails', label: 'Resolution' },
   ];
   return <><h1>{user.role === 'student' ? 'My complaints' : 'Complaints'}</h1>
