@@ -79,9 +79,7 @@ function run(handler) {
   return (req, res, next) => Promise.resolve(handler(req, res, next)).catch(next);
 }
 
-router.use(requireInventoryRole);
-
-router.get('/inventory', run(async (_req, res) => {
+router.get('/inventory', requireInventoryRole, run(async (_req, res) => {
   const [rows] = await pool.query(`
     SELECT b.id AS block_id, b.name AS block_name, b.is_active AS block_active,
            r.id AS room_id, r.room_number, r.floor, r.is_active AS room_active,
@@ -121,13 +119,13 @@ router.get('/inventory', run(async (_req, res) => {
   res.json([...blocks.values()].map(({ _rooms, ...block }) => block));
 }));
 
-router.post('/blocks', run(async (req, res) => {
+router.post('/blocks', requireInventoryRole, run(async (req, res) => {
   const { name } = validate(req.body, { name: { required: true, max: 60 } });
   const [result] = await pool.query('INSERT INTO blocks (name) VALUES (?)', [name]);
   res.status(201).json({ id: result.insertId, name, isActive: true });
 }));
 
-router.patch('/blocks/:id', run(async (req, res) => {
+router.patch('/blocks/:id', requireInventoryRole, run(async (req, res) => {
   const id = parseId(req.params.id, 'blockId');
   const data = validate(req.body, { name: { max: 60 } });
   const isActive = parseIsActive(req.body || {});
@@ -150,7 +148,7 @@ router.patch('/blocks/:id', run(async (req, res) => {
   res.json({ id: block.id, name: block.name, isActive: Boolean(block.is_active) });
 }));
 
-router.post('/rooms', run(async (req, res) => {
+router.post('/rooms', requireInventoryRole, run(async (req, res) => {
   const data = validate(req.body, {
     blockId: { required: true, type: 'int', min: 1 },
     roomNumber: { required: true, max: 20 },
@@ -167,7 +165,7 @@ router.post('/rooms', run(async (req, res) => {
   res.status(201).json({ id: result, ...data, isActive: true });
 }));
 
-router.patch('/rooms/:id', run(async (req, res) => {
+router.patch('/rooms/:id', requireInventoryRole, run(async (req, res) => {
   const id = parseId(req.params.id, 'roomId');
   const data = validate(req.body, {
     blockId: { type: 'int', min: 1 }, roomNumber: { max: 20 }, floor: { type: 'int' },
@@ -199,7 +197,7 @@ router.patch('/rooms/:id', run(async (req, res) => {
   res.json({ id: room.id, blockId: room.block_id, roomNumber: room.room_number, floor: room.floor, isActive: Boolean(room.is_active) });
 }));
 
-router.post('/beds', run(async (req, res) => {
+router.post('/beds', requireInventoryRole, run(async (req, res) => {
   const data = validate(req.body, {
     roomId: { required: true, type: 'int', min: 1 }, label: { required: true, max: 20 },
   });
@@ -214,7 +212,7 @@ router.post('/beds', run(async (req, res) => {
   res.status(201).json({ id, ...data, isActive: true, occupied: false });
 }));
 
-router.patch('/beds/:id', run(async (req, res) => {
+router.patch('/beds/:id', requireInventoryRole, run(async (req, res) => {
   const id = parseId(req.params.id, 'bedId');
   const data = validate(req.body, { roomId: { type: 'int', min: 1 }, label: { max: 20 } });
   const isActive = parseIsActive(req.body || {});
