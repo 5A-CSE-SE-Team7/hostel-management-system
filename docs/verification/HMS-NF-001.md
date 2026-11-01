@@ -1,3 +1,7 @@
+# Final native-bcrypt / bounded-pool benchmark — 2026-11-01
+
+Actual tree `e802e83e332a9622a7ba2d48d8a7b626f1eff5a3`: **FAIL**, 705 requests, zero errors, five authenticated sessions, twenty iterations, production-cost12 passwords. Login p90 **3799.53 ms**; maximum protected-read p90 **318.84 ms**. All endpoints met the unchanged 3000 ms threshold. Raw records identify the exact source and local environment. This supersedes earlier measurements below; it does not establish deployed/browser performance or waive issue27's separate failed stress measurements.
+
 # Sprint 2 remediation verification — 2026-11-01
 
 Measured the actual application tree at `2c82f4989de5122ff17dab23037f624387099af9` using Node v24.19.0 and real MySQL. 705 requests, zero errors, five authenticated sessions and twenty iterations. Login p90 2726.68 ms; all seven protected read endpoint p90 values <= 95.29 ms. Every measured endpoint passed the unchanged 3000 ms threshold. Raw samples and source identity are committed in `docs/evidence/performance-*.json`.
