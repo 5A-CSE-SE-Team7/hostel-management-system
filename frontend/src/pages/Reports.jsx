@@ -45,7 +45,7 @@ function ReportForm() {
       {report && (
         <section className="card"><h2>{TYPES.find((t) => t.value === report.type)?.label} · {report.period.from} to {report.period.to}</h2>
           {report.summary && <pre>{JSON.stringify(report.summary, null, 2)}</pre>}
-          {report.occupancy && <p>Occupied {report.occupancy.occupied} / {report.occupancy.totalBeds} beds. New allocations: {report.allocations.newAllocations}, transfers: {report.allocations.transfers}, check-ins: {report.allocations.checkIns}, check-outs: {report.allocations.checkOuts}.</p>}
+          {report.occupancy && <p>Occupied {report.occupancy.occupied}{report.occupancy.totalBeds == null ? "; historical capacity unavailable" : ` / ${report.occupancy.totalBeds} beds`}. New allocations: {report.allocations.newAllocations}, transfers: {report.allocations.transfers}, check-ins: {report.allocations.checkIns}, check-outs: {report.allocations.checkOuts}.</p>}
           <Table caption="Report data" columns={cols} rows={rows} empty="No rows for this period." />
         </section>
       )}
