@@ -1,3 +1,9 @@
+# Final isolated normal-load replay — 2026-11-01
+
+**PASS**, actual application tree `bf0746a9ed445437f5fb1523fb50183dbfbaa17a`, Node v24.19.0/MySQL8, production-cost12 passwords, five authenticated sessions and twenty iterations: **705/705 requests succeeded**, zero errors. Login p90 **1137.85 ms**; highest protected-read p90 **49.39 ms**. All unchanged 3000 ms thresholds passed. The separate 500-session test was finished before this replay.
+
+Raw samples/source identity are the canonical `performance-local.json`/`performance-baseline.json`. The contended failure and earlier runs below remain recorded; browser/deployed performance is still unverified. No threshold, hash cost or failure criterion was weakened.
+
 # Contended verification run — 2026-11-01
 
 A later representative run overlapped the separate 500-session login stress fixture on the same local resources and failed login p90 (3799.53 ms). Its source identity and all raw samples are retained as `performance-contended-baseline.json` and `performance-contended.json`. This must not be reported as a passing normal-load measurement. An isolated normal-load replay is required before final acceptance of the local benchmark. Earlier successful runs below remain historical, scoped evidence.
