@@ -10,15 +10,15 @@ cleanup() {
   rm -rf "$root"
 }
 trap cleanup EXIT
-# Compose the current genuine team candidate from the reviewed CI snapshot.
+# Export the actual reviewed application commit into an isolated fixture.
 # No temporary STAFF/date patches and no main merge.
 # Resolve and record the actual integration snapshot. To replay, set
 # HMS_CI_REF to the recorded immutable SHA after fetching it.
-ci_ref="$(git rev-parse "${HMS_CI_REF:-refs/remotes/origin/feature/HMS-S04-ci-automation}^{commit}")"
+ci_ref="$(git rev-parse HEAD)"
 git_dir="$(git rev-parse --path-format=absolute --git-common-dir)"
 repository="$(dirname "$git_dir")"
 git archive "$ci_ref" | tar -x -C "$root"
-(cd "$root" && GIT_DIR="$git_dir" python scripts/ci/compose-integration.py "$root")
+# Test the actual committed application tree, never a pinned alternate composition.
 git show HEAD:backend/scripts/loadtest.sh > "$root/backend/scripts/loadtest.sh"
 git show HEAD:backend/scripts/perf/benchmark.mjs > "$root/backend/scripts/perf/benchmark.mjs"
 git show HEAD:backend/scripts/perf/prepare-fixture.cjs > "$root/backend/scripts/perf/prepare-fixture.cjs"
@@ -28,7 +28,7 @@ compose=(env -u DOCKER_HOST -u DOCKER_CONTEXT -u DOCKER_TLS -u DOCKER_TLS_VERIFY
 created=true
 (cd "$root/backend" && npm ci --no-fund && npm audit --audit-level=high && DB_NAME="$perf_db" npm run db:init && DB_NAME="$perf_db" npm run db:seed)
 mkdir -p docs/evidence
-node -e 'const fs=require("fs");fs.writeFileSync("docs/evidence/performance-baseline.json",JSON.stringify({integrationCommit:process.argv[1],workloadCommit:process.argv[2],sources:JSON.parse(fs.readFileSync(process.argv[3])),synthetic:true},null,2)+"\n");' "$ci_ref" "$(git rev-parse HEAD)" "$root/docs/integration/refs.json"
+node -e 'const fs=require("fs");fs.writeFileSync("docs/evidence/performance-baseline.json",JSON.stringify({integrationCommit:process.argv[1],workloadCommit:process.argv[2],source: "actual committed application tree",synthetic:true},null,2)+"\n");' "$ci_ref" "$(git rev-parse HEAD)" "$root/docs/integration/refs.json"
 DB_NAME="$perf_db" HMS_BACKEND_ROOT="$root/backend" node "$root/backend/scripts/perf/prepare-fixture.cjs" docs/evidence/performance-fixture.json
 NODE_ENV=test DB_NAME="$perf_db" node -e 'const fs=require("fs"); const app=require(process.argv[1]+"/src/app").createApp(); const server=require("http").createServer(app); server.listen(0,"127.0.0.1",()=>fs.writeFileSync(process.argv[2],String(server.address().port))); process.on("SIGTERM",()=>server.close(()=>process.exit(0)));' "$root/backend" "$root/port" > "$root/server.log" 2>&1 &
 server_pid=$!
