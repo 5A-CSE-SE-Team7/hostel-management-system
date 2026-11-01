@@ -4,6 +4,7 @@ const { pool, withTransaction } = require('../db');
 const { E } = require('../utils/errors');
 const { validate } = require('../utils/validate');
 const { audit } = require('../utils/audit');
+const { persist, queueDelivery } = require('../utils/notify');
 const { requireAuth, requireRole } = require('../middleware/auth');
 const roles = ['student', 'warden', 'admin', 'maintenance'];
 const statuses = ['submitted', 'assigned', 'in_progress', 'resolved'];
@@ -95,8 +96,9 @@ router.post('/complaints/:id/assign', staff, async (req, res, next) => {
     const complaintId = id(req.params.id, 'id');
     const assignedTo = id(req.body?.assignedTo, 'assignedTo');
     const d = validate(req.body, { priority: { enum: ['low', 'medium', 'high', 'urgent'] } });
+    const notificationIds = [];
     const result = await withTransaction(async conn => {
-      const [[complaint]] = await conn.query('SELECT status, priority FROM complaints WHERE id = ? FOR UPDATE', [complaintId]);
+      const [[complaint]] = await conn.query('SELECT status, priority, student_id FROM complaints WHERE id = ? FOR UPDATE', [complaintId]);
       if (!complaint) throw E.notFound('Complaint');
       if (complaint.status === 'resolved') throw E.conflict('Resolved complaints cannot be reassigned', 'INVALID_TRANSITION');
       const [[assignee]] = await conn.query("SELECT id FROM users WHERE id = ? AND role = 'maintenance' AND is_active = 1 FOR SHARE", [assignedTo]);
@@ -105,8 +107,11 @@ router.post('/complaints/:id/assign', staff, async (req, res, next) => {
       const priority = d.priority || complaint.priority;
       await conn.query('UPDATE complaints SET assigned_to = ?, status = ?, priority = ? WHERE id = ?', [assignedTo, status, priority, complaintId]);
       await audit(req, 'COMPLAINT_ASSIGN', 'complaint', complaintId, { assignedTo, priority }, { conn, strict: true });
+      notificationIds.push(await persist(conn, complaint.student_id, 'complaint_assigned', `Your complaint #${complaintId} has been assigned.`, complaintId));
+      notificationIds.push(await persist(conn, assignedTo, 'complaint_assigned_to_you', `Complaint #${complaintId} has been assigned to you.`, complaintId));
       return { complaintId, status, assignedTo, priority };
     });
+    queueDelivery(notificationIds);
     res.json(result);
   } catch (error) { next(error); }
 });
@@ -114,13 +119,39 @@ router.patch('/complaints/:id/priority', staff, async (req, res, next) => {
   try {
     const complaintId = id(req.params.id, 'id');
     const d = validate(req.body, { priority: { required: true, enum: ['low', 'medium', 'high', 'urgent'] } });
+    const notificationIds = [];
     await withTransaction(async conn => {
-      const [[complaint]] = await conn.query('SELECT id FROM complaints WHERE id = ? FOR UPDATE', [complaintId]);
+      const [[complaint]] = await conn.query('SELECT id, student_id FROM complaints WHERE id = ? FOR UPDATE', [complaintId]);
       if (!complaint) throw E.notFound('Complaint');
       await conn.query('UPDATE complaints SET priority = ? WHERE id = ?', [d.priority, complaintId]);
       await audit(req, 'COMPLAINT_PRIORITY', 'complaint', complaintId, d, { conn, strict: true });
+      notificationIds.push(await persist(conn, complaint.student_id, 'complaint_updated', `Priority for complaint #${complaintId} is now ${d.priority}.`, complaintId));
     });
+    queueDelivery(notificationIds);
     res.json({ complaintId, priority: d.priority });
+  } catch (error) { next(error); }
+});
+// HMS-F-011: strict assigned -> in_progress -> resolved lifecycle.
+router.patch('/complaints/:id/status', requireRole('maintenance', 'warden', 'admin'), async (req, res, next) => {
+  try {
+    const complaintId = id(req.params.id, 'id');
+    const d = validate(req.body, { status: { required: true, enum: ['in_progress', 'resolved'] }, resolutionDetails: { max: 2000 } });
+    const notificationIds = [];
+    const result = await withTransaction(async conn => {
+      const [[complaint]] = await conn.query('SELECT status, assigned_to, student_id FROM complaints WHERE id = ? FOR UPDATE', [complaintId]);
+      if (!complaint) throw E.notFound('Complaint');
+      if (req.session.user.role === 'maintenance' && complaint.assigned_to !== req.session.user.id) throw E.forbidden('This complaint is not assigned to you');
+      const nextStatus = { assigned: 'in_progress', in_progress: 'resolved' }[complaint.status];
+      if (d.status !== nextStatus) throw E.conflict(`Cannot change status from ${complaint.status} to ${d.status}`, 'INVALID_TRANSITION');
+      if (d.status === 'resolved' && !d.resolutionDetails) throw E.validation({ resolutionDetails: 'Resolution details are required' });
+      await conn.query(`UPDATE complaints SET status = ?, resolution_details = ?, resolved_at = ${d.status === 'resolved' ? 'NOW()' : 'NULL'} WHERE id = ?`, [d.status, d.status === 'resolved' ? d.resolutionDetails : null, complaintId]);
+      await audit(req, 'COMPLAINT_STATUS', 'complaint', complaintId, { from: complaint.status, to: d.status }, { conn, strict: true });
+      const [[row]] = await conn.query('SELECT status, updated_at AS updatedAt FROM complaints WHERE id = ?', [complaintId]);
+      notificationIds.push(await persist(conn, complaint.student_id, d.status === 'resolved' ? 'complaint_resolved' : 'complaint_updated', `Your complaint #${complaintId} is now ${d.status.replaceAll('_', ' ')}.`, complaintId));
+      return { complaintId, ...row };
+    });
+    queueDelivery(notificationIds);
+    res.json(result);
   } catch (error) { next(error); }
 });
 module.exports = router;
