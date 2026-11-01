@@ -7,6 +7,8 @@ test('TC-Admin-04 period counts include checkouts from older allocations and occ
  let r=await w.get('/api/reports/occupancy?from=2026-02-01&to=2026-02-28');assert.equal(r.status,200);
  assert.equal(r.body.allocations.checkOuts,1);assert.equal(r.body.allocations.newAllocations,0);assert.equal(r.body.occupancy.occupied,0);
  r=await w.get('/api/reports/occupancy?from=2026-01-01&to=2026-01-31');assert.equal(r.body.occupancy.occupied,1);assert.equal(r.body.allocations.checkIns,1);
+ await h.pool.query('UPDATE beds SET is_active=0 WHERE id=?',[bedIds[0]]);
+ r=await w.get('/api/reports/occupancy?from=2026-01-01&to=2026-01-31');assert.equal(r.body.occupancy.occupied,1);assert.equal(r.body.occupancy.currentTotalBeds,0);assert.equal(r.body.occupancy.totalBeds,null);assert.equal(r.body.occupancy.available,null);
  const maint=await h.login(await h.mkUser('maintenance'));const student=await h.login(s);
  for(const type of ['occupancy','allocations','complaints','fee-dues','visitors','leave']){
   assert.equal((await w.get(`/api/reports/${type}?from=2026-01-01&to=2026-12-31`)).status,200);
