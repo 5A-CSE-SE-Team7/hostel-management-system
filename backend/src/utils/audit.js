@@ -5,9 +5,6 @@ const { pool } = require('../db');
 // PR53's event-object call is an adapter into the same transaction/chain.
 
 const GENESIS = '0'.repeat(64);
-// Queue standalone writes before acquiring a pool connection. The database
-// head lock remains authoritative across processes and caller-owned transactions.
-let standaloneTail = Promise.resolve();
 
 function computeHash(previous, row) {
   const payload = JSON.stringify([
@@ -35,16 +32,9 @@ async function audit(req, action, entity, entityId, details, options = {}) {
     details = event.details;
     req = null;
   }
+  const conn = options.conn || await pool.getConnection();
   const ownConnection = !options.conn;
-  let releaseStandalone;
-  if (ownConnection) {
-    const previous = standaloneTail;
-    standaloneTail = new Promise(resolve => { releaseStandalone = resolve; });
-    await previous;
-  }
-  let conn;
   try {
-    conn = options.conn || await pool.getConnection();
     if (ownConnection) await conn.beginTransaction();
     const [[head]] = await conn.query('SELECT last_hash FROM audit_head WHERE id = 1 FOR UPDATE');
     if (!head) throw new Error('Audit chain head is missing');
@@ -68,16 +58,13 @@ async function audit(req, action, entity, entityId, details, options = {}) {
     if (ownConnection) await conn.commit();
     return { id: insert.insertId, hash, prev_hash: head.last_hash, ...row };
   } catch (err) {
-    if (ownConnection && conn) {
+    if (ownConnection) {
       try { await conn.rollback(); } catch (_) { /* ignore rollback errors */ }
     }
     console.error('[audit] failed to write audit event', action, err.message);
     if (options.strict) throw err;
   } finally {
-    if (ownConnection) {
-      if (conn) conn.release();
-      releaseStandalone();
-    }
+    if (ownConnection) conn.release();
   }
 }
 
