@@ -58,3 +58,9 @@ button:disabled { opacity: .65; cursor: wait; }
 
 @media (max-width: 700px) { .user-row { grid-template-columns: 1fr 1fr; } }
 @media (max-width: 480px) { .registration { margin: 2rem auto; } .registration .card { padding: 1rem; } }
+
+/* Responsive account controls and accessible focus across all modules. */
+.user-row { grid-template-columns: minmax(0,1.2fr) minmax(0,1.5fr) minmax(0,1fr) auto; }
+@media(max-width:700px) { .user-row { grid-template-columns: minmax(0,1fr) minmax(0,1fr); } }
+@media(max-width:480px) { .user-row { grid-template-columns: minmax(0,1fr); } .account-links { flex-wrap:wrap; } }
+@media(prefers-reduced-motion:reduce) { *, *::before, *::after { scroll-behavior:auto!important; animation-duration:.01ms!important; transition-duration:.01ms!important; } }
