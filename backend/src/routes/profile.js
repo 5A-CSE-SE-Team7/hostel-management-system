@@ -108,6 +108,7 @@ router.get('/students', staffOnly, async (req, res, next) => {
         ORDER BY u.name, u.id LIMIT 100`,
       [search, like, like, like],
     );
+    await audit(req, 'STUDENT_RECORD_LIST', 'user', null, { count: rows.length }, { strict: true });
     return res.json(rows);
   } catch (err) {
     return next(err);

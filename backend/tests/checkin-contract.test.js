@@ -1,0 +1,24 @@
+const test = require('node:test');
+const assert = require('node:assert/strict');
+const h = require('./helpers');
+test.after(h.closeAll);
+test('TC-Room-04 real sessions serialize check-in/out and preserve occupancy history', async () => {
+  await h.resetDb(); const warden = await h.login(await h.mkUser('warden'));
+  const user = await h.mkUser('student'); const student = await h.login(user);
+  const { bedIds } = await h.mkInventory(warden, 1, 'lifecycle');
+  const a = await warden.post('/api/allocations').send({ studentId: user.id, bedId: bedIds[0] });
+  const path = `/api/allocations/${a.body.id}`;
+  assert.equal((await warden.post(path+'/check-out').send({})).status,409);
+  assert.equal((await student.post(path+'/check-in').send({})).status,403);
+  assert.equal((await warden.post(path+'/check-in').send({ checkInDate:'2026-02-30' })).status,400);
+  const attempts = await Promise.all([1,2].map(() => warden.post(path+'/check-in').send({})));
+  assert.deepEqual(attempts.map(r=>r.status).sort(),[200,409]);
+  assert.equal((await warden.get('/api/occupancy')).body.occupiedBeds,1);
+  assert.equal((await warden.post(path+'/check-out').send({})).status,200);
+  assert.equal((await warden.get('/api/occupancy')).body.occupiedBeds,0);
+  const room = (await student.get('/api/me/room')).body;
+  assert.equal(room.allocation,null); assert.equal(room.history[0].status,'checked_out');
+  assert.ok(room.history[0].checkInDate); assert.ok(room.history[0].checkOutDate);
+  assert.equal((await warden.get('/api/allocations/history')).body.length,1);
+  assert.equal((await require('../src/utils/audit').verifyChain()).valid,true);
+});

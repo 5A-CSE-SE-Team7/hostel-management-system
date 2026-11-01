@@ -43,7 +43,7 @@ export async function benchmark({ base, email, password, concurrency = 5, iterat
     const rows = samples.filter(row => row.name === name), p90Ms = percentile(rows.map(row => row.durationMs));
     const expected = name === 'login' ? concurrency : concurrency*iterations;
     const errors = rows.filter(row => !row.ok).length;
-    return [name, { expected, count: rows.length, errors, p90Ms, maxMs: rows.length ? Math.max(...rows.map(row => row.durationMs)) : null, status: rows.length === expected && errors === 0 && p90Ms <= thresholdMs ? 'PASS' : rows.length !== expected ? 'BLOCKED' : 'FAIL' }];
+    return [name, { expected, count: rows.length, errors, p90Ms, maxMs: rows.length ? rows.reduce((max,row)=>Math.max(max,row.durationMs),0) : null, status: rows.length === expected && errors === 0 && p90Ms <= thresholdMs ? 'PASS' : rows.length !== expected ? 'BLOCKED' : 'FAIL' }];
   }));
   return { startedAt, endedAt: new Date().toISOString(), environment: { node: process.version, cpus: cpus().length, memoryBytes: totalmem() }, concurrency, iterations, thresholdMs, timeoutMs, includesLogin: true, warmupExcluded: 0, browserRenderMeasured: false, endpoints, status: Object.values(endpoints).every(row => row.status === 'PASS') ? 'PASS' : 'FAIL', samples };
 }
