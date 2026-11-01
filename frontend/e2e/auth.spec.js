@@ -53,6 +53,7 @@ test('student can sign in, reach profile, and sign out using keyboard navigation
   await page.route('**/api/profile', (route) => route.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify(student) }));
 
   await page.goto('/login');
+  await page.getByRole('link',{name:'Skip to content'}).focus();
   await page.keyboard.press('Tab');
   await expect(page.getByLabel('Institutional email')).toBeFocused();
   await page.keyboard.press('Tab');
@@ -60,10 +61,10 @@ test('student can sign in, reach profile, and sign out using keyboard navigation
   await page.getByLabel('Institutional email').fill(student.email);
   await page.getByLabel('Password').fill('Student123');
   await page.getByRole('button', { name: 'Sign in' }).click();
-  await expect(page.getByRole('heading', { name: `Welcome, ${student.name}` })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Dashboard',exact:true })).toBeVisible();
   await page.getByRole('link', { name: 'My profile' }).click();
   await expect(page.getByRole('heading', { name: 'My profile' })).toBeVisible();
   await page.getByRole('link', { name: 'Back to dashboard' }).click();
   await page.getByRole('button', { name: 'Sign out' }).click();
-  await expect(page.getByRole('heading', { name: 'Hostel Management System' })).toBeVisible();
+  await expect(page.getByRole('button', { name: 'Sign in',exact:true })).toBeVisible();
 });

@@ -136,7 +136,7 @@ export default function Allocations() {
       <section aria-labelledby="active-allocation-heading">
         <h2 id="active-allocation-heading">Current allocations</h2>
         {loading ? <p role="status">Loading current allocations…</p> : activeAllocations.length ? (
-          <div style={{ overflowX: 'auto' }}>
+          <div tabIndex={0} style={{ overflowX: 'auto' }}>
             <table>
               <thead>
                 <tr>
@@ -221,7 +221,7 @@ export default function Allocations() {
       <section aria-labelledby="allocation-history-heading">
         <h2 id="allocation-history-heading">Allocation history</h2>
         {loading ? <p role="status">Loading allocation history…</p> : allocationHistory.length ? (
-          <div style={{ overflowX: 'auto' }}>
+          <div tabIndex={0} style={{ overflowX: 'auto' }}>
             <table>
               <thead>
                 <tr>
@@ -258,7 +258,7 @@ export default function Allocations() {
               {occupancy.occupiedBeds} occupied of {occupancy.totalBeds} active beds
               {' '}({occupancy.occupancyPercent}%). {occupancy.availableBeds} available.
             </p>
-            <div style={{ overflowX: 'auto' }}>
+            <div tabIndex={0} style={{ overflowX: 'auto' }}>
               <table>
                 <thead>
                   <tr>

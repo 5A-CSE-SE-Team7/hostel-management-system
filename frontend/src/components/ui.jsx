@@ -9,5 +9,5 @@ export function Field({ label, error, ...props }) {
 export function Badge({ children }) { return <span className="badge">{children}</span>; }
 export function DataTable({ caption, columns, rows, rowKey = 'id', empty = 'No records yet.' }) {
   if (!rows.length) return <Alert>{empty}</Alert>;
-  return <div className="table-scroll"><table><caption>{caption}</caption><thead><tr>{columns.map(c => <th scope="col" key={c.key}>{c.label}</th>)}</tr></thead><tbody>{rows.map(row => <tr key={row[rowKey]}>{columns.map(c => <td key={c.key}>{c.render ? c.render(row) : row[c.key]}</td>)}</tr>)}</tbody></table></div>;
+  return <div className="table-scroll" role="region" aria-label={caption} tabIndex={0}><table><caption>{caption}</caption><thead><tr>{columns.map(c => <th scope="col" key={c.key}>{c.label}</th>)}</tr></thead><tbody>{rows.map(row => <tr key={row[rowKey]}>{columns.map(c => <td key={c.key}>{c.render ? c.render(row) : row[c.key]}</td>)}</tr>)}</tbody></table></div>;
 }
