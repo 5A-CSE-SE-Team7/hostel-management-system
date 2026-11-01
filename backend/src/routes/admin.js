@@ -113,19 +113,31 @@ router.patch('/users/:id', adminOnly, async (req, res, next) => {
 // Restore the existing shared audit API contract with the genuine hash chain.
 router.get('/audit', adminOnly, async (req, res, next) => {
   try {
+    const paginated = Object.hasOwn(req.query, 'page') || Object.hasOwn(req.query, 'pageSize');
     const filters = validate(req.query, {
       action: { max: 80 }, userId: { type: 'int', min: 1 },
       limit: { type: 'int', min: 1, max: 500 },
+      page: { type: 'int', min: 1 }, pageSize: { type: 'int', min: 1, max: 100 },
     });
     const where = []; const values = [];
     if (filters.action) { where.push('action = ?'); values.push(filters.action); }
     if (filters.userId) { where.push('user_id = ?'); values.push(filters.userId); }
-    values.push(filters.limit ?? 100);
+    const condition = where.length ? `WHERE ${where.join(' AND ')}` : '';
+    if (paginated) {
+      const page = filters.page ?? 1; const pageSize = filters.pageSize ?? 50;
+      const offset = (page - 1) * pageSize;
+      if (!Number.isSafeInteger(page) || !Number.isSafeInteger(offset)) throw E.validation({ page: 'Page is too large' });
+      const [[{ total }]] = await pool.query(`SELECT COUNT(*) AS total FROM audit_logs ${condition}`, values);
+      const [items] = await pool.query(
+        `SELECT id, user_id, role, action, entity, entity_id, details, ip, created_at, prev_hash, hash
+           FROM audit_logs ${condition} ORDER BY id DESC LIMIT ? OFFSET ?`, [...values, pageSize, offset],
+      );
+      return res.json({ items, page, pageSize, total: Number(total) });
+    }
     const [rows] = await pool.query(
       `SELECT id, user_id AS userId, role, action, entity, entity_id AS entityId,
               details, ip, created_at AS createdAt, hash
-         FROM audit_logs ${where.length ? `WHERE ${where.join(' AND ')}` : ''}
-        ORDER BY id DESC LIMIT ?`, values,
+         FROM audit_logs ${condition} ORDER BY id DESC LIMIT ?`, [...values, filters.limit ?? 100],
     );
     return res.json(rows);
   } catch (err) { return next(err); }
