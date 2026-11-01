@@ -12,7 +12,7 @@ const today = new Date().toISOString().slice(0, 10);
 
 export default function Reports() {
   const { user } = useAuth();
-  if (!['warden','admin'].includes(user?.role)) return <><h2>Access denied</h2><Alert>You do not have permission to view reports.</Alert></>;
+  if (!['warden','admin'].includes(user?.role)) return <><h1>Access denied</h1><Alert>You do not have permission to view reports.</Alert></>;
   return <ReportForm />;
 }
 function ReportForm() {
@@ -32,7 +32,7 @@ function ReportForm() {
 
   return (
     <>
-      <h2>Reports</h2>
+      <h1>Reports</h1>
       <form className="card" onSubmit={generate} noValidate>
         <div className="form-grid">
           <Select form={form} setForm={setForm} name="type" label="Report" options={TYPES} required />
@@ -43,7 +43,7 @@ function ReportForm() {
         <div className="row"><button disabled={st.busy}>Generate</button><button type="button" className="secondary" onClick={download} disabled={!report || csvState.busy}>Download CSV</button></div>
       </form>
       {report && (
-        <section className="card"><h3>{TYPES.find((t) => t.value === report.type)?.label} · {report.period.from} to {report.period.to}</h3>
+        <section className="card"><h2>{TYPES.find((t) => t.value === report.type)?.label} · {report.period.from} to {report.period.to}</h2>
           {report.summary && <pre>{JSON.stringify(report.summary, null, 2)}</pre>}
           {report.occupancy && <p>Occupied {report.occupancy.occupied} / {report.occupancy.totalBeds} beds. New allocations: {report.allocations.newAllocations}, transfers: {report.allocations.transfers}, check-ins: {report.allocations.checkIns}, check-outs: {report.allocations.checkOuts}.</p>}
           <Table caption="Report data" columns={cols} rows={rows} empty="No rows for this period." />
