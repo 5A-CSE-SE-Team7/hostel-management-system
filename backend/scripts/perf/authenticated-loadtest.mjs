@@ -123,6 +123,7 @@ async function main() {
   const requestErrors = requestSamples.length - requestSuccesses;
   const result = {
     issue: 'HMS-NF-002',
+    applicationCommit: process.env.HMS_APPLICATION_COMMIT || null,
     startedAt,
     workloadStartedAt,
     endedAt: new Date().toISOString(),
