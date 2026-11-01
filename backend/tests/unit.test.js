@@ -2,6 +2,8 @@
 process.env.NODE_ENV = 'test';
 const test = require('node:test');
 const assert = require('node:assert/strict');
+const path = require('node:path');
+const { spawnSync } = require('node:child_process');
 const { validate } = require('../src/utils/validate');
 const { computeHash, GENESIS } = require('../src/utils/audit');
 const { requireRole } = require('../src/middleware/auth');
@@ -27,4 +29,14 @@ test('requireRole blocks other roles and unauthenticated callers (HMS-SR-003)', 
   assert.equal(run(undefined).status, 401);
   assert.equal(run({ user: { role: 'student' } }).status, 403);
   assert.equal(run({ user: { role: 'admin' } }), undefined);
+});
+
+test('production password hashing uses bcrypt cost 12 (HMS-SR-002)', () => {
+  const script = "process.env.NODE_ENV='production'; process.env.SESSION_SECRET='unit-test-secret'; process.stdout.write(String(require('./src/config').bcryptRounds));";
+  const result = spawnSync(process.execPath, ['-e', script], {
+    cwd: path.resolve(__dirname, '..'),
+    encoding: 'utf8',
+  });
+  assert.equal(result.status, 0, result.stderr);
+  assert.equal(result.stdout, '12');
 });

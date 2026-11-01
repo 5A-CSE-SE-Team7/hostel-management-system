@@ -37,3 +37,12 @@ Each assigned member must open their own pull request and a repository owner mus
 ## Assignment/branch note
 
 Issue #22 is assigned to Aayaan but its `Fees.jsx` implementation is on the M4 branch under the supplied branch plan. Resolve that cross-branch ownership before opening either PR; do not close #22 from M4 unless Aayaan is the PR author.
+
+
+## Existing M4 PR sequence (no new PR needed)
+
+- Existing #52 (`feature/HMS-M4-sprint1-fees-visitors-leave`) contains Sprint 1 API work for #21/#23/#24 plus foundation/demo documentation. It does not add reports or a second fee frontend.
+- Existing #51 (`feature/HMS-M4-fees-visitors-leave`) normally inherits #52 and adds reports/CSV and the full M4 screens. Review/integrate #52 first; after that accepted commit is on main, #51 becomes the additive difference. Preserve both PRs' original author and main base; do not merge the full report feature backwards into Sprint 1.
+- #48 remains the canonical fee frontend for Aayaan's #22. #51 retains Visitors/Leave/Reports with compatible shared-kit/API adapters; the obsolete competing Fees.jsx is not copied into the application.
+- Common Sprint 1 assertions are preserved once; report assertions remain an additional suite. The integrated build must use real M1/M2 prerequisites and the shared #40/#42 frontend plus the existing complaint stack. Missing modules are not silently ignored or replaced with stubs.
+- Demo storyboards do not satisfy the actual video deliverable. All existing issues, owners, PR references and review requirements remain unchanged.
