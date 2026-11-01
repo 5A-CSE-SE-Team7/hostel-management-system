@@ -1,5 +1,14 @@
 import { writeFileSync } from 'node:fs';
 import { cpus, totalmem } from 'node:os';
+import { pathToFileURL } from 'node:url';
+export const workload = [
+ {path:'/api/auth/me', valid:d=>Number(d?.id)>0&&typeof d?.role==='string'},
+ {path:'/api/profile', valid:d=>Number(d?.id)>0},
+ {path:'/api/complaints?limit=10', valid:Array.isArray},
+ {path:'/api/occupancy', valid:d=>Number.isInteger(d?.totalBeds)&&Number.isInteger(d?.occupiedBeds)},
+ {path:'/api/fees/dues', valid:Array.isArray},
+];
+export function maximum(values){return values.reduce((a,b)=>Math.max(a,b),0);}
 
 function integerSetting(name, fallback, minimum, maximum) {
   const value = Number(process.env[name] ?? fallback);
@@ -52,12 +61,12 @@ async function login(base, email, password, timeoutMs, delayMs) {
   return { status, durationMs, ok, cookie };
 }
 
-async function authenticatedRequest(base, cookie, timeoutMs) {
+async function authenticatedRequest(base, cookie, timeoutMs, endpoint) {
   const started = performance.now();
   let status = null;
   let data = null;
   try {
-    const response = await fetch(new URL('/api/auth/me', base), {
+    const response = await fetch(new URL(endpoint.path, base), {
       headers: { Cookie: cookie },
       signal: AbortSignal.timeout(timeoutMs),
       redirect: 'error',
@@ -66,8 +75,8 @@ async function authenticatedRequest(base, cookie, timeoutMs) {
     data = await responseJson(response);
   } catch { /* Save a failed sample without retaining response data or secrets. */ }
   const durationMs = Math.round((performance.now() - started) * 100) / 100;
-  const ok = status === 200 && Number(data?.id) > 0 && typeof data?.role === 'string';
-  return { status, durationMs, ok };
+  const ok = status === 200 && endpoint.valid(data);
+  return { endpoint: endpoint.path, status, durationMs, ok };
 }
 
 async function main() {
@@ -100,8 +109,9 @@ async function main() {
   const deadline = performance.now() + durationSeconds * 1000;
 
   await Promise.all(sessions.map(async (cookie) => {
+    let iteration=0;
     do {
-      requestSamples.push(await authenticatedRequest(base, cookie, timeoutMs));
+      requestSamples.push(await authenticatedRequest(base, cookie, timeoutMs, workload[iteration++ % workload.length]));
     } while (performance.now() < deadline);
   }));
 
@@ -117,7 +127,9 @@ async function main() {
     workloadStartedAt,
     endedAt: new Date().toISOString(),
     environment: { node: process.version, cpus: cpus().length, memoryBytes: totalmem() },
-    target: `${base.origin}/api/auth/me`,
+    target: base.origin,
+    workload: workload.map(e=>e.path),
+    accountModel: 'Independent authenticated sessions sharing one synthetic warden/admin account',
     virtualUsersRequested: virtualUsers,
     authenticatedVirtualUsers: uniqueSessions,
     durationSeconds,
@@ -129,7 +141,7 @@ async function main() {
       errors: loginErrors,
       successRatePercent: successRate(loginSuccesses, loginSamples.length),
       p90Ms: percentile(loginDurations),
-      maxMs: loginDurations.length ? Math.max(...loginDurations) : null,
+      maxMs: loginDurations.length ? maximum(loginDurations) : null,
     },
     authenticatedRequests: {
       total: requestSamples.length,
@@ -137,7 +149,7 @@ async function main() {
       errors: requestErrors,
       successRatePercent: successRate(requestSuccesses, requestSamples.length),
       p90Ms: percentile(requestDurations),
-      maxMs: requestDurations.length ? Math.max(...requestDurations) : null,
+      maxMs: requestDurations.length ? maximum(requestDurations) : null,
     },
     status: loginSuccesses === virtualUsers && uniqueSessions === virtualUsers
       && requestSamples.length > 0 && requestErrors === 0 ? 'PASS' : 'FAIL',
@@ -161,7 +173,7 @@ async function main() {
   if (result.status !== 'PASS') process.exitCode = 1;
 }
 
-main().catch((error) => {
+if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) main().catch((error) => {
   console.error(error.message);
   process.exitCode = 1;
 });
