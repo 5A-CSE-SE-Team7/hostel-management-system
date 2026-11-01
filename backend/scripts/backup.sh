@@ -19,7 +19,7 @@ fi
 
 umask 077
 mkdir -p -- "$BACKUP_DIR"
-BACKUP_FILE="$BACKUP_DIR/${DB_NAME}_$(date +%Y%m%d_%H%M%S).sql.gz"
+BACKUP_FILE="$BACKUP_DIR/${DB_NAME}_$(date +%Y%m%d_%H%M%S_%N).sql.gz"
 TEMP_FILE="$(mktemp "$BACKUP_DIR/.${DB_NAME}_backup.XXXXXX")"
 cleanup() { [[ -z "${TEMP_FILE:-}" ]] || rm -f -- "$TEMP_FILE"; }
 trap cleanup EXIT
@@ -27,7 +27,7 @@ trap cleanup EXIT
 # Keep incomplete dumps hidden and publish the final backup atomically only on success.
 MYSQL_PWD="$DB_PASSWORD" mysqldump \
   --host="$DB_HOST" --port="$DB_PORT" --user="$DB_USER" \
-  --single-transaction --routines --events "$DB_NAME" | gzip -c > "$TEMP_FILE"
+  --single-transaction --no-tablespaces --set-gtid-purged=OFF --routines --events "$DB_NAME" | gzip -c > "$TEMP_FILE"
 mv -- "$TEMP_FILE" "$BACKUP_FILE"
 TEMP_FILE=''
 
