@@ -64,3 +64,7 @@ button:disabled { opacity: .65; cursor: wait; }
 @media(max-width:700px) { .user-row { grid-template-columns: minmax(0,1fr) minmax(0,1fr); } }
 @media(max-width:480px) { .user-row { grid-template-columns: minmax(0,1fr); } .account-links { flex-wrap:wrap; } }
 @media(prefers-reduced-motion:reduce) { *, *::before, *::after { scroll-behavior:auto!important; animation-duration:.01ms!important; transition-duration:.01ms!important; } }
+/* Grid items must shrink around long SRNs and institutional email addresses. */
+.registration .card, .student-results, .student-results > li { min-width: 0; }
+.student-result { min-width: 0; overflow-wrap: anywhere; white-space: normal; }
+.registration input, .registration select { min-width: 0; }
