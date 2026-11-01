@@ -1,3 +1,9 @@
+# Sprint 2 remediation verification — 2026-11-01
+
+Measured the actual application tree at `2c82f4989de5122ff17dab23037f624387099af9` using Node v24.19.0 and real MySQL. 705 requests, zero errors, five authenticated sessions and twenty iterations. Login p90 2726.68 ms; all seven protected read endpoint p90 values <= 95.29 ms. Every measured endpoint passed the unchanged 3000 ms threshold. Raw samples and source identity are committed in `docs/evidence/performance-*.json`.
+
+The runner now exports HEAD rather than historical pinned module compositions. This is local API evidence with synthetic data and production-strength password hashes. Browser/deployed performance and production sizing remain unverified. Earlier measurements below are historical.
+
 # Actual updated workload measurement
 
 Executed locally against the real Node22/MySQL application composed from integration snapshot `2fe8f69cf358205c12a483041cba66173c14cd78` (full owner refs in performance-baseline.json), using 5 authenticated admin sessions × 20 iterations and bcrypt cost12 synthetic accounts. All **705 recorded requests passed**, including 100 requests each to the real allocation occupancy and available-bed APIs. No nonexistent GET /api/allocations was called. All measured p90 values were below 3000ms. This is local representative API evidence, not deployed/browser/500-user verification.
