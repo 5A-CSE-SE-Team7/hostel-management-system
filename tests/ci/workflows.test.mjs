@@ -97,3 +97,9 @@ test('combined fixture preserves the complete real frontend and fee contracts', 
   const refs = JSON.parse(readFileSync(new URL('../../docs/integration/refs.json', import.meta.url)));
   assert.match(refs.frontendIntegration, /^[a-f0-9]{40}$/);
 });
+
+test('combined runner tests actual PR sources and separates the main baseline', () => {
+ const script=readFileSync(new URL('../../scripts/ci/combined-integration.sh',import.meta.url),'utf8');
+ assert.match(script,/git checkout-index --all/); assert.match(script,/git archive "\$baseline"/);
+ assert.doesNotMatch(script,/python scripts\/ci\/compose-integration/);
+});
