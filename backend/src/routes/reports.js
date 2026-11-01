@@ -18,16 +18,18 @@ const REPORTS = {
          COUNT(CASE WHEN bd.is_active = 1 AND r.is_active = 1 AND b.is_active = 1 THEN 1 END) AS totalBeds,
          COUNT(a.id) AS occupied
        FROM blocks b LEFT JOIN rooms r ON r.block_id = b.id LEFT JOIN beds bd ON bd.room_id = r.id
-       LEFT JOIN allocations a ON a.bed_id = bd.id AND a.released_at IS NULL GROUP BY b.id, b.name ORDER BY b.name`);
+       LEFT JOIN allocations a ON a.bed_id = bd.id AND a.allocated_at <= ?
+         AND (a.released_at IS NULL OR a.released_at > ?)
+       GROUP BY b.id, b.name ORDER BY b.name`, [hi(to), hi(to)]);
     const [[alloc]] = await pool.query(
-      `SELECT COUNT(*) AS newAllocations,
-              SUM(status = 'transferred') AS transfers,
+      `SELECT SUM(allocated_at BETWEEN ? AND ?) AS newAllocations,
+              SUM(status = 'transferred' AND released_at BETWEEN ? AND ?) AS transfers,
               SUM(check_in_date BETWEEN ? AND ?) AS checkIns,
               SUM(check_out_date BETWEEN ? AND ?) AS checkOuts
-       FROM allocations WHERE allocated_at BETWEEN ? AND ?`, [from, to, from, to, lo(from), hi(to)]);
+       FROM allocations`, [lo(from), hi(to), lo(from), hi(to), from, to, from, to]);
     const totalBeds = blocks.reduce((s, b) => s + b.totalBeds, 0); const occupied = blocks.reduce((s, b) => s + b.occupied, 0);
-    return { occupancy: { totalBeds, occupied, available: totalBeds - occupied, byBlock: blocks },
-      allocations: { newAllocations: alloc.newAllocations, transfers: Number(alloc.transfers || 0), checkIns: Number(alloc.checkIns || 0), checkOuts: Number(alloc.checkOuts || 0) } };
+    return { occupancy: { asOf: to, inventoryBasis: 'Current active inventory; allocation occupancy at the selected end date', totalBeds, occupied, available: totalBeds - occupied, byBlock: blocks },
+      allocations: { newAllocations: Number(alloc.newAllocations || 0), transfers: Number(alloc.transfers || 0), checkIns: Number(alloc.checkIns || 0), checkOuts: Number(alloc.checkOuts || 0) } };
   },
   async allocations({ from, to }) {
     const [rows] = await pool.query(
@@ -88,7 +90,7 @@ router.get('/:type', async (req, res, next) => {
     const period = { from: q.from || `${today.slice(0, 8)}01`, to: q.to || today };
     if (period.from > period.to) throw E.validation({ from: 'Start date must not be after end date' }, 'Invalid period');
     const data = await gen(period);
-    await audit(req, 'REPORT_GENERATE', 'report', req.params.type, period);
+    await audit(req, 'REPORT_GENERATE', 'report', req.params.type, period, { strict: true });
     if (q.format === 'csv') {
       const rows = data.rows || data.occupancy?.byBlock || [];
       const cols = rows.length ? Object.keys(rows[0]) : [];
