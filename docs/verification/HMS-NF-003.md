@@ -15,3 +15,7 @@ The genuine committed integrated application was probed during two isolated perf
 The three monitor regression tests pass on Node22 and in the complete real-module suite. Compatible dependency audits are clean. The existing independent monitor topology, systemd timer/service, maintenance policy and retention documentation remain unchanged. The timer was not installed or represented as running.
 
 Status: MONITOR IMPLEMENTED / TARGET NOT YET VERIFIED. PASS: code calculations and actual probe success/failure handling. BLOCKED: 99.5% monthly acceptance needs an actual monitoring host/domain, scheduled service deployment and adequate real observation coverage. No missing data was treated as uptime.
+
+## Sprint 2 remediation, 2026-11-01
+
+A real API instance using synthetic MySQL records returned HTTP200/status-ok; after that exact listener was closed, the same observer returned `ok:false`/no HTTP response. Both actual observations are in `docs/evidence/remediation-probe-lifecycle.ndjson`. These deliberately controlled lifecycle checks verify monitor behavior and are not production downtime or monthly uptime evidence. Monitoring calculations remain covered by the availability suite; monthly acceptance remains unverified.
