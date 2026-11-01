@@ -15,7 +15,7 @@ test('TC-Auth/Room/Comp live registration, complaint, bed allocation and mainten
 test('TC-UX-01 real role pages pass automated WCAG scans and responsive overflow checks',async({page})=>{
  test.setTimeout(300000);
  page.on('pageerror',e=>console.log('PAGE ERROR',e.message));
- const pages={student:['/','/profile','/my-room','/complaints','/fees','/visitors','/leave','/notifications'],warden:['/inventory','/allocations','/students','/reports'],maintenance:['/','/complaints'],admin:['/users','/audit']};
+ const pages={student:['/','/profile','/my-room','/complaints','/fees','/visitors','/leave','/notifications'],warden:['/inventory','/allocations','/students','/reports','/fees','/visitors','/leave','/complaints','/notifications'],maintenance:['/','/complaints'],admin:['/users','/audit']};
  for(const[role,paths]of Object.entries(pages)){
   await signIn(page,role==='student'?'student1@hms.test':role==='maintenance'?'maint1@hms.test':`${role}@hms.test`);
   for(const width of [375,768,1280])for(const path of paths){await page.setViewportSize({width,height:900});await page.goto(path);await expect(page.getByRole('heading',{level:1}).first(),`${role} ${path}`).toBeVisible({timeout:15000});await expect(page.getByText(/Loading|Checking your session/)).toHaveCount(0);
