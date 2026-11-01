@@ -5,7 +5,7 @@ import { Alert, Badge, Input, Select, Table, fmtDate, useAction, useLoad, toUtc 
 
 export default function Leave() {
   const { user } = useAuth();
-  if (!['student','warden','admin'].includes(user?.role)) return <><h2>Access denied</h2><Alert>You do not have permission to view these records.</Alert></>;
+  if (!['student','warden','admin'].includes(user?.role)) return <><h1>Access denied</h1><Alert>You do not have permission to view these records.</Alert></>;
   return <LeaveRecords user={user} />;
 }
 function LeaveRecords({ user }) {
@@ -28,9 +28,9 @@ function LeaveRecords({ user }) {
 
   return (
     <>
-      <h2>Leave & outpass</h2>
+      <h1>Leave & outpass</h1>
       {!isStaff && (
-        <form className="card" onSubmit={submit} noValidate><h3>New request</h3><Alert>{st.error}</Alert><Alert kind="success">{st.ok}</Alert>
+        <form className="card" onSubmit={submit} noValidate><h2>New request</h2><Alert>{st.error}</Alert><Alert kind="success">{st.ok}</Alert>
           <div className="form-grid">
             <Select {...p} name="type" label="Type" required options={['outpass', 'leave']} />
             <Input {...p} name="fromAt" label="From" type="datetime-local" required />
