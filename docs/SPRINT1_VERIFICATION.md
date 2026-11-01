@@ -28,7 +28,12 @@ GitHub main's checks were green at inspection. Protected main requires
 `Backend unit + integration tests` and `Frontend build`. Full bypass/admin settings
 are not available through this connection. PR #44 still has no formal review.
 Project automation failed because its token is unavailable; administrator steps
-are in CI_AUTOMATION.md. No code-side workflow defect was found by this audit.
+are in CI_AUTOMATION.md. The combined fixture initially rejected the new Sprint 1 inbox as Sprint 2 code
+and overwrote current app files with archived snapshots. Its scope guard now permits
+the Sprint 1 inbox and preserves current completion files. Both combined modes
+passed locally: broader historical fixture 94 backend / 67 frontend / 9 live UI
+tests; Sprint 1 fixture 76 backend / 53 frontend / 3 live UI tests. These fixture
+results supplement, rather than replace, direct completion-branch tests.
 
 See SPRINT1_RTM.md for all 19 Sprint 1 issue mappings. No SRS/SAD/STP source was
 rewritten. No Sprint 2 PR was merged. Owner review/authorized integration and #4
