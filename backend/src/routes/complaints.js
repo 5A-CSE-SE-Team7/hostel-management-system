@@ -72,6 +72,7 @@ router.get('/complaints', async (req, res, next) => {
     if (filter) { conditions.push('c.status = ?'); values.push(filter); }
     if (before) { conditions.push('c.id < ?'); values.push(before); }
     const [rows] = await pool.query(`${SELECT} WHERE ${conditions.join(' AND ')} ORDER BY c.id DESC LIMIT ?`, [...values, limit]);
+    if (req.session.user.role !== 'student') await audit(req, 'COMPLAINT_RECORD_VIEW', 'complaint', null, { count: rows.length }, { strict: true });
     res.json(rows);
   } catch (error) { next(error); }
 });
@@ -80,6 +81,7 @@ router.get('/complaints/:id', async (req, res, next) => {
     const [where, values] = scope(req.session.user);
     const [[row]] = await pool.query(`${SELECT} WHERE c.id = ? AND ${where}`, [id(req.params.id, 'id'), ...values]);
     if (!row) throw E.notFound('Complaint');
+    if (req.session.user.role !== 'student') await audit(req, 'COMPLAINT_RECORD_VIEW', 'complaint', row.id, null, { strict: true });
     res.json(row);
   } catch (error) { next(error); }
 });

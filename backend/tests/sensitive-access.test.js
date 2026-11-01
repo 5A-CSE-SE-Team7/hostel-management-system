@@ -60,3 +60,13 @@ test('TC-Sec-04 sensitive records: cross-student access blocked; staff access to
   assert.ok(auditRows.some((row) => row.action === 'FEE_LEDGER_VIEW' && row.role === 'warden'));
 });
 
+
+test('critical staff collection reads are audited and fail closed when audit persistence is unavailable', async () => {
+ for (const path of ['/api/students','/api/fees/dues','/api/visitors','/api/leave','/api/complaints']) assert.equal((await warden.get(path)).status,200);
+ const [rows]=await h.pool.query('SELECT DISTINCT action FROM audit_logs'); const actions=new Set(rows.map(r=>r.action));
+ for(const action of ['STUDENT_RECORD_LIST','FEE_DUES_VIEW','VISITOR_RECORD_VIEW','LEAVE_RECORD_VIEW','COMPLAINT_RECORD_VIEW'])assert.ok(actions.has(action),action);
+ await h.pool.query('DELETE FROM audit_head WHERE id=1');
+ for(const path of [`/api/fees/ledger/${s.id}`,'/api/students','/api/visitors','/api/leave','/api/complaints']){
+  const r=await warden.get(path);assert.equal(r.status,500);assert.equal(r.body.errorCode,'INTERNAL_ERROR');assert.equal(Array.isArray(r.body),false);
+ }
+});

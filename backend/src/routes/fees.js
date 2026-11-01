@@ -72,13 +72,13 @@ router.get('/fees/ledger/:studentId', staff, async (req, res, next) => {
   try {
     const id = parseId(req.params.studentId, 'studentId');
     await assertStudent(id);
-    await audit(req, 'FEE_LEDGER_VIEW', 'user', id, null);
+    await audit(req, 'FEE_LEDGER_VIEW', 'user', id, null, { strict: true });
     res.json(await ledger(id));
   } catch (e) { next(e); }
 });
 
 // Staff: students with outstanding balance
-router.get('/fees/dues', staff, async (_req, res, next) => {
+router.get('/fees/dues', staff, async (req, res, next) => {
   try {
     const [rows] = await pool.query(
       `SELECT u.id AS studentId, u.name, s.srn,
@@ -87,6 +87,7 @@ router.get('/fees/dues', staff, async (_req, res, next) => {
        LEFT JOIN (SELECT student_id, SUM(amount) total FROM fee_assessments GROUP BY student_id) a ON a.student_id = u.id
        LEFT JOIN (SELECT student_id, SUM(amount) total FROM fee_payments GROUP BY student_id) p ON p.student_id = u.id
        HAVING outstanding > 0 ORDER BY outstanding DESC LIMIT 500`);
+    await audit(req, 'FEE_DUES_VIEW', 'fee', null, { count: rows.length }, { strict: true });
     res.json(rows);
   } catch (e) { next(e); }
 });
