@@ -4,10 +4,16 @@ root="$(mktemp -d /tmp/hms-combined.XXXXXX)"
 server_pid=''
 cleanup() { if [[ -n "$server_pid" ]]; then kill "$server_pid" 2>/dev/null || true; wait "$server_pid" 2>/dev/null || true; fi; rm -rf "$root"; }
 trap cleanup EXIT
-git checkout-index --all --prefix="$root/"
-flags=()
-if [[ "${1:-}" == '--m4-sprint1' ]]; then flags+=(--m4-sprint1); fi
-python scripts/ci/compose-integration.py "$root" "${flags[@]}"
+# Validate the actual checked-out PR tree. Historical per-file overlays can
+# replace current implementations while leaving newer regression tests behind.
+if [[ "${1:-}" == '--m4-sprint1' ]]; then
+  baseline="$(git rev-parse refs/remotes/origin/main)"
+  echo "Sprint1 regression baseline: $baseline"
+  git archive "$baseline" | tar -x -C "$root"
+else
+  echo "Actual PR tree: $(git rev-parse HEAD)"
+  git checkout-index --all --prefix="$root/"
+fi
 for component in backend frontend; do
   (cd "$root/$component" && npm ci --no-fund && npm audit --audit-level=high)
 done
