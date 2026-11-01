@@ -16,7 +16,9 @@ remain masked. MP4 encoding is the only transformation of the continuous capture
 QA: inspected extracted frames across the recording and full-resolution workflow
 screenshots; all required actions/confirmations visible, no black screens or major
 rendering defects observed. ffprobe confirmed dimensions, codec and duration.
-Full ffmpeg decode completed without errors. Static pauses intentionally allow
+Full ffmpeg decode completed without errors. Chromium loaded the final MP4 over
+local HTTP, reported 1920×1080 / 57.92s, and advanced playback beyond two seconds
+without a media error. Static pauses intentionally allow
 reading; no artificial freeze frames added. Human review of presentation remains
 part of PR review.
 

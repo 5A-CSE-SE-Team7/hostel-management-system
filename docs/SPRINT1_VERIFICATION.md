@@ -12,6 +12,7 @@ Executed against the completion branch based on main `03dacfec`:
 | `node --test tests/ci/*.test.mjs` | 14 passed, 0 failed |
 | `scripts/check-sprint1-accessibility.mjs` | Chromium axe WCAG A/AA login/register, light/dark, validation states and 3px focus: PASS |
 | `scripts/demo-sprint1.cjs` | Real browser login, allocation, complaint creation, staff assignment PASS |
+| Chromium final MP4 playback | PASS: duration 57.92s, playback advanced, no media error |
 | ffprobe / complete ffmpeg decode | 57.920 seconds, 1920×1080 H.264, decode without errors |
 
 The backend tests include real MySQL hash inspection, transactions, allocation
