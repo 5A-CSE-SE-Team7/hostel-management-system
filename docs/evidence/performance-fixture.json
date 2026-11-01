@@ -1,0 +1,264 @@
+{
+  "synthetic": true,
+  "passwordHashCost": 12,
+  "mysqlVersion": "8.0.46",
+  "counts": {
+    "users": 10,
+    "students": 6,
+    "beds": 12,
+    "allocations": 6,
+    "complaints": 1000,
+    "fee_assessments": 6
+  },
+  "plans": {
+    "inventory": {
+      "sql": "SELECT b.id,r.id,bd.id,a.id FROM blocks b LEFT JOIN rooms r ON r.block_id=b.id LEFT JOIN beds bd ON bd.room_id=r.id LEFT JOIN allocations a ON a.bed_id=bd.id AND a.released_at IS NULL ORDER BY b.name,r.room_number,bd.label",
+      "rows": [
+        {
+          "id": 1,
+          "select_type": "SIMPLE",
+          "table": "b",
+          "partitions": null,
+          "type": "index",
+          "possible_keys": null,
+          "key": "name",
+          "key_len": "242",
+          "ref": null,
+          "rows": 2,
+          "filtered": 100,
+          "Extra": "Using index; Using temporary; Using filesort"
+        },
+        {
+          "id": 1,
+          "select_type": "SIMPLE",
+          "table": "r",
+          "partitions": null,
+          "type": "ref",
+          "possible_keys": "uq_room",
+          "key": "uq_room",
+          "key_len": "4",
+          "ref": "hms_perf_232519.b.id",
+          "rows": 3,
+          "filtered": 100,
+          "Extra": "Using index"
+        },
+        {
+          "id": 1,
+          "select_type": "SIMPLE",
+          "table": "bd",
+          "partitions": null,
+          "type": "ref",
+          "possible_keys": "uq_bed",
+          "key": "uq_bed",
+          "key_len": "4",
+          "ref": "hms_perf_232519.r.id",
+          "rows": 4,
+          "filtered": 100,
+          "Extra": "Using index"
+        },
+        {
+          "id": 1,
+          "select_type": "SIMPLE",
+          "table": "a",
+          "partitions": null,
+          "type": "ref",
+          "possible_keys": "fk_alloc_bed",
+          "key": "fk_alloc_bed",
+          "key_len": "4",
+          "ref": "hms_perf_232519.bd.id",
+          "rows": 1,
+          "filtered": 100,
+          "Extra": "Using where"
+        }
+      ]
+    },
+    "allocation_occupancy": {
+      "sql": "SELECT b.id,COUNT(d.id) AS totalBeds,SUM(a.id IS NOT NULL) AS occupiedBeds FROM blocks b LEFT JOIN rooms r ON r.block_id=b.id AND r.is_active=1 LEFT JOIN beds d ON d.room_id=r.id AND d.is_active=1 LEFT JOIN allocations a ON a.bed_id=d.id AND a.released_at IS NULL WHERE b.is_active=1 GROUP BY b.id",
+      "rows": [
+        {
+          "id": 1,
+          "select_type": "SIMPLE",
+          "table": "b",
+          "partitions": null,
+          "type": "index",
+          "possible_keys": "PRIMARY,name",
+          "key": "PRIMARY",
+          "key_len": "4",
+          "ref": null,
+          "rows": 2,
+          "filtered": 50,
+          "Extra": "Using where"
+        },
+        {
+          "id": 1,
+          "select_type": "SIMPLE",
+          "table": "r",
+          "partitions": null,
+          "type": "ref",
+          "possible_keys": "uq_room",
+          "key": "uq_room",
+          "key_len": "4",
+          "ref": "hms_perf_232519.b.id",
+          "rows": 3,
+          "filtered": 100,
+          "Extra": "Using where"
+        },
+        {
+          "id": 1,
+          "select_type": "SIMPLE",
+          "table": "d",
+          "partitions": null,
+          "type": "ref",
+          "possible_keys": "uq_bed",
+          "key": "uq_bed",
+          "key_len": "4",
+          "ref": "hms_perf_232519.r.id",
+          "rows": 4,
+          "filtered": 100,
+          "Extra": "Using where"
+        },
+        {
+          "id": 1,
+          "select_type": "SIMPLE",
+          "table": "a",
+          "partitions": null,
+          "type": "ref",
+          "possible_keys": "fk_alloc_bed",
+          "key": "fk_alloc_bed",
+          "key_len": "4",
+          "ref": "hms_perf_232519.d.id",
+          "rows": 1,
+          "filtered": 100,
+          "Extra": "Using where"
+        }
+      ]
+    },
+    "available_beds": {
+      "sql": "SELECT d.id FROM beds d JOIN rooms r ON r.id=d.room_id AND r.is_active=1 JOIN blocks b ON b.id=r.block_id AND b.is_active=1 WHERE d.is_active=1 AND NOT EXISTS (SELECT 1 FROM allocations a WHERE a.bed_id=d.id AND a.released_at IS NULL)",
+      "rows": [
+        {
+          "id": 1,
+          "select_type": "SIMPLE",
+          "table": "b",
+          "partitions": null,
+          "type": "ALL",
+          "possible_keys": "PRIMARY",
+          "key": null,
+          "key_len": null,
+          "ref": null,
+          "rows": 2,
+          "filtered": 50,
+          "Extra": "Using where"
+        },
+        {
+          "id": 1,
+          "select_type": "SIMPLE",
+          "table": "r",
+          "partitions": null,
+          "type": "ref",
+          "possible_keys": "PRIMARY,uq_room",
+          "key": "uq_room",
+          "key_len": "4",
+          "ref": "hms_perf_232519.b.id",
+          "rows": 3,
+          "filtered": 16.67,
+          "Extra": "Using where"
+        },
+        {
+          "id": 1,
+          "select_type": "SIMPLE",
+          "table": "d",
+          "partitions": null,
+          "type": "ref",
+          "possible_keys": "uq_bed",
+          "key": "uq_bed",
+          "key_len": "4",
+          "ref": "hms_perf_232519.r.id",
+          "rows": 4,
+          "filtered": 10,
+          "Extra": "Using where"
+        },
+        {
+          "id": 1,
+          "select_type": "SIMPLE",
+          "table": "a",
+          "partitions": null,
+          "type": "ref",
+          "possible_keys": "fk_alloc_bed",
+          "key": "fk_alloc_bed",
+          "key_len": "4",
+          "ref": "hms_perf_232519.d.id",
+          "rows": 1,
+          "filtered": 100,
+          "Extra": "Using where; Not exists"
+        }
+      ]
+    },
+    "complaints": {
+      "sql": "SELECT c.id,cc.name FROM complaints c JOIN complaint_categories cc ON cc.id=c.category_id ORDER BY c.id DESC LIMIT 100",
+      "rows": [
+        {
+          "id": 1,
+          "select_type": "SIMPLE",
+          "table": "cc",
+          "partitions": null,
+          "type": "index",
+          "possible_keys": "PRIMARY",
+          "key": "name",
+          "key_len": "242",
+          "ref": null,
+          "rows": 6,
+          "filtered": 100,
+          "Extra": "Using index; Using temporary; Using filesort"
+        },
+        {
+          "id": 1,
+          "select_type": "SIMPLE",
+          "table": "c",
+          "partitions": null,
+          "type": "ref",
+          "possible_keys": "fk_comp_cat",
+          "key": "fk_comp_cat",
+          "key_len": "4",
+          "ref": "hms_perf_232519.cc.id",
+          "rows": 1,
+          "filtered": 100,
+          "Extra": "Using index"
+        }
+      ]
+    },
+    "complaint_report": {
+      "sql": "SELECT c.id,u.name FROM complaints c JOIN users u ON u.id=c.student_id WHERE c.created_at BETWEEN DATE_FORMAT(CURDATE(),'%Y-%m-01') AND NOW() ORDER BY c.id",
+      "rows": [
+        {
+          "id": 1,
+          "select_type": "SIMPLE",
+          "table": "u",
+          "partitions": null,
+          "type": "ALL",
+          "possible_keys": "PRIMARY",
+          "key": null,
+          "key_len": null,
+          "ref": null,
+          "rows": 10,
+          "filtered": 100,
+          "Extra": "Using temporary; Using filesort"
+        },
+        {
+          "id": 1,
+          "select_type": "SIMPLE",
+          "table": "c",
+          "partitions": null,
+          "type": "ref",
+          "possible_keys": "idx_comp_student",
+          "key": "idx_comp_student",
+          "key_len": "4",
+          "ref": "hms_perf_232519.u.id",
+          "rows": 1,
+          "filtered": 11.11,
+          "Extra": "Using where"
+        }
+      ]
+    }
+  }
+}

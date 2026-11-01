@@ -1,0 +1,46 @@
+# Actual updated workload measurement
+
+Executed locally against the real Node22/MySQL application composed from integration snapshot `2fe8f69cf358205c12a483041cba66173c14cd78` (full owner refs in performance-baseline.json), using 5 authenticated admin sessions × 20 iterations and bcrypt cost12 synthetic accounts. All **705 recorded requests passed**, including 100 requests each to the real allocation occupancy and available-bed APIs. No nonexistent GET /api/allocations was called. All measured p90 values were below 3000ms. This is local representative API evidence, not deployed/browser/500-user verification.
+
+| Endpoint | p90 ms | Errors |
+|---|---:|---:|
+| login | 1895.59 | 0 |
+| inventory | 11.49 | 0 |
+| allocation_occupancy | 11.98 | 0 |
+| available_beds | 14.79 | 0 |
+| complaint_tracking | 15.26 | 0 |
+| dashboard_fee_dues | 13.44 | 0 |
+| occupancy_report | 30.73 | 0 |
+| complaint_report | 38.23 | 0 |
+
+# Current API workload repair
+
+The accepted new allocation PR55 supplies GET /api/occupancy and GET /api/beds/available, not GET /api/allocations. The representative workload now measures both real allocation reads and validates their response contracts, while retaining inventory, complaint tracking, fee dues, occupancy/complaint reports and cost12 login. No endpoint is invented. These reads do not claim to measure a POST allocation transaction or browser rendering.
+
+The runner resolves the existing CI branch into an immutable recorded snapshot, records all actual source pins and the workload commit in performance-baseline.json, and supports exact replay with HMS_CI_REF=<recorded SHA>. It copies the committed current benchmark and prepares only a dedicated hms_perf_PID database, which is dropped afterward. Earlier measurements below describe the older explicitly documented API candidate and are not current-baseline results. New measurements are only claimed once actually executed and recorded.
+
+# HMS-NF-001 — current integrated performance evidence
+
+Aayaan Kamil / PES2UG24CS017; existing PR49 / issue26. This supersedes the earlier local snapshot without upgrading it to production evidence.
+
+The runner now composes committed real M1/M2/M4/complaint/TLS/monitoring sources via CI snapshot 86a570c07b814c0ff54d3ce0efad589ae13368aa. It applies no STAFF/calendar proposals and preserves the production p90 threshold of 3000ms. It creates only a disposable hms_perf_PID database, refuses other names in the fixture preparer, stops its temporary server and drops its database on exit. It uses the already-running local Docker MySQL service and never modifies main or production data.
+
+The synthetic fixture deliberately upgrades its seed password hashes from baseline cost10 to the actual M1 production cost12 before measuring login. This prevents the old seed hash strength understating authentication cost. Test-server mode increases rate-limit allowance for a controlled benchmark; no production rate limits were changed.
+
+Actual run: 2026-10-30T09:42:52.717Z through 2026-10-30T09:42:56.425Z; Node v22.23.4; 5 visible CPUs; MySQL 8.0.46; 5 concurrent authenticated admin sessions, 20 iterations/session, 605 measured requests, zero errors, no warmup samples excluded. Fixture: 10 synthetic users, 6 students, 12 beds, 6 allocations, 1000 complaints and 6 fee assessments. Browser rendering/TLS/network deployment latency is not measured.
+
+| Operation | Requests | Errors | p90 ms | Result |
+| --- | ---: | ---: | ---: | --- |
+| login | 5 | 0 | 1994.91 | PASS |
+| inventory | 100 | 0 | 12.72 | PASS |
+| allocations | 100 | 0 | 12.32 | PASS |
+| complaint_tracking | 100 | 0 | 13.13 | PASS |
+| dashboard_fee_dues | 100 | 0 | 12.31 | PASS |
+| occupancy_report | 100 | 0 | 30.67 | PASS |
+| complaint_report | 100 | 0 | 32.5 | PASS |
+
+All measured endpoints pass p90<=3000ms under this declared local load. Raw individual samples/environment are in docs/evidence/performance-local.json; counts and actual EXPLAIN SQL/plans are in performance-fixture.json. Existing indexes support the measured workload; no unsubstantiated schema/index changes were introduced. Two benchmark regression tests pass.
+
+Reproduce after fetching referenced existing branches: `npm exec --yes --package=node@22 -- bash scripts/validate-performance.sh`. Docker MySQL must already be running. Optional HMS_MONITOR_EVIDENCE_DIR captures a real healthy probe and an intentionally stopped-fixture probe; those observations are synthetic monitor validation, not production downtime evidence.
+
+PASS: this representative local API benchmark. BLOCKED/NOT TESTED: production/browser performance, sustained production-sized distributions and actual deployment sizing. No 500-user scalability or production performance claim is made. Standalone main-based application CI still needs genuine frontend/auth/audit prerequisites; required failures are retained.
