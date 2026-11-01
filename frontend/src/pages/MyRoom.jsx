@@ -61,7 +61,7 @@ export default function MyRoom() {
         <section aria-labelledby="room-history-heading">
           <h2 id="room-history-heading">Room history</h2>
           {history.length ? (
-            <div style={{ overflowX: 'auto' }}>
+            <div tabIndex={0} style={{ overflowX: 'auto' }}>
               <table>
                 <thead>
                   <tr>
