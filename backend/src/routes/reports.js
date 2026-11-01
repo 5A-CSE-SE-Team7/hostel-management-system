@@ -28,7 +28,15 @@ const REPORTS = {
               SUM(check_out_date BETWEEN ? AND ?) AS checkOuts
        FROM allocations`, [lo(from), hi(to), lo(from), hi(to), from, to, from, to]);
     const totalBeds = blocks.reduce((s, b) => s + b.totalBeds, 0); const occupied = blocks.reduce((s, b) => s + b.occupied, 0);
-    return { occupancy: { asOf: to, inventoryBasis: 'Current active inventory; allocation occupancy at the selected end date', totalBeds, occupied, available: totalBeds - occupied, byBlock: blocks },
+    const today = new Date().toISOString().slice(0, 10);
+    const historical = to < today;
+    // Inventory flags have no activation history. Do not manufacture historical
+    // capacity or subtract historical occupants from today's smaller inventory.
+    return { occupancy: { asOf: to > today ? today : to,
+      inventoryBasis: historical ? 'Historical capacity unavailable; currentTotalBeds is current active inventory' : 'Current active inventory',
+      totalBeds: historical ? null : totalBeds, currentTotalBeds: totalBeds, occupied,
+      available: historical ? null : totalBeds - occupied,
+      byBlock: blocks.map(block => ({ ...block, currentTotalBeds: block.totalBeds, totalBeds: historical ? null : block.totalBeds })) },
       allocations: { newAllocations: Number(alloc.newAllocations || 0), transfers: Number(alloc.transfers || 0), checkIns: Number(alloc.checkIns || 0), checkOuts: Number(alloc.checkOuts || 0) } };
   },
   async allocations({ from, to }) {
