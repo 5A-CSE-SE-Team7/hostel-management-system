@@ -1,11 +1,10 @@
 # Repo owners review and merge PRs (assignment: "Repo owners should review and commit the PR").
-# Replace with real GitHub usernames.
-*                     @REPO_OWNER
-/backend/src/routes/auth.js        @aditya-github
-/backend/src/routes/inventory.js   @abhishek-github
-/backend/src/routes/allocations.js @abhishek-github
-/backend/src/routes/complaints.js  @aayaan-github
-/backend/src/routes/fees.js        @aadi-github
-/backend/src/routes/visitors.js    @aadi-github
-/backend/src/routes/leave.js       @aadi-github
-/backend/src/routes/reports.js     @aadi-github
+*                     @aadi-basal-06
+/backend/src/routes/auth.js        @kenzyeee
+/backend/src/routes/inventory.js   @ashek108
+/backend/src/routes/allocations.js @ashek108
+/backend/src/routes/complaints.js  @Aayaan721
+/backend/src/routes/fees.js        @aadi-basal-06
+/backend/src/routes/visitors.js    @aadi-basal-06
+/backend/src/routes/leave.js       @aadi-basal-06
+/backend/src/routes/reports.js     @aadi-basal-06

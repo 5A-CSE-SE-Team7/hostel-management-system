@@ -1,13 +1,17 @@
 import React, { useState } from 'react';
-import { api } from '../api.js';
+import { get, post, patch } from '../api.js';
 import { useAuth } from '../auth.jsx';
-import { Alert, Badge, Input, Select, Table, fmtDate, useAction, useLoad } from '../components/ui.jsx';
+import { Alert, Badge, Input, Select, Table, fmtDate, useAction, useLoad, toUtc } from '../components/m4-ui.jsx';
 
 export default function Visitors() {
   const { user } = useAuth();
-  const isStaff = user.role !== 'student';
-  const { data, error, reload } = useLoad(() => api.get('/visitors'));
-  const students = useLoad(async () => (isStaff ? api.get('/students') : []), [isStaff]);
+  if (!['student','warden','admin'].includes(user?.role)) return <><h2>Access denied</h2><Alert>You do not have permission to view these records.</Alert></>;
+  return <VisitorsRecords user={user} />;
+}
+function VisitorsRecords({ user }) {
+  const isStaff = ['warden', 'admin'].includes(user.role);
+  const { data, error, loading, reload } = useLoad(() => get('/visitors'));
+  const students = useLoad(async () => (isStaff ? get('/students') : []), [isStaff]);
   const blank = { studentId: '', visitorName: '', idType: '', idNumber: '', relation: '', visitAt: '', purpose: '' };
   const [form, setForm] = useState(blank);
   const [st, run] = useAction(); const [rs, runRow] = useAction();
@@ -16,11 +20,11 @@ export default function Visitors() {
     e.preventDefault();
     const body = Object.fromEntries(Object.entries(form).filter(([, v]) => v !== ''));
     if (body.studentId) body.studentId = Number(body.studentId);
-    if (body.visitAt) body.visitAt = new Date(body.visitAt).toISOString();
-    if (await run(() => api.post('/visitors', body), isStaff ? 'Visitor recorded.' : 'Visitor request submitted for approval.')) { setForm(blank); reload(); }
+    if (body.visitAt) body.visitAt = toUtc(body.visitAt);
+    if (await run(() => post('/visitors', body), isStaff ? 'Visitor recorded.' : 'Visitor request submitted for approval.')) { setForm(blank); reload(); }
   };
   const p = { form, setForm, errors: st.fieldErrors };
-  const act = (id, status) => async () => { if (await runRow(() => api.patch(`/visitors/${id}/status`, { status }), 'Updated.')) reload(); };
+  const act = (id, status) => async () => { if (await runRow(() => patch(`/visitors/${id}/status`, { status }), 'Updated.')) reload(); };
 
   return (
     <>
@@ -37,14 +41,14 @@ export default function Visitors() {
         </div>
         <div className="row"><button disabled={st.busy}>Save</button></div></form>
       <Alert>{error}</Alert><Alert>{rs.error}</Alert>
-      <Table caption="Visitor records" rows={data} empty="No visitor records."
+      <Table loading={loading} error={error} caption="Visitor records" rows={data} empty="No visitor records."
         columns={[{ header: 'Visit time', render: (v) => fmtDate(v.visitAt) }, ...(isStaff ? [{ header: 'Student', key: 'studentName' }] : []),
           { header: 'Visitor', key: 'visitorName' }, { header: 'ID', render: (v) => `${v.idType}: ${v.idNumber}` }, { header: 'Purpose', key: 'purpose' },
           { header: 'Status', render: (v) => <Badge value={v.status} /> },
           ...(isStaff ? [{ header: 'Actions', render: (v) => (
             <div className="row" style={{ marginTop: 0 }}>
-              {v.status === 'pending' && <><button className="small" onClick={act(v.id, 'approved')}>Approve</button><button className="small danger" onClick={act(v.id, 'rejected')}>Reject</button></>}
-              {v.status === 'approved' && <button className="small secondary" onClick={act(v.id, 'completed')}>Mark completed</button>}
+              {v.status === 'pending' && <><button disabled={rs.busy} className="small" onClick={act(v.id, 'approved')}>Approve</button><button disabled={rs.busy} className="small danger" onClick={act(v.id, 'rejected')}>Reject</button></>}
+              {v.status === 'approved' && <button disabled={rs.busy} className="small secondary" onClick={act(v.id, 'completed')}>Mark completed</button>}
             </div>) }] : [])]} />
     </>
   );
