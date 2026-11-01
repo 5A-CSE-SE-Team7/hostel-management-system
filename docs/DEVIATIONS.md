@@ -23,3 +23,6 @@ This register records implementation choices and gaps that differ from, or are n
 
 - Complete a keyboard-only walkthrough and a screen-reader pass; record any remaining issues.
 - Run the full browser smoke journey after the inventory and complaint pages are present in the integrated branch. The current M1 checkout does not contain those screens or their API routes.
+
+## Native bcrypt execution (Sprint 2 scalability)
+What: the authentication runtime uses native asynchronous bcrypt while retaining the existing bcrypt-compatible hash format and cost12 policy. Why: real 500-session measurements exposed HTTP event-loop starvation during JavaScript password comparisons. Impact: existing bcryptjs-created hashes remain valid; a native binary is now installed from the locked dependency graph. Tests verify compatibility. This does not by itself satisfy the measured 500-session stress requirement; see HMS-NF-002 verification.
