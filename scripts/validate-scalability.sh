@@ -8,7 +8,7 @@ docker_cmd=(docker --host=unix:///var/run/docker.sock)
 cleanup(){ if [[ -n "$server_pid" ]];then kill "$server_pid" 2>/dev/null || true;wait "$server_pid" 2>/dev/null || true;fi; "${docker_cmd[@]}" exec hostel-management-system-db-1 mysql -uroot -proot_pass -e "DROP DATABASE IF EXISTS \`$load_db\`;";rm -rf "$scratch"; }
 trap cleanup EXIT
 "${docker_cmd[@]}" exec hostel-management-system-db-1 mysql -uroot -proot_pass -e "CREATE DATABASE \`$load_db\`; GRANT ALL ON \`$load_db\`.* TO 'hms'@'%';"
-export NODE_ENV=test DB_NAME="$load_db"
+export NODE_ENV=test DB_NAME="$load_db" HMS_APPLICATION_COMMIT="$(git rev-parse HEAD)"
 npm run db:init --prefix backend
 npm run db:seed --prefix backend
 # Production-strength hash; test mode only relaxes the synthetic fixture rate limit.
