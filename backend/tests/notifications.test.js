@@ -61,3 +61,18 @@ test('existing M4 notify contract is preserved without implementing fee logic', 
   const [[row]] = await h.pool.query('SELECT ref_type, ref_id FROM notifications WHERE id = ?', [id]);
   assert.equal(row.ref_type, 'fee'); assert.equal(row.ref_id, 123);
 });
+
+test('notification persistence failure rolls back complaint transition and audit event together', async () => {
+  const categoryId = await h.seedCategory('Rollback category');
+  const complaint = await student.post('/api/complaints').send({ categoryId, location:'B102', description:'Rollback fixture' });
+  const path = `/api/complaints/${complaint.body.complaintId}/assign`;
+  await h.pool.query("CREATE TRIGGER fail_notification BEFORE INSERT ON notifications FOR EACH ROW SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT='synthetic persistence failure'");
+  try {
+    const result = await warden.post(path).send({ assignedTo:maintenance.id });
+    assert.equal(result.status,500);
+    const record = (await student.get(`/api/complaints/${complaint.body.complaintId}`)).body;
+    assert.equal(record.status,'submitted'); assert.equal(record.assignedTo,null);
+    const [[count]] = await h.pool.query("SELECT COUNT(*) n FROM audit_logs WHERE action='COMPLAINT_ASSIGN' AND entity_id=?",[String(complaint.body.complaintId)]);
+    assert.equal(count.n,0);
+  } finally { await h.pool.query('DROP TRIGGER fail_notification'); }
+});
