@@ -1,10 +1,11 @@
 import { useCallback, useEffect, useId, useState } from 'react';
 import { api } from '../api';
 import ComplaintAssignment from '../components/ComplaintAssignment';
+import ComplaintProgress from '../components/ComplaintProgress';
 import { useAuth } from '../auth';
 import { Alert, Badge, DataTable, Field } from '../components/ui';
 const empty = { categoryId: '', location: '', description: '', attachmentRef: '' };
-export default function Complaints() {
+export default function Complaints({ heading } = {}) {
   const { user } = useAuth();
   const [form, setForm] = useState(empty);
   const isStaff = ['warden', 'admin'].includes(user.role);
@@ -54,9 +55,10 @@ export default function Complaints() {
     { key: 'status', label: 'Status', render: row => <Badge>{row.status}</Badge> },
     { key: 'priority', label: 'Priority' }, { key: 'assignedToName', label: 'Assigned to' },
     ...(isStaff ? [{ key: 'actions', label: 'Assignment / priority', render: row => <ComplaintAssignment complaint={row} staff={staff} onDone={async message => { setSuccess(message); await reload(); }} /> }] : []),
+    ...(['maintenance', 'warden', 'admin'].includes(user.role) ? [{ key: 'progress', label: 'Progress', render: row => <ComplaintProgress complaint={row} onDone={async message => { setSuccess(message); await reload(); }} /> }] : []),
     { key: 'updatedAt', label: 'Updated' }, { key: 'resolutionDetails', label: 'Resolution' },
   ];
-  return <><h1>{user.role === 'student' ? 'My complaints' : 'Complaints'}</h1>
+  return <><h1>{heading || (user.role === 'student' ? 'My complaints' : 'Complaints')}</h1>
     <Alert>{success}</Alert><Alert error>{error}</Alert>
     {loading ? <Alert>Loading complaints…</Alert> : error ? <button onClick={reload}>Retry complaints</button> : <>
       {user.role === 'student' && <form onSubmit={submit} aria-label="Submit a complaint">

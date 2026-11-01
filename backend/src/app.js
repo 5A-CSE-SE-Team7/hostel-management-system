@@ -9,7 +9,7 @@ const common = require('./middleware/common');
 
 function createApp() {
   const app = express();
-  app.set('trust proxy', 1); // behind nginx / cloud LB that terminates TLS
+  app.set('trust proxy', config.trustProxy); // explicitly scoped TLS terminator only
   app.disable('x-powered-by');
 
   app.use(common.requestId);
@@ -43,11 +43,11 @@ function createApp() {
   app.use('/api', require('./routes/inventory'));
   app.use('/api', require('./routes/allocations'));
   app.use('/api', require('./routes/complaints'));
-  // mounted by M3 PR: app.use('/api', require('./routes/notifications'));
+  app.use('/api', require('./routes/notifications'));
   app.use('/api', require('./routes/fees'));
   app.use('/api', require('./routes/visitors'));
   app.use('/api', require('./routes/leave'));
-  // mounted by M4 PR: app.use('/api/reports', require('./routes/reports'));
+  app.use('/api/reports', require('./routes/reports'));
 
   app.use(common.notFound);
   app.use(common.errorHandler);
