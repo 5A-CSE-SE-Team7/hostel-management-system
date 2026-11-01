@@ -1,7 +1,7 @@
 const mysql = require('mysql2/promise');
 const config = require('./config');
 
-const connectionLimit = Number(process.env.DB_CONNECTION_LIMIT || 100);
+const connectionLimit = Number(process.env.DB_CONNECTION_LIMIT || 20);
 if (!Number.isSafeInteger(connectionLimit) || connectionLimit < 1 || connectionLimit > 500) {
   throw new Error('DB_CONNECTION_LIMIT must be an integer between 1 and 500');
 }
