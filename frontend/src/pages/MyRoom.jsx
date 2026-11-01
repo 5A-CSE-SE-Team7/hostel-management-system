@@ -9,6 +9,7 @@ async function getMyRoom() {
 
 export default function MyRoom() {
   const [allocation, setAllocation] = useState(null);
+  const [history, setHistory] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
@@ -18,6 +19,7 @@ export default function MyRoom() {
     try {
       const result = await getMyRoom();
       setAllocation(result.allocation);
+      setHistory(result.history || []);
     } catch (err) {
       setError(err.message || 'Could not load your room assignment.');
     } finally {
@@ -54,6 +56,38 @@ export default function MyRoom() {
       ) : !error ? (
         <p>You don’t have a bed assignment yet. Contact your warden for help.</p>
       ) : null}
+
+      {!loading && !error && (
+        <section aria-labelledby="room-history-heading">
+          <h2 id="room-history-heading">Room history</h2>
+          {history.length ? (
+            <div style={{ overflowX: 'auto' }}>
+              <table>
+                <thead>
+                  <tr>
+                    <th scope="col">Bed</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Allocated</th>
+                    <th scope="col">Check-in</th>
+                    <th scope="col">Check-out</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {history.map((row) => (
+                    <tr key={row.id}>
+                      <th scope="row">{row.block.name} · Room {row.room.roomNumber} · Bed {row.bed.label}</th>
+                      <td>{row.status}</td>
+                      <td>{row.allocatedAt}</td>
+                      <td>{row.checkInDate || '—'}</td>
+                      <td>{row.checkOutDate || '—'}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          ) : <p>No room history yet.</p>}
+        </section>
+      )}
     </main>
   );
 }

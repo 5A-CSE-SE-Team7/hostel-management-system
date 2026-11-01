@@ -47,6 +47,7 @@ router.get('/visitors', async (req, res, next) => {
     if (req.query.from) { where.push('v.visit_at >= ?'); vals.push(`${String(req.query.from).slice(0, 10)} 00:00:00`); }
     if (req.query.to) { where.push('v.visit_at <= ?'); vals.push(`${String(req.query.to).slice(0, 10)} 23:59:59`); }
     const [rows] = await pool.query(`${SELECT} ${where.length ? `WHERE ${where.join(' AND ')}` : ''} ORDER BY v.visit_at DESC LIMIT 500`, vals);
+    if (req.session.user.role !== 'student') await audit(req, 'VISITOR_RECORD_VIEW', 'visitors', null, { count: rows.length }, { strict: true });
     res.json(rows);
   } catch (e) { next(e); }
 });

@@ -82,5 +82,7 @@ test('Operations: health endpoint, consistent JSON errors, malformed JSON, unkno
   assert.equal(nf.status, 401);
   const bad = await warden.post('/api/fees/assessments').set('Content-Type', 'application/json').send('{bad json');
   assert.equal(bad.status, 400); assert.equal(bad.body.errorCode, 'VALIDATION_ERROR');
+  const inventoryJson = await warden.post('/api/blocks').set('Content-Type', 'application/json').send('{bad json');
+  assert.equal(inventoryJson.status,400); assert.equal(inventoryJson.body.errorCode,'VALIDATION_ERROR');
   assert.equal((await warden.get('/api/does-not-exist')).body.errorCode, 'NOT_FOUND');
 });
