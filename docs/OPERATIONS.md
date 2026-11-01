@@ -26,7 +26,8 @@ LOADTEST_VUS=500 LOADTEST_DURATION_SECONDS=30 LOADTEST_RAMP_UP_SECONDS=30 \
 bash scripts/loadtest.sh --authenticated http://127.0.0.1:4000 perf-results.json
 ```
 
-Each virtual user logs in separately and keeps its own session cookie (use an admin/warden fixture for this workload) while cycling through session, profile, complaint, occupancy and fee-dues reads. Login attempts share one synthetic account; use `NODE_ENV=test` for the dedicated test server so its login limiter allows the full ramp. Do not enable test mode on production or expose this scenario to production data. The JSON report records attempted and successful logins, distinct sessions, authenticated request success rate, p90/max latency, and failures without storing credentials or response bodies. `DB_CONNECTION_LIMIT` controls the shared query/session pool (default 100); keep it below the MySQL server's available connection budget. A PASS requires all requested users to obtain unique sessions and zero failed authenticated requests.
+
+Each virtual user logs in separately and keeps its own session cookie (use an admin/warden fixture for this workload) while cycling through session, profile, complaint, occupancy and fee-dues reads. Login attempts share one synthetic account; use `NODE_ENV=test` for the dedicated test server so its login limiter allows the full ramp. Do not enable test mode on production or expose this scenario to production data. The JSON report records attempted and successful logins, distinct sessions, authenticated request success rate, p90/max latency, and failures without storing credentials or response bodies. `DB_CONNECTION_LIMIT` controls the shared query/session pool (default 20); keep it below the MySQL server's available connection budget. A PASS requires all requested users to obtain unique sessions and zero failed authenticated requests.
 
 ## HMS-NF-003 sampled availability monitor
 
@@ -45,4 +46,5 @@ A sample estimates its one-minute bucket; this is sampled availability, not cont
 Scheduled maintenance policy: record start/end/reason and declaredAt before work begins, obtain the team's ordinary maintenance authorization, and notify affected users. Report a JSON array of these windows via --maintenance=FILE. Retroactive or invalid exclusions are rejected. Overlapping/partial windows are unioned without double counting; exclude only their actual overlap. Unplanned downtime stays in the denominator. Changes to this policy require team review; do not edit evidence merely to meet the target.
 
 Topology/process management: browser -> HTTPS nginx -> loopback Node API (systemd/pm2 under the existing deployment policy) -> MySQL. Monitor the public HTTPS health URL externally. Use the TLS branch's explicit proxy configuration. Document actual host, certificate renewal, API restart policy and monitor ownership when deployed. Current local evidence in docs/evidence is one observation only and explicitly does not establish 99.5% monthly availability.
+
 
