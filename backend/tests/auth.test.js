@@ -280,3 +280,9 @@ test('TC-Sec-02 every stored password is a unique bcrypt hash, never a known pla
   }
   assert.equal(new Set(hashes).size, hashes.length, 'bcrypt hashes must be uniquely salted');
 });
+
+test('registration rejects passwords beyond bcrypt UTF-8 byte limit without silently truncating', async () => {
+  const result=await h.request(h.app).post('/api/auth/register').send({srn:'UTF8LIMIT1',name:'UTF8 fixture',email:'utf8-limit@hms.test',contact:'9000000000',password:'😀'.repeat(20)+'a1'});
+  assert.equal(result.status,400);assert.ok(result.body.details.password);
+  const [[row]]=await h.pool.query('SELECT COUNT(*) n FROM users WHERE email=?',['utf8-limit@hms.test']);assert.equal(row.n,0);
+});

@@ -1,0 +1,3232 @@
+{
+  "issue": "HMS-NF-002",
+  "startedAt": "2026-11-01T05:27:23.844Z",
+  "workloadStartedAt": "2026-11-01T05:30:28.531Z",
+  "endedAt": "2026-11-01T05:30:58.588Z",
+  "environment": {
+    "node": "v24.19.0",
+    "cpus": 3,
+    "memoryBytes": 10452459520
+  },
+  "target": "http://127.0.0.1:40033",
+  "workload": [
+    "/api/auth/me",
+    "/api/profile",
+    "/api/complaints?limit=10",
+    "/api/occupancy",
+    "/api/fees/dues"
+  ],
+  "accountModel": "Independent authenticated sessions sharing one synthetic warden/admin account",
+  "virtualUsersRequested": 500,
+  "authenticatedVirtualUsers": 19,
+  "durationSeconds": 30,
+  "rampUpSeconds": 180,
+  "timeoutMs": 5000,
+  "login": {
+    "attempted": 500,
+    "successes": 19,
+    "errors": 481,
+    "successRatePercent": 3.8,
+    "p90Ms": 5011.54,
+    "maxMs": 6301.78
+  },
+  "authenticatedRequests": {
+    "total": 114,
+    "successes": 0,
+    "errors": 114,
+    "successRatePercent": 0,
+    "p90Ms": 5014.49,
+    "maxMs": 5027.86
+  },
+  "status": "FAIL",
+  "samples": {
+    "login": [
+      {
+        "status": 200,
+        "ok": true,
+        "durationMs": 839.73
+      },
+      {
+        "status": 200,
+        "ok": true,
+        "durationMs": 1119.14
+      },
+      {
+        "status": 200,
+        "ok": true,
+        "durationMs": 1214.97
+      },
+      {
+        "status": 200,
+        "ok": true,
+        "durationMs": 1429.48
+      },
+      {
+        "status": 200,
+        "ok": true,
+        "durationMs": 1439.58
+      },
+      {
+        "status": 200,
+        "ok": true,
+        "durationMs": 1423.55
+      },
+      {
+        "status": 200,
+        "ok": true,
+        "durationMs": 1409.61
+      },
+      {
+        "status": 200,
+        "ok": true,
+        "durationMs": 1415.71
+      },
+      {
+        "status": 200,
+        "ok": true,
+        "durationMs": 1401.95
+      },
+      {
+        "status": 200,
+        "ok": true,
+        "durationMs": 1384.78
+      },
+      {
+        "status": 200,
+        "ok": true,
+        "durationMs": 1372.55
+      },
+      {
+        "status": 200,
+        "ok": true,
+        "durationMs": 1372.72
+      },
+      {
+        "status": 200,
+        "ok": true,
+        "durationMs": 1367.79
+      },
+      {
+        "status": 200,
+        "ok": true,
+        "durationMs": 1456.5
+      },
+      {
+        "status": 200,
+        "ok": true,
+        "durationMs": 1603.12
+      },
+      {
+        "status": 200,
+        "ok": true,
+        "durationMs": 2125.74
+      },
+      {
+        "status": 200,
+        "ok": true,
+        "durationMs": 2590.78
+      },
+      {
+        "status": 200,
+        "ok": true,
+        "durationMs": 3166.62
+      },
+      {
+        "status": 200,
+        "ok": true,
+        "durationMs": 3699.45
+      },
+      {
+        "status": 200,
+        "ok": false,
+        "durationMs": 5015.28
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5011.62
+      },
+      {
+        "status": 200,
+        "ok": false,
+        "durationMs": 5001.26
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5002.66
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5001
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5001.27
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5009.23
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5002.99
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5000.51
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5000.73
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5001.31
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5000.36
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5000.92
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5001.29
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5004.18
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5000.22
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5001.39
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5000.93
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 4999.98
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 4999.78
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5002.95
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5000.51
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5001.02
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5001.46
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5003.25
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5001.08
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5003.85
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5000.97
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5001.29
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5001.54
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5000.82
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5000.46
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5001.31
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5001.13
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 4999.92
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5004.13
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5002.25
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5000.15
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5006.15
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5001.97
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5000.84
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5000.74
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5011.72
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5003.1
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5000.04
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5000.55
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5001.03
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5012.04
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5000.32
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5000.9
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5000.65
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5000.55
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5002.13
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5001.05
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5000.91
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5000.68
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5001.14
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5000.96
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5001.87
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5000.05
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5001.35
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5001.84
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5001.05
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5000.23
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5001.41
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5000.88
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5000.53
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5012.42
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5001.41
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5002.14
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5000.74
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5001.42
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5000.78
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5002.3
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5003.05
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5000.37
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5002.07
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5000.84
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5004.01
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5001.15
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5000.17
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5004.13
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5001.04
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5003.21
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 4999.95
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5002.59
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5001.28
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5004.18
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5000.79
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5002.49
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5029.55
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5000.2
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5011.71
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5005.83
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5000.36
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5031.77
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5002.58
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5009.55
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5002.08
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5005.15
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5002.83
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5002.77
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5001.1
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5000.91
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5006.12
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5000.65
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5000.77
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5007.47
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5002.47
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5000.7
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5001.94
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 4999.66
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5001.36
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5002.24
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5003.31
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5005.96
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5001.21
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5001.09
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5003.19
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5002.28
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5031.68
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5001.07
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5002.38
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5005.75
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5004.46
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5034.47
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5002.98
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5001.2
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5002.78
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5002.65
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5003.3
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5004.11
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5209.58
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5061.51
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5112.17
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 6301.78
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5976.91
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5605.96
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5257.43
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5108.62
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5371.92
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 6201.57
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5832.26
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5565.89
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5204.75
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5001.45
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5001.04
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5098.6
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5112.41
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5011.12
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5013.98
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5011.94
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5014.06
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5031.11
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5000.88
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5072.91
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5006.12
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5007.73
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5002.4
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5000.74
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5029.95
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5005.12
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5000.31
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5002.96
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5001.19
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5032.61
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5003.64
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5006.51
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5008.38
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5003.4
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5001.78
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5001.79
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5004.08
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5001.1
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5001.05
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5003.6
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5001.46
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5000.86
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5001.72
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5003.51
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5002
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5000.62
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5005.82
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5000.75
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5001.04
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5000.96
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5003.6
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5000.78
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5000.06
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5001.91
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5032.02
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5003.91
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5001.62
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5000.74
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5002.14
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5000.13
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5000.53
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5000.56
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5000.45
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5001.19
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5003.16
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5000.8
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5000.88
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5004.11
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5000.97
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5035.13
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5001.57
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5004.23
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5001.3
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5000.84
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5004.42
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5000.48
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5000.54
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5001.07
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5001.71
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5000.4
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5000.69
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5000.64
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5001.87
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5000.56
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5000.57
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5000.08
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5003.82
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5000.74
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5000.65
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5003.94
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5003.76
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5003.5
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5002.8
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5000.71
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5005.19
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5000.81
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5005.12
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5000.76
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5001.49
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5000.96
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5001.46
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5001.6
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5004.6
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5002.68
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5002.6
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5000.1
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5000.33
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5001.9
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5001.26
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5002.29
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5000.49
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5001.19
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5000.65
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5000.29
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5031.88
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5001.29
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5000.72
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5003.5
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5004.3
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5001.68
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5006.07
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5001.21
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5001.65
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5000.39
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5036.35
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5001.88
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5000.86
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5002.34
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5001.8
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5001.74
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5003.85
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5005.76
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5001.06
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5000.61
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5007.88
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5000.97
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5000.48
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5001.36
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5000.74
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5002.23
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5001.18
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5000.7
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5001.21
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5003.6
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5000.72
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5000.99
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5006.03
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5000.38
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5000.48
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5000.65
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5000.98
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5000.61
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5001.69
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5001.63
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5000.27
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5001.14
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5001.88
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5001.11
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5000.77
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5007.48
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5006.9
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5000.8
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5002.87
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5001.66
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5032.44
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5000.98
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5000.99
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5000.83
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5005.15
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5032.87
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5002.32
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5000.65
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5002.56
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5000.53
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5001.54
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5001.67
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5001.2
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5001.95
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5002.29
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5001.71
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5001.5
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5004.6
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5003.46
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5000.22
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5030.67
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5003.32
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5000.7
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5003.17
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5000.7
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5002.84
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5002.67
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5000.65
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5001.43
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5006.73
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5037.86
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5000.72
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5004.12
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5003.15
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 4999.93
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5004.71
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5001.09
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5000.7
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5005.73
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5002.7
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5001
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5001.08
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5000.93
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5001.06
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5000.53
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5001.99
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5004.22
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5001.24
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5002.16
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5000.55
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5001.35
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5001.7
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5010.63
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5002.04
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5002.28
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5001.34
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5000.86
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5000.93
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5002.67
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5001.48
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5000.76
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5000.47
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5004.13
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5000.46
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5000.79
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5000.44
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5001.08
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5000.72
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5002.81
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5004.69
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5000.47
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5002.29
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5004.27
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5001.29
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5001.28
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5031.14
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5001.91
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5001.08
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5001.94
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5001.76
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5030.45
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5001.18
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5013.75
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5002.59
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5003.86
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5000.6
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5000.98
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5000.42
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5000.69
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5002.07
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5031.87
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5000.81
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5001.34
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5001.2
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5001.07
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5031.57
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5003.12
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5001.26
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5001.63
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5000.64
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5032.01
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5002.93
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5011.54
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5000.14
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5004.78
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5033.44
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5000.36
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5003.09
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5001.14
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5002.99
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5003.29
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5001.6
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5001.38
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5000.23
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5001.04
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5004.07
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5000.52
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5000.18
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5001.35
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5001.64
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5002.41
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5000.5
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5000.61
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5002.86
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5000.16
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5004.75
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5001.33
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5001.77
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5002.08
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5002
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5001.37
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5000.62
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5000.88
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5001.1
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5001.07
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5000.67
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5011.46
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5001.79
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5006.51
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5001.23
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 4999.76
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5000.8
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5000.78
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5001.19
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5002.98
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5000.97
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5001.36
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5014.05
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5002.04
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5000.06
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5033.14
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5000.43
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5004.67
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5007.26
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5000.98
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5030.81
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5001.22
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5010.05
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5001.44
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5000.62
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5001.69
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5001.24
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5002.11
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5000.54
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5003.75
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5001.28
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5000.59
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5003.77
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5000.66
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5000.71
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5003.15
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5001.59
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5001.48
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5000.69
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5000.68
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5002.69
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5001.01
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5001.43
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5000.64
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5001.61
+      },
+      {
+        "status": null,
+        "ok": false,
+        "durationMs": 5000.93
+      }
+    ],
+    "authenticatedRequests": [
+      {
+        "endpoint": "/api/auth/me",
+        "status": null,
+        "durationMs": 5001.2,
+        "ok": false
+      },
+      {
+        "endpoint": "/api/auth/me",
+        "status": null,
+        "durationMs": 5001.86,
+        "ok": false
+      },
+      {
+        "endpoint": "/api/auth/me",
+        "status": null,
+        "durationMs": 5003.25,
+        "ok": false
+      },
+      {
+        "endpoint": "/api/auth/me",
+        "status": null,
+        "durationMs": 5003.02,
+        "ok": false
+      },
+      {
+        "endpoint": "/api/auth/me",
+        "status": null,
+        "durationMs": 5003.12,
+        "ok": false
+      },
+      {
+        "endpoint": "/api/auth/me",
+        "status": null,
+        "durationMs": 5004.84,
+        "ok": false
+      },
+      {
+        "endpoint": "/api/auth/me",
+        "status": null,
+        "durationMs": 5006.82,
+        "ok": false
+      },
+      {
+        "endpoint": "/api/auth/me",
+        "status": null,
+        "durationMs": 5007.28,
+        "ok": false
+      },
+      {
+        "endpoint": "/api/auth/me",
+        "status": null,
+        "durationMs": 5007.54,
+        "ok": false
+      },
+      {
+        "endpoint": "/api/auth/me",
+        "status": null,
+        "durationMs": 5008.56,
+        "ok": false
+      },
+      {
+        "endpoint": "/api/auth/me",
+        "status": null,
+        "durationMs": 5010.73,
+        "ok": false
+      },
+      {
+        "endpoint": "/api/auth/me",
+        "status": null,
+        "durationMs": 5011.47,
+        "ok": false
+      },
+      {
+        "endpoint": "/api/auth/me",
+        "status": null,
+        "durationMs": 5012.56,
+        "ok": false
+      },
+      {
+        "endpoint": "/api/auth/me",
+        "status": null,
+        "durationMs": 5013.17,
+        "ok": false
+      },
+      {
+        "endpoint": "/api/auth/me",
+        "status": null,
+        "durationMs": 5013.43,
+        "ok": false
+      },
+      {
+        "endpoint": "/api/auth/me",
+        "status": null,
+        "durationMs": 5015.99,
+        "ok": false
+      },
+      {
+        "endpoint": "/api/auth/me",
+        "status": null,
+        "durationMs": 5016.35,
+        "ok": false
+      },
+      {
+        "endpoint": "/api/auth/me",
+        "status": null,
+        "durationMs": 5024.66,
+        "ok": false
+      },
+      {
+        "endpoint": "/api/auth/me",
+        "status": null,
+        "durationMs": 5027.86,
+        "ok": false
+      },
+      {
+        "endpoint": "/api/profile",
+        "status": null,
+        "durationMs": 5002.88,
+        "ok": false
+      },
+      {
+        "endpoint": "/api/profile",
+        "status": null,
+        "durationMs": 5002.93,
+        "ok": false
+      },
+      {
+        "endpoint": "/api/profile",
+        "status": null,
+        "durationMs": 5001.93,
+        "ok": false
+      },
+      {
+        "endpoint": "/api/profile",
+        "status": null,
+        "durationMs": 5002.34,
+        "ok": false
+      },
+      {
+        "endpoint": "/api/profile",
+        "status": null,
+        "durationMs": 5005.08,
+        "ok": false
+      },
+      {
+        "endpoint": "/api/profile",
+        "status": null,
+        "durationMs": 5004.33,
+        "ok": false
+      },
+      {
+        "endpoint": "/api/profile",
+        "status": null,
+        "durationMs": 5002.66,
+        "ok": false
+      },
+      {
+        "endpoint": "/api/profile",
+        "status": null,
+        "durationMs": 5002.37,
+        "ok": false
+      },
+      {
+        "endpoint": "/api/profile",
+        "status": null,
+        "durationMs": 5003.77,
+        "ok": false
+      },
+      {
+        "endpoint": "/api/profile",
+        "status": null,
+        "durationMs": 5003.04,
+        "ok": false
+      },
+      {
+        "endpoint": "/api/profile",
+        "status": null,
+        "durationMs": 5001.14,
+        "ok": false
+      },
+      {
+        "endpoint": "/api/profile",
+        "status": null,
+        "durationMs": 5014.15,
+        "ok": false
+      },
+      {
+        "endpoint": "/api/profile",
+        "status": null,
+        "durationMs": 5014.03,
+        "ok": false
+      },
+      {
+        "endpoint": "/api/profile",
+        "status": null,
+        "durationMs": 5014.42,
+        "ok": false
+      },
+      {
+        "endpoint": "/api/profile",
+        "status": null,
+        "durationMs": 5014.49,
+        "ok": false
+      },
+      {
+        "endpoint": "/api/profile",
+        "status": null,
+        "durationMs": 5012.09,
+        "ok": false
+      },
+      {
+        "endpoint": "/api/profile",
+        "status": null,
+        "durationMs": 5011.81,
+        "ok": false
+      },
+      {
+        "endpoint": "/api/profile",
+        "status": null,
+        "durationMs": 5003.31,
+        "ok": false
+      },
+      {
+        "endpoint": "/api/profile",
+        "status": null,
+        "durationMs": 5001.53,
+        "ok": false
+      },
+      {
+        "endpoint": "/api/complaints?limit=10",
+        "status": null,
+        "durationMs": 5001.53,
+        "ok": false
+      },
+      {
+        "endpoint": "/api/complaints?limit=10",
+        "status": null,
+        "durationMs": 5002.09,
+        "ok": false
+      },
+      {
+        "endpoint": "/api/complaints?limit=10",
+        "status": null,
+        "durationMs": 5002.09,
+        "ok": false
+      },
+      {
+        "endpoint": "/api/complaints?limit=10",
+        "status": null,
+        "durationMs": 5001.87,
+        "ok": false
+      },
+      {
+        "endpoint": "/api/complaints?limit=10",
+        "status": null,
+        "durationMs": 5001.16,
+        "ok": false
+      },
+      {
+        "endpoint": "/api/complaints?limit=10",
+        "status": null,
+        "durationMs": 5018.77,
+        "ok": false
+      },
+      {
+        "endpoint": "/api/complaints?limit=10",
+        "status": null,
+        "durationMs": 5019.49,
+        "ok": false
+      },
+      {
+        "endpoint": "/api/complaints?limit=10",
+        "status": null,
+        "durationMs": 5022.15,
+        "ok": false
+      },
+      {
+        "endpoint": "/api/complaints?limit=10",
+        "status": null,
+        "durationMs": 5021.71,
+        "ok": false
+      },
+      {
+        "endpoint": "/api/complaints?limit=10",
+        "status": null,
+        "durationMs": 5023.04,
+        "ok": false
+      },
+      {
+        "endpoint": "/api/complaints?limit=10",
+        "status": null,
+        "durationMs": 5023.33,
+        "ok": false
+      },
+      {
+        "endpoint": "/api/complaints?limit=10",
+        "status": null,
+        "durationMs": 5009.27,
+        "ok": false
+      },
+      {
+        "endpoint": "/api/complaints?limit=10",
+        "status": null,
+        "durationMs": 5009.44,
+        "ok": false
+      },
+      {
+        "endpoint": "/api/complaints?limit=10",
+        "status": null,
+        "durationMs": 5009.02,
+        "ok": false
+      },
+      {
+        "endpoint": "/api/complaints?limit=10",
+        "status": null,
+        "durationMs": 5008.97,
+        "ok": false
+      },
+      {
+        "endpoint": "/api/complaints?limit=10",
+        "status": null,
+        "durationMs": 5010.34,
+        "ok": false
+      },
+      {
+        "endpoint": "/api/complaints?limit=10",
+        "status": null,
+        "durationMs": 5010.61,
+        "ok": false
+      },
+      {
+        "endpoint": "/api/complaints?limit=10",
+        "status": null,
+        "durationMs": 5011.98,
+        "ok": false
+      },
+      {
+        "endpoint": "/api/complaints?limit=10",
+        "status": null,
+        "durationMs": 5018.1,
+        "ok": false
+      },
+      {
+        "endpoint": "/api/occupancy",
+        "status": null,
+        "durationMs": 5001.56,
+        "ok": false
+      },
+      {
+        "endpoint": "/api/occupancy",
+        "status": null,
+        "durationMs": 5000.98,
+        "ok": false
+      },
+      {
+        "endpoint": "/api/occupancy",
+        "status": null,
+        "durationMs": 5001.25,
+        "ok": false
+      },
+      {
+        "endpoint": "/api/occupancy",
+        "status": null,
+        "durationMs": 5002.35,
+        "ok": false
+      },
+      {
+        "endpoint": "/api/occupancy",
+        "status": null,
+        "durationMs": 5005.28,
+        "ok": false
+      },
+      {
+        "endpoint": "/api/occupancy",
+        "status": null,
+        "durationMs": 5000.74,
+        "ok": false
+      },
+      {
+        "endpoint": "/api/occupancy",
+        "status": null,
+        "durationMs": 5002.15,
+        "ok": false
+      },
+      {
+        "endpoint": "/api/occupancy",
+        "status": null,
+        "durationMs": 5000.22,
+        "ok": false
+      },
+      {
+        "endpoint": "/api/occupancy",
+        "status": null,
+        "durationMs": 5000.06,
+        "ok": false
+      },
+      {
+        "endpoint": "/api/occupancy",
+        "status": null,
+        "durationMs": 5001.43,
+        "ok": false
+      },
+      {
+        "endpoint": "/api/occupancy",
+        "status": null,
+        "durationMs": 5002.87,
+        "ok": false
+      },
+      {
+        "endpoint": "/api/occupancy",
+        "status": null,
+        "durationMs": 5002.71,
+        "ok": false
+      },
+      {
+        "endpoint": "/api/occupancy",
+        "status": null,
+        "durationMs": 5006.42,
+        "ok": false
+      },
+      {
+        "endpoint": "/api/occupancy",
+        "status": null,
+        "durationMs": 5007.41,
+        "ok": false
+      },
+      {
+        "endpoint": "/api/occupancy",
+        "status": null,
+        "durationMs": 5007.62,
+        "ok": false
+      },
+      {
+        "endpoint": "/api/occupancy",
+        "status": null,
+        "durationMs": 5006.96,
+        "ok": false
+      },
+      {
+        "endpoint": "/api/occupancy",
+        "status": null,
+        "durationMs": 5007.38,
+        "ok": false
+      },
+      {
+        "endpoint": "/api/occupancy",
+        "status": null,
+        "durationMs": 5007.14,
+        "ok": false
+      },
+      {
+        "endpoint": "/api/occupancy",
+        "status": null,
+        "durationMs": 5001.77,
+        "ok": false
+      },
+      {
+        "endpoint": "/api/fees/dues",
+        "status": null,
+        "durationMs": 4999.76,
+        "ok": false
+      },
+      {
+        "endpoint": "/api/fees/dues",
+        "status": null,
+        "durationMs": 5000.33,
+        "ok": false
+      },
+      {
+        "endpoint": "/api/fees/dues",
+        "status": null,
+        "durationMs": 5000.44,
+        "ok": false
+      },
+      {
+        "endpoint": "/api/fees/dues",
+        "status": null,
+        "durationMs": 5000.46,
+        "ok": false
+      },
+      {
+        "endpoint": "/api/fees/dues",
+        "status": null,
+        "durationMs": 5000.89,
+        "ok": false
+      },
+      {
+        "endpoint": "/api/fees/dues",
+        "status": null,
+        "durationMs": 5000.45,
+        "ok": false
+      },
+      {
+        "endpoint": "/api/fees/dues",
+        "status": null,
+        "durationMs": 5004.47,
+        "ok": false
+      },
+      {
+        "endpoint": "/api/fees/dues",
+        "status": null,
+        "durationMs": 5004.17,
+        "ok": false
+      },
+      {
+        "endpoint": "/api/fees/dues",
+        "status": null,
+        "durationMs": 5003.92,
+        "ok": false
+      },
+      {
+        "endpoint": "/api/fees/dues",
+        "status": null,
+        "durationMs": 5006.14,
+        "ok": false
+      },
+      {
+        "endpoint": "/api/fees/dues",
+        "status": null,
+        "durationMs": 5005.05,
+        "ok": false
+      },
+      {
+        "endpoint": "/api/fees/dues",
+        "status": null,
+        "durationMs": 5004.76,
+        "ok": false
+      },
+      {
+        "endpoint": "/api/fees/dues",
+        "status": null,
+        "durationMs": 5002.47,
+        "ok": false
+      },
+      {
+        "endpoint": "/api/fees/dues",
+        "status": null,
+        "durationMs": 5001.22,
+        "ok": false
+      },
+      {
+        "endpoint": "/api/fees/dues",
+        "status": null,
+        "durationMs": 5001.55,
+        "ok": false
+      },
+      {
+        "endpoint": "/api/fees/dues",
+        "status": null,
+        "durationMs": 5001.63,
+        "ok": false
+      },
+      {
+        "endpoint": "/api/fees/dues",
+        "status": null,
+        "durationMs": 5001.96,
+        "ok": false
+      },
+      {
+        "endpoint": "/api/fees/dues",
+        "status": null,
+        "durationMs": 5002.13,
+        "ok": false
+      },
+      {
+        "endpoint": "/api/fees/dues",
+        "status": null,
+        "durationMs": 4999.87,
+        "ok": false
+      },
+      {
+        "endpoint": "/api/auth/me",
+        "status": null,
+        "durationMs": 5000.41,
+        "ok": false
+      },
+      {
+        "endpoint": "/api/auth/me",
+        "status": null,
+        "durationMs": 5000.64,
+        "ok": false
+      },
+      {
+        "endpoint": "/api/auth/me",
+        "status": null,
+        "durationMs": 5002.03,
+        "ok": false
+      },
+      {
+        "endpoint": "/api/auth/me",
+        "status": null,
+        "durationMs": 5000.79,
+        "ok": false
+      },
+      {
+        "endpoint": "/api/auth/me",
+        "status": null,
+        "durationMs": 5000.68,
+        "ok": false
+      },
+      {
+        "endpoint": "/api/auth/me",
+        "status": null,
+        "durationMs": 5001.12,
+        "ok": false
+      },
+      {
+        "endpoint": "/api/auth/me",
+        "status": null,
+        "durationMs": 5000.75,
+        "ok": false
+      },
+      {
+        "endpoint": "/api/auth/me",
+        "status": null,
+        "durationMs": 5000.19,
+        "ok": false
+      },
+      {
+        "endpoint": "/api/auth/me",
+        "status": null,
+        "durationMs": 5000.65,
+        "ok": false
+      },
+      {
+        "endpoint": "/api/auth/me",
+        "status": null,
+        "durationMs": 5000.1,
+        "ok": false
+      },
+      {
+        "endpoint": "/api/auth/me",
+        "status": null,
+        "durationMs": 5000.57,
+        "ok": false
+      },
+      {
+        "endpoint": "/api/auth/me",
+        "status": null,
+        "durationMs": 5000.37,
+        "ok": false
+      },
+      {
+        "endpoint": "/api/auth/me",
+        "status": null,
+        "durationMs": 4999.99,
+        "ok": false
+      },
+      {
+        "endpoint": "/api/auth/me",
+        "status": null,
+        "durationMs": 4999.75,
+        "ok": false
+      },
+      {
+        "endpoint": "/api/auth/me",
+        "status": null,
+        "durationMs": 5000.45,
+        "ok": false
+      },
+      {
+        "endpoint": "/api/auth/me",
+        "status": null,
+        "durationMs": 4999.49,
+        "ok": false
+      },
+      {
+        "endpoint": "/api/auth/me",
+        "status": null,
+        "durationMs": 5000.81,
+        "ok": false
+      },
+      {
+        "endpoint": "/api/auth/me",
+        "status": null,
+        "durationMs": 5000.91,
+        "ok": false
+      },
+      {
+        "endpoint": "/api/auth/me",
+        "status": null,
+        "durationMs": 5001.46,
+        "ok": false
+      }
+    ]
+  }
+}
