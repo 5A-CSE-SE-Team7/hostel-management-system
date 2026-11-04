@@ -38,6 +38,6 @@ it('real visitor and leave screens preserve student/staff workflows and rejectio
  await waitFor(()=>expect(screen.getByLabelText(/Remarks for request/)).toHaveAttribute('aria-invalid','true'));
  await user.type(screen.getByLabelText(/Remarks for request/),'Verified rejection remark');await user.click(within(screen.getByText('Integrated leave request').closest('tr')).getByRole('button',{name:'Reject'}));
  await waitFor(()=>expect(screen.getByText('Integrated leave request').closest('tr')).toHaveTextContent('rejected'));expect(screen.getByText('Verified rejection remark')).toBeVisible();
- await logout(user);await login(user,'student1@hms.test');await user.click(screen.getByRole('link',{name:'Notifications',exact:true}));
+ await logout(user);await login(user,'student1@hms.test');const inboxLink=screen.getByRole('link',{name:/^Notifications(?: \d+ unread notifications)?$/});expect(inboxLink).toHaveAttribute('href','/notifications');await user.click(inboxLink);
  expect(await screen.findByText(/Your leave\/outpass request #\d+ was rejected. Remarks: Verified rejection remark/)).toBeVisible();
 },30000);
