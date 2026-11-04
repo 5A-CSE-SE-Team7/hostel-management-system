@@ -123,4 +123,24 @@ router.patch('/complaints/:id/priority', staff, async (req, res, next) => {
     res.json({ complaintId, priority: d.priority });
   } catch (error) { next(error); }
 });
+// HMS-F-011: strict assigned -> in_progress -> resolved lifecycle.
+router.patch('/complaints/:id/status', requireRole('maintenance', 'warden', 'admin'), async (req, res, next) => {
+  try {
+    const complaintId = id(req.params.id, 'id');
+    const d = validate(req.body, { status: { required: true, enum: ['in_progress', 'resolved'] }, resolutionDetails: { max: 2000 } });
+    const result = await withTransaction(async conn => {
+      const [[complaint]] = await conn.query('SELECT status, assigned_to FROM complaints WHERE id = ? FOR UPDATE', [complaintId]);
+      if (!complaint) throw E.notFound('Complaint');
+      if (req.session.user.role === 'maintenance' && complaint.assigned_to !== req.session.user.id) throw E.forbidden('This complaint is not assigned to you');
+      const nextStatus = { assigned: 'in_progress', in_progress: 'resolved' }[complaint.status];
+      if (d.status !== nextStatus) throw E.conflict(`Cannot change status from ${complaint.status} to ${d.status}`, 'INVALID_TRANSITION');
+      if (d.status === 'resolved' && !d.resolutionDetails) throw E.validation({ resolutionDetails: 'Resolution details are required' });
+      await conn.query(`UPDATE complaints SET status = ?, resolution_details = ?, resolved_at = ${d.status === 'resolved' ? 'NOW()' : 'NULL'} WHERE id = ?`, [d.status, d.status === 'resolved' ? d.resolutionDetails : null, complaintId]);
+      await audit(req, 'COMPLAINT_STATUS', 'complaint', complaintId, { from: complaint.status, to: d.status }, { conn, strict: true });
+      const [[row]] = await conn.query('SELECT status, updated_at AS updatedAt FROM complaints WHERE id = ?', [complaintId]);
+      return { complaintId, ...row };
+    });
+    res.json(result);
+  } catch (error) { next(error); }
+});
 module.exports = router;
