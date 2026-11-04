@@ -1,3 +1,5 @@
+> Completion recording: [sprint1.mp4](sprint1.mp4). See [capture and QA evidence](SPRINT1_RECORDING.md). The historical storyboard below is preserved; its original missing-recording notes describe the earlier state.
+
 # Sprint 1 Demonstration Guide
 
 **Project:** Hostel Management System (Team 7)
