@@ -1,3 +1,4 @@
+import Notifications from './pages/Notifications';
 import { useState } from 'react';
 import Fees from './pages/Fees';
 import Visitors from './pages/Visitors';
