@@ -13,11 +13,14 @@ async function api(path, options = {}) {
 
 export default function Allocations() {
   const [availableBeds, setAvailableBeds] = useState([]);
+  const [activeAllocations, setActiveAllocations] = useState([]);
   const [occupancy, setOccupancy] = useState(null);
   const [studentId, setStudentId] = useState('');
   const [bedId, setBedId] = useState('');
+  const [transferBedIds, setTransferBedIds] = useState({});
   const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
+  const [transferringId, setTransferringId] = useState(null);
   const [error, setError] = useState('');
   const [notice, setNotice] = useState('');
 
@@ -25,13 +28,19 @@ export default function Allocations() {
     setLoading(true);
     setError('');
     try {
-      const [beds, summary] = await Promise.all([
+      const [beds, summary, allocations] = await Promise.all([
         api('/api/beds/available'),
         api('/api/occupancy'),
+        api('/api/allocations'),
       ]);
       setAvailableBeds(beds);
       setOccupancy(summary);
       setBedId((current) => beds.some((bed) => String(bed.id) === current) ? current : '');
+      setActiveAllocations(allocations);
+      setTransferBedIds((current) => Object.fromEntries(allocations.map((allocation) => {
+        const key = String(allocation.id);
+        return [key, beds.some((bed) => String(bed.id) === current[key]) ? current[key] : ''];
+      })));
     } catch (err) {
       setError(err.message || 'Could not load allocation data.');
     } finally {
@@ -58,6 +67,27 @@ export default function Allocations() {
       setError(err.message || 'Could not allocate the bed.');
     } finally {
       setSubmitting(false);
+    }
+  }
+
+  async function transferAllocation(allocation) {
+    const targetBedId = Number(transferBedIds[String(allocation.id)]);
+    if (!targetBedId) return;
+    setTransferringId(allocation.id);
+    setError('');
+    setNotice('');
+    try {
+      const result = await api(`/api/allocations/${allocation.id}/transfer`, {
+        method: 'POST',
+        body: JSON.stringify({ targetBedId }),
+      });
+      const target = availableBeds.find((bed) => bed.id === result.bedId);
+      setNotice(`Student ${allocation.studentName} transferred to ${target?.block.name || 'the selected block'}, room ${target?.room.roomNumber || ''}, bed ${target?.label || ''}.`);
+      await loadData();
+    } catch (err) {
+      setError(err.message || 'Could not transfer the student. The current allocation was kept.');
+    } finally {
+      setTransferringId(null);
     }
   }
 
@@ -91,6 +121,53 @@ export default function Allocations() {
           </button>
         </form>
         {!loading && !availableBeds.length && <p>No available beds. Add or reactivate inventory first.</p>}
+      </section>
+
+      <section aria-labelledby="transfer-allocation-heading">
+        <h2 id="transfer-allocation-heading">Transfer an allocated student</h2>
+        {loading ? <p role="status">Loading current allocations…</p> : activeAllocations.length ? (
+          <div style={{ overflowX: 'auto' }}>
+            <table>
+              <thead>
+                <tr>
+                  <th scope="col">Student</th>
+                  <th scope="col">Current bed</th>
+                  <th scope="col">Available target bed</th>
+                  <th scope="col">Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                {activeAllocations.map((allocation) => {
+                  const key = String(allocation.id);
+                  return (
+                    <tr key={allocation.id}>
+                      <th scope="row">{allocation.studentName} (#{allocation.studentId})</th>
+                      <td>{allocation.blockName} · Room {allocation.roomNumber} · Bed {allocation.bedLabel}</td>
+                      <td>
+                        <select id={`transfer-bed-${allocation.id}`} value={transferBedIds[key] || ''}
+                          aria-label={`Target bed for ${allocation.studentName}`}
+                          onChange={(event) => setTransferBedIds((current) => ({ ...current, [key]: event.target.value }))}>
+                          <option value="">Choose a bed</option>
+                          {availableBeds.map((bed) => (
+                            <option key={bed.id} value={bed.id}>
+                              {bed.block.name} · Room {bed.room.roomNumber} · Bed {bed.label}
+                            </option>
+                          ))}
+                        </select>
+                      </td>
+                      <td>
+                        <button type="button" disabled={!transferBedIds[key] || transferringId !== null}
+                          onClick={() => transferAllocation(allocation)}>
+                          {transferringId === allocation.id ? 'Transferring…' : 'Transfer'}
+                        </button>
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
+        ) : <p>No active allocations to transfer.</p>}
       </section>
 
       <section aria-labelledby="occupancy-heading">
