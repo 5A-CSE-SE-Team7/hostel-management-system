@@ -16,7 +16,7 @@ This execution companion supplements the unchanged submitted SRS/SAD RTMs. P bel
 | F-014..015 | TC-Admin-02..03 | Sprint1 API and live frontend service tests | P, automated |
 | F-016 | TC-Admin-04 | PR51 six report types, period boundaries, CSV injection and roles | P, automated |
 | NF-001 | TC-Perf-01 | PR49 actual-tree local benchmark | Local evidence only; deployed/browser N |
-| NF-002 | TC-Perf-02 | PR59 500-session runner and retained measured results | See latest evidence; production N |
+| NF-002 | TC-Perf-02 | PR59 current raw integration failures; docs/verification/HMS-NF-002.md | F: both current 500-user runs failed; production N |
 | NF-003 | TC-Rel-01 | PR50 semantic probes, unknown coverage, maintenance exclusions | Monitor tests only; monthly target N |
 | NF-004 | TC-Rel-02 | PR60 isolated timed restore and real API chain verification | Local fixture only; daily deployed schedule N |
 | NF-005 | TC-UX-01 | PR58 automated real-page axe/responsiveness, 375/768/1280 px | Manual screen-reader and full AA acceptance N |
