@@ -14,13 +14,16 @@ async function api(path, options = {}) {
 export default function Allocations() {
   const [availableBeds, setAvailableBeds] = useState([]);
   const [activeAllocations, setActiveAllocations] = useState([]);
+  const [allocationHistory, setAllocationHistory] = useState([]);
   const [occupancy, setOccupancy] = useState(null);
   const [studentId, setStudentId] = useState('');
   const [bedId, setBedId] = useState('');
   const [transferBedIds, setTransferBedIds] = useState({});
+  const [transitionDates, setTransitionDates] = useState({});
   const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
   const [transferringId, setTransferringId] = useState(null);
+  const [transitioningId, setTransitioningId] = useState(null);
   const [error, setError] = useState('');
   const [notice, setNotice] = useState('');
 
@@ -28,18 +31,25 @@ export default function Allocations() {
     setLoading(true);
     setError('');
     try {
-      const [beds, summary, allocations] = await Promise.all([
+      const [beds, summary, allocations, history] = await Promise.all([
         api('/api/beds/available'),
         api('/api/occupancy'),
         api('/api/allocations'),
+        api('/api/allocations/history'),
       ]);
       setAvailableBeds(beds);
       setOccupancy(summary);
       setBedId((current) => beds.some((bed) => String(bed.id) === current) ? current : '');
       setActiveAllocations(allocations);
+      setAllocationHistory(history);
       setTransferBedIds((current) => Object.fromEntries(allocations.map((allocation) => {
         const key = String(allocation.id);
         return [key, beds.some((bed) => String(bed.id) === current[key]) ? current[key] : ''];
+      })));
+      const today = new Date().toISOString().slice(0, 10);
+      setTransitionDates((current) => Object.fromEntries(allocations.map((allocation) => {
+        const key = String(allocation.id);
+        return [key, { checkIn: current[key]?.checkIn || today, checkOut: current[key]?.checkOut || today }];
       })));
     } catch (err) {
       setError(err.message || 'Could not load allocation data.');
@@ -123,8 +133,8 @@ export default function Allocations() {
         {!loading && !availableBeds.length && <p>No available beds. Add or reactivate inventory first.</p>}
       </section>
 
-      <section aria-labelledby="transfer-allocation-heading">
-        <h2 id="transfer-allocation-heading">Transfer an allocated student</h2>
+      <section aria-labelledby="active-allocation-heading">
+        <h2 id="active-allocation-heading">Current allocations</h2>
         {loading ? <p role="status">Loading current allocations…</p> : activeAllocations.length ? (
           <div style={{ overflowX: 'auto' }}>
             <table>
@@ -132,8 +142,11 @@ export default function Allocations() {
                 <tr>
                   <th scope="col">Student</th>
                   <th scope="col">Current bed</th>
+                  <th scope="col">Status</th>
                   <th scope="col">Available target bed</th>
-                  <th scope="col">Action</th>
+                  <th scope="col">Transfer</th>
+                  <th scope="col">Check-in/out date</th>
+                  <th scope="col">Check-in/out</th>
                 </tr>
               </thead>
               <tbody>
@@ -143,6 +156,7 @@ export default function Allocations() {
                     <tr key={allocation.id}>
                       <th scope="row">{allocation.studentName} (#{allocation.studentId})</th>
                       <td>{allocation.blockName} · Room {allocation.roomNumber} · Bed {allocation.bedLabel}</td>
+                      <td>{allocation.status}</td>
                       <td>
                         <select id={`transfer-bed-${allocation.id}`} value={transferBedIds[key] || ''}
                           aria-label={`Target bed for ${allocation.studentName}`}
@@ -156,9 +170,43 @@ export default function Allocations() {
                         </select>
                       </td>
                       <td>
-                        <button type="button" disabled={!transferBedIds[key] || transferringId !== null}
+                        <button type="button" disabled={!transferBedIds[key] || transferringId !== null || transitioningId !== null}
                           onClick={() => transferAllocation(allocation)}>
                           {transferringId === allocation.id ? 'Transferring…' : 'Transfer'}
+                        </button>
+                      </td>
+                      <td>
+                        <input type="date" value={transitionDates[key]?.[allocation.status === 'checked_in' ? 'checkOut' : 'checkIn'] || ''}
+                          aria-label={`${allocation.status === 'checked_in' ? 'Check-out' : 'Check-in'} date for ${allocation.studentName}`}
+                          onChange={(event) => setTransitionDates((current) => ({
+                            ...current,
+                            [key]: { ...current[key], [allocation.status === 'checked_in' ? 'checkOut' : 'checkIn']: event.target.value },
+                          }))} />
+                      </td>
+                      <td>
+                        <button type="button" disabled={!transitionDates[key]?.[allocation.status === 'checked_in' ? 'checkOut' : 'checkIn']
+                          || transitioningId !== null || transferringId !== null}
+                          onClick={async () => {
+                            const checkedIn = allocation.status === 'checked_in';
+                            const action = checkedIn ? 'check-out' : 'check-in';
+                            const dateField = checkedIn ? 'checkOutDate' : 'checkInDate';
+                            setTransitioningId(allocation.id);
+                            setError('');
+                            setNotice('');
+                            try {
+                              await api(`/api/allocations/${allocation.id}/${action}`, {
+                                method: 'POST',
+                                body: JSON.stringify({ [dateField]: transitionDates[key][checkedIn ? 'checkOut' : 'checkIn'] }),
+                              });
+                              setNotice(`${allocation.studentName} checked ${checkedIn ? 'out' : 'in'} successfully.`);
+                              await loadData();
+                            } catch (err) {
+                              setError(err.message || `Could not check ${checkedIn ? 'out' : 'in'} the student.`);
+                            } finally {
+                              setTransitioningId(null);
+                            }
+                          }}>
+                          {transitioningId === allocation.id ? 'Saving…' : allocation.status === 'checked_in' ? 'Check out' : 'Check in'}
                         </button>
                       </td>
                     </tr>
@@ -167,7 +215,39 @@ export default function Allocations() {
               </tbody>
             </table>
           </div>
-        ) : <p>No active allocations to transfer.</p>}
+        ) : <p>No active allocations.</p>}
+      </section>
+
+      <section aria-labelledby="allocation-history-heading">
+        <h2 id="allocation-history-heading">Allocation history</h2>
+        {loading ? <p role="status">Loading allocation history…</p> : allocationHistory.length ? (
+          <div style={{ overflowX: 'auto' }}>
+            <table>
+              <thead>
+                <tr>
+                  <th scope="col">Student</th>
+                  <th scope="col">Bed</th>
+                  <th scope="col">Status</th>
+                  <th scope="col">Allocated</th>
+                  <th scope="col">Check-in</th>
+                  <th scope="col">Check-out</th>
+                </tr>
+              </thead>
+              <tbody>
+                {allocationHistory.map((row) => (
+                  <tr key={row.id}>
+                    <th scope="row">{row.studentName} (#{row.studentId})</th>
+                    <td>{row.blockName} · Room {row.roomNumber} · Bed {row.bedLabel}</td>
+                    <td>{row.status}</td>
+                    <td>{row.allocatedAt}</td>
+                    <td>{row.checkInDate || '—'}</td>
+                    <td>{row.checkOutDate || '—'}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        ) : <p>No allocation history yet.</p>}
       </section>
 
       <section aria-labelledby="occupancy-heading">
