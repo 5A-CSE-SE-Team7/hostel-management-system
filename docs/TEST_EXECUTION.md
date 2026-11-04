@@ -1,3 +1,5 @@
+> Current integration acceptance (2026-11-04): TC-Perf-02 / HMS-NF-002 is **F**. Both current 500-user runs failed; do not close #27 or infer scale readiness from functional CI. See verification/HMS-NF-002.md and the committed scalability-integration failure samples. Historical results below remain dated evidence.
+
 # Sprint 2 test execution and residual acceptance
 
 2026-11-01: all results below use synthetic data. This document records verified scope and explicit exceptions; it does not close issues34/36/38.
