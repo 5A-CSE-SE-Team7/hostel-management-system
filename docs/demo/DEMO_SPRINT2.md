@@ -1,3 +1,5 @@
+> Current integration audit: the team removed `sprint2.mp4` in commit `04b82ce` for a replacement team recording. The description below is historical evidence, not a currently available deliverable. Issue #36 remains incomplete until a new recording is committed and reviewed.
+
 # Sprint 2 recorded demonstration
 
 Video: [sprint2.mp4](sprint2.mp4), **60.48 seconds**, H.264 MP4, 1280×900. Recorded on 2026-11-01 from the actual integrated application at `9f5d015b55ea7424969349629a83ce0afe2b7a3f`, using local Chromium and a separate synthetic `hms_demo` MySQL database. This is an automated, silent screen recording of real UI actions and genuine API/session/database responses; API responses were not mocked and frames were not fabricated or sped up.
