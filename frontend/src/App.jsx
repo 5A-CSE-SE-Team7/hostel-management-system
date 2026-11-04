@@ -3,7 +3,6 @@ import Visitors from './pages/Visitors';
 import Leave from './pages/Leave';
 import Complaints from './pages/Complaints';
 import Dashboard from './pages/Dashboard';
-import Notifications from './pages/Notifications';
 import NotificationCount from './components/NotificationCount';
 import { Navigate, NavLink, Outlet, Route, Routes, useLocation } from 'react-router-dom';
 import { useAuth } from './auth';
