@@ -1,3 +1,5 @@
+> **Current cumulative integration drill: PASS locally.** The actual backup/restore scripts restored a populated synthetic database in 2 seconds. Counts matched across 13 business tables, including allocation, complaint, assessment/payment, visitor, leave and notification records. All 14 original audit rows/hashes were preserved; the restored authenticated API verified a valid 16-event chain after additional reads. Evidence: `docs/evidence/recovery-integration.json`, measured application `8982493ffbb42d343308d85af2a24c826d05d532`. Production scheduling and a production-sized drill remain unverified. The preceding #59 scalability acceptance remains blocked despite this restore PASS.
+
 # Backup and restore verification — 2026-11-01
 
 Executed real MySQL 8 backup/restore on synthetic, isolated `hms_backup_fixture` -> `hms_restore_drill`; the source was retained. The first attempt exposed missing PROCESS privilege for tablespace dumping. The corrected script uses `--no-tablespaces --set-gtid-purged=OFF` and succeeded without that privilege.
