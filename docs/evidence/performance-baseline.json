@@ -1,6 +1,6 @@
 {
-  "integrationCommit": "bf0746a9ed445437f5fb1523fb50183dbfbaa17a",
-  "workloadCommit": "bf0746a9ed445437f5fb1523fb50183dbfbaa17a",
+  "integrationCommit": "8982493ffbb42d343308d85af2a24c826d05d532",
+  "workloadCommit": "8982493ffbb42d343308d85af2a24c826d05d532",
   "source": "actual committed application tree",
   "synthetic": true
 }

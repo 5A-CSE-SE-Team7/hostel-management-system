@@ -1,3 +1,5 @@
+> **Current cumulative integration normal-load result: PASS.** Application `8982493ffbb42d343308d85af2a24c826d05d532` completed 705/705 requests with zero errors, five sessions and twenty iterations. Login p90 was 2,223.07 ms; the highest protected-read p90 was 102.34 ms. All original 3,000 ms thresholds passed. Raw samples, fixture counts and EXPLAIN plans are retained in `docs/evidence/performance-*.json`. This is an API benchmark, not browser-render or deployed-host evidence. The separate 500-user scalability runs failed; #59 remains a blocking predecessor despite this normal-load PASS. Earlier measurements below are historical.
+
 # Final isolated normal-load replay — 2026-11-01
 
 **PASS**, actual application tree `bf0746a9ed445437f5fb1523fb50183dbfbaa17a`, Node v24.19.0/MySQL8, production-cost12 passwords, five authenticated sessions and twenty iterations: **705/705 requests succeeded**, zero errors. Login p90 **1137.85 ms**; highest protected-read p90 **49.39 ms**. All unchanged 3000 ms thresholds passed. The separate 500-session test was finished before this replay.
