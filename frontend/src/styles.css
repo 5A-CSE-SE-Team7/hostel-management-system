@@ -68,3 +68,15 @@ button:disabled { opacity: .65; cursor: wait; }
 .registration .card, .student-results, .student-results > li { min-width: 0; }
 .student-result { min-width: 0; overflow-wrap: anywhere; white-space: normal; }
 .registration input, .registration select { min-width: 0; }
+/* Account cards use an explicit light palette in both OS themes. */
+.registration .card { color: #172334; color-scheme: light; }
+.registration .card a { color: #174c9b; }
+.registration .card .error, .registration .card .field-error,
+.registration .card .alert { color: #a31919; }
+.registration .card :focus-visible { outline: 3px solid #174c9b; outline-offset: 3px; }
+.registration .field input:focus { outline-color: #174c9b; }
+.registration .success { color: #18794e; }
+@media (prefers-color-scheme: dark) {
+  .registration > .intro { color: #c2ccda; }
+  .registration > .success { color: #8ee0b3; }
+}
