@@ -93,3 +93,23 @@ The backend tamper tests deliberately alter audit rows. Before live frontend tes
 Safe foundation merge order for owner approval: PR42, PR40 (already contains PR39; no duplicate entry merge), PR53, then PR41 and PR47, followed by PR49 and PR50. Existing feature PRs remain scoped: do not copy audit/auth/frontend implementations into each branch or skip standalone tests. Until those foundations enter main, PR41/47/49/50 raw required checks remain dependency-blocked and nonzero. Re-evaluate each PR's merge ref and rerun CI after main changes; this local combined result does not claim that merge has happened. PR52 then PR51 is the separate additive M4 order; the full combined fixture additionally uses genuine M2 routes and the complaint/fee stack. See docs/integration/AUDIT_FOUNDATION.md on PR53 for audit format compatibility.
 
 GitHub job pages expose conclusions/annotations, but complete runner logs require sign-in. This environment's enforced allowlist omits api.github.com: API/private branch-protection and Project membership verification are unavailable here. A public job conclusion and a locally reproduced error are reported separately from inaccessible log text. Keep real Project token/URL configuration and branch-protection verification as owner actions.
+
+## Sprint 1 completion administrator checklist
+
+The current workflow already rejects missing configuration and never checks out
+untrusted code on its privileged metadata event. Do not replace that failure with
+a successful skip: successful insertion is an acceptance criterion of #4.
+
+1. Set Actions variable `PROJECT_URL` to the intended organization Project URL
+   (currently `https://github.com/orgs/5A-CSE-SE-Team7/projects/2`).
+2. Set repository Actions secret `ADD_TO_PROJECT_PAT` to a token belonging to a
+   user with write access to that Project. For a classic PAT use `project` scope
+   (and `repo` only if private repository access is needed). Authorize organization
+   SSO if required. Organization policies must permit the token. Never paste it
+   into a workflow, PR, issue, or command log.
+3. Dispatch **Project automation** with `content_url` set to an existing issue URL.
+   Confirm the job succeeds AND the item appears in Project 2.
+4. Confirm a subsequently opened genuine issue appears automatically. Do not
+   claim this criterion complete based only on YAML/unit tests.
+5. Preserve required checks `Backend unit + integration tests` and `Frontend build`
+   on protected `main`; verify review/bypass policy as repository administrator.
