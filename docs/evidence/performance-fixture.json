@@ -37,7 +37,7 @@
           "possible_keys": "uq_room",
           "key": "uq_room",
           "key_len": "4",
-          "ref": "hms_perf_30511.b.id",
+          "ref": "hms_perf_28118.b.id",
           "rows": 3,
           "filtered": 100,
           "Extra": "Using index"
@@ -51,7 +51,7 @@
           "possible_keys": "uq_bed",
           "key": "uq_bed",
           "key_len": "4",
-          "ref": "hms_perf_30511.r.id",
+          "ref": "hms_perf_28118.r.id",
           "rows": 4,
           "filtered": 100,
           "Extra": "Using index"
@@ -65,7 +65,7 @@
           "possible_keys": "fk_alloc_bed",
           "key": "fk_alloc_bed",
           "key_len": "4",
-          "ref": "hms_perf_30511.bd.id",
+          "ref": "hms_perf_28118.bd.id",
           "rows": 1,
           "filtered": 100,
           "Extra": "Using where"
@@ -98,7 +98,7 @@
           "possible_keys": "uq_room",
           "key": "uq_room",
           "key_len": "4",
-          "ref": "hms_perf_30511.b.id",
+          "ref": "hms_perf_28118.b.id",
           "rows": 3,
           "filtered": 100,
           "Extra": "Using where"
@@ -112,7 +112,7 @@
           "possible_keys": "uq_bed",
           "key": "uq_bed",
           "key_len": "4",
-          "ref": "hms_perf_30511.r.id",
+          "ref": "hms_perf_28118.r.id",
           "rows": 4,
           "filtered": 100,
           "Extra": "Using where"
@@ -126,7 +126,7 @@
           "possible_keys": "fk_alloc_bed",
           "key": "fk_alloc_bed",
           "key_len": "4",
-          "ref": "hms_perf_30511.d.id",
+          "ref": "hms_perf_28118.d.id",
           "rows": 1,
           "filtered": 100,
           "Extra": "Using where"
@@ -159,7 +159,7 @@
           "possible_keys": "PRIMARY,uq_room",
           "key": "uq_room",
           "key_len": "4",
-          "ref": "hms_perf_30511.b.id",
+          "ref": "hms_perf_28118.b.id",
           "rows": 3,
           "filtered": 16.67,
           "Extra": "Using where"
@@ -173,7 +173,7 @@
           "possible_keys": "uq_bed",
           "key": "uq_bed",
           "key_len": "4",
-          "ref": "hms_perf_30511.r.id",
+          "ref": "hms_perf_28118.r.id",
           "rows": 4,
           "filtered": 10,
           "Extra": "Using where"
@@ -187,7 +187,7 @@
           "possible_keys": "fk_alloc_bed",
           "key": "fk_alloc_bed",
           "key_len": "4",
-          "ref": "hms_perf_30511.d.id",
+          "ref": "hms_perf_28118.d.id",
           "rows": 1,
           "filtered": 100,
           "Extra": "Using where; Not exists"
@@ -220,7 +220,7 @@
           "possible_keys": "fk_comp_cat",
           "key": "fk_comp_cat",
           "key_len": "4",
-          "ref": "hms_perf_30511.cc.id",
+          "ref": "hms_perf_28118.cc.id",
           "rows": 1,
           "filtered": 100,
           "Extra": "Using index"
@@ -253,7 +253,7 @@
           "possible_keys": "idx_comp_student",
           "key": "idx_comp_student",
           "key_len": "4",
-          "ref": "hms_perf_30511.u.id",
+          "ref": "hms_perf_28118.u.id",
           "rows": 1,
           "filtered": 11.11,
           "Extra": "Using where"
