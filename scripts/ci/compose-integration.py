@@ -4,6 +4,11 @@ import json, subprocess, sys
 from pathlib import Path
 sprint1 = '--m4-sprint1' in sys.argv[2:]
 root = Path(sys.argv[1])
+# Preserve the current Sprint 1 completion over historical owner snapshots.
+completion = {p: (root/p).read_bytes() for p in [
+    'backend/src/app.js', 'frontend/src/App.jsx', 'frontend/src/styles.css',
+    'frontend/integration/visitors-leave.test.jsx',
+] if sprint1 and (root/p).exists()}
 refs = json.loads(Path('docs/integration/refs.json').read_text())
 def copy(key, prefix):
     files = subprocess.check_output(['git','ls-tree','-r','--name-only',refs[key],'--',prefix],text=True).splitlines()
@@ -25,8 +30,12 @@ for prefix in ['backend/src/routes/inventory.js','backend/tests/room.test.js','f
     copy('inventory',prefix)
 for prefix in ['backend/src/routes/inventory.js','backend/src/routes/allocations.js','backend/tests/allocations.test.js','frontend/src/pages/Allocations.jsx','frontend/src/pages/MyRoom.jsx','frontend/src/tests/allocation-navigation.test.jsx']:
     copy('m2',prefix)
+# Sprint 1 #24 now includes a recipient-only notification inbox. Its presence
+# is intentional; fee UI/reporting remain excluded from this historical fixture.
 if sprint1:
-    for path in ['frontend/src/pages/Fees.jsx','frontend/src/pages/Reports.jsx','backend/src/routes/reports.js','backend/src/routes/notifications.js']:
+    for path, content in completion.items():
+        (root/path).write_bytes(content)
+    for path in ['frontend/src/pages/Fees.jsx','frontend/src/pages/Reports.jsx','backend/src/routes/reports.js']:
         assert not (root/path).exists(), f'Sprint2 source leaked into Sprint1: {path}'
 else:
     # Normal-merge frontend candidate preserves every genuine feature and test.
