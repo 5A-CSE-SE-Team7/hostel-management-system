@@ -1,72 +1,65 @@
+// HMS-F-012 notification adapter. In-app state is durable; email is optional.
 const config = require('../config');
 const { pool } = require('../db');
-
-let transporter = null;
-function getTransporter() {
-  if (!config.smtp?.host) return null;
-  if (!transporter) {
+let transport;
+function configuredTransport() {
+  if (!config.smtp.host) return null;
+  if (!transport) transport = require('nodemailer').createTransport({
+    host: config.smtp.host, port: config.smtp.port, secure: config.smtp.port === 465,
+    requireTLS: config.smtp.port !== 465, tls: { minVersion: 'TLSv1.2' },
+    connectionTimeout: 10000, greetingTimeout: 10000, socketTimeout: 10000,
+    auth: config.smtp.user ? { user: config.smtp.user, pass: config.smtp.pass } : undefined,
+    disableFileAccess: true, disableUrlAccess: true,
+  });
+  return transport;
+}
+async function persist(conn, userId, type, message, ref) {
+  const [result] = await conn.query('INSERT INTO notifications (user_id, type, message, ref_type, ref_id) VALUES (?,?,?,?,?)', [userId, type, message, 'complaint', ref]);
+  return result.insertId;
+}
+// Factory is a test seam for optional SMTP, not a substitute for real auth/audit.
+function createDelivery({ database = pool, getTransport = configuredTransport, log = console.error } = {}) {
+  return async function deliver(id) {
+    const sender = getTransport();
+    if (!sender) return 'in_app';
+    const connection = await database.getConnection();
+    const lock = `hms-notification-${id}`;
+    let acquired = false;
     try {
-      // eslint-disable-next-line global-require
-      const nodemailer = require('nodemailer');
-      transporter = nodemailer.createTransport({
-        host: config.smtp.host,
-        port: config.smtp.port,
-        auth: config.smtp.user ? { user: config.smtp.user, pass: config.smtp.pass } : undefined,
-      });
-    } catch (e) {
-      console.warn('[notify] nodemailer not available, skipping email delivery:', e.message);
-      return null;
-    }
-  }
-  return transporter;
-}
-
-/**
- * Notification adapter (HMS-F-012). The originating status change is already persisted by the
- * caller; here we persist the in-app notification first, then try e-mail as a best-effort
- * secondary channel with retry. Delivery failures never fail the business action (SAD 3.7).
- */
-async function notify(userId, type, message, ref = {}) {
-  let id = null;
-  try {
-    const [res] = await pool.query(
-      'INSERT INTO notifications (user_id, type, message, ref_type, ref_id) VALUES (?,?,?,?,?)',
-      [userId, type, (message || '').slice(0, 300), ref?.type || null, ref?.id || null]
-    );
-    id = res.insertId;
-  } catch (err) {
-    console.error('[notify] could not persist notification:', err.message);
-    return null;
-  }
-
-  const t = getTransporter();
-  if (t) {
-    setImmediate(async () => {
+      const [[result]] = await connection.query('SELECT GET_LOCK(?, 0) AS acquired', [lock]);
+      acquired = result.acquired === 1;
+      if (!acquired) return 'busy';
+    const [[notification]] = await connection.query('SELECT n.id, n.type, n.message, n.delivery_status AS deliveryStatus, u.email FROM notifications n JOIN users u ON u.id = n.user_id WHERE n.id = ?', [id]);
+    if (!notification || notification.deliveryStatus === 'sent') return notification?.deliveryStatus || 'missing';
+    let status = 'failed';
+    // Initial attempt plus three retries. Never include SMTP error strings or
+    // addresses in logs: server errors can contain credentials/recipient data.
+    for (let attempt = 0; attempt <= 3; attempt += 1) {
       try {
-        const [[u]] = await pool.query('SELECT email FROM users WHERE id = ?', [userId]);
-        if (!u?.email) return;
-        let sent = false;
-        for (let attempt = 1; attempt <= 3 && !sent; attempt += 1) {
-          try {
-            await t.sendMail({
-              from: config.smtp.from,
-              to: u.email,
-              subject: `HMS: ${type.replace(/_/g, ' ')}`,
-              text: message,
-            });
-            sent = true;
-          } catch (err) {
-            console.error(`[notify] email attempt ${attempt} failed:`, err.message);
-          }
-        }
-        await pool.query('UPDATE notifications SET delivery_status = ? WHERE id = ?', [sent ? 'sent' : 'failed', id]);
-      } catch (err) {
-        console.error('[notify] email pipeline error:', err.message);
-      }
-    });
-  }
-  return id;
+        await sender.sendMail({ from: config.smtp.from, to: notification.email, subject: `HMS: ${notification.type.replaceAll('_', ' ')}`, text: notification.message, disableFileAccess: true, disableUrlAccess: true });
+        status = 'sent'; break;
+      } catch (_) { log(`[notify] notification ${id}: email attempt ${attempt + 1} failed`); }
+    }
+    await connection.query('UPDATE notifications SET delivery_status = ? WHERE id = ?', [status, id]);
+    return status;
+    } finally {
+      try { if (acquired) await connection.query('SELECT RELEASE_LOCK(?)', [lock]); } finally { connection.release(); }
+    }
+  };
 }
-
-module.exports = { notify };
-
+const deliver = createDelivery();
+function queueDelivery(ids) {
+  if (!config.smtp.host) return;
+  setImmediate(() => {
+    Promise.all(ids.map(id => deliver(id))).catch(() => console.error('[notify] optional email pipeline failed; use the retry worker'));
+  });
+}
+// Compatibility adapter for existing M4 callers; do not implement fee rules here.
+async function notify(userId, type, message, ref = {}) {
+  try {
+    const [result] = await pool.query('INSERT INTO notifications (user_id, type, message, ref_type, ref_id) VALUES (?,?,?,?,?)', [userId, type, String(message).slice(0, 300), ref.type || null, ref.id || null]);
+    queueDelivery([result.insertId]);
+    return result.insertId;
+  } catch (_) { console.error('[notify] could not persist optional notification'); return null; }
+}
+module.exports = { persist, notify, createDelivery, deliver, queueDelivery };

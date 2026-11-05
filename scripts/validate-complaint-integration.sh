@@ -6,7 +6,7 @@ set -euo pipefail
 root="$(mktemp -d /tmp/hms-complaint-integration.XXXXXX)"
 trap 'rm -rf "$root"' EXIT
 git checkout-index --all --prefix="$root/"
-m1=b14ab0bae2fd06d80cffff6232fd44c8d41b8ee4
+m1=fb7b11ceda2aa7793974b7ac6973ef3427307bdd # actual PR #42 head
 m2=17ad39d1de05beef6fc23b511d64cd86635dd9bc
 s04=e764dd26a93b71f581abf8abcc0feedff7036b86
 for file in src/routes/auth.js src/middleware/auth.js; do
