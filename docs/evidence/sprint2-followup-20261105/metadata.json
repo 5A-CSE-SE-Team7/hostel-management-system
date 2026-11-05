@@ -110,5 +110,20 @@
     },
     "reusedMainCI": "https://github.com/5A-CSE-SE-Team7/hostel-management-system/actions/runs/41976914388",
     "browserScope": "Local system Chromium via project chrome; prior main CI proves branded Chrome/Firefox. No manual screen-reader sign-off."
+  },
+  "initialPRCI": {
+    "run": 41982225256,
+    "backendCombinedPassed": 111,
+    "frontendPassed": 67,
+    "liveUIIntegrationPassed": 4,
+    "browserPassed": 14,
+    "browserFailed": 4,
+    "failureScope": "New Firefox keyboard tests assumed forward focus wrap to earlier controls; Chrome and existing Firefox journeys/axe passed."
+  },
+  "keyboardCorrection": {
+    "change": "Use genuine Shift+Tab traversal for earlier skip-link/logout controls; no focus forcing, assertion removal or timeout changes.",
+    "localRetestPassed": 4,
+    "localRetestFailed": 0,
+    "freshRemoteCI": "Pending at this commit; inspect PR64 latest checks."
   }
 }

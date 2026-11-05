@@ -2,7 +2,7 @@ import { test, expect } from '@playwright/test';
 
 // Real seeded API sessions, with every interactive step driven by the keyboard.
 // This regression does not substitute for a human screen-reader assessment.
-async function tabTo(page, target) {
+async function tabTo(page, target, key = 'Tab') {
   await expect(target).toBeVisible();
   for (let step = 0; step < 80; step += 1) {
     if (await target.evaluate(element => element === document.activeElement)) {
@@ -10,7 +10,7 @@ async function tabTo(page, target) {
       expect(parseFloat(outline), 'keyboard target has a visible focus outline').toBeGreaterThanOrEqual(2);
       return;
     }
-    await page.keyboard.press('Tab');
+    await page.keyboard.press(key);
   }
   throw new Error('Expected control was unreachable within a complete keyboard traversal');
 }
@@ -37,10 +37,12 @@ for (const [role, email, destination] of [
     await page.keyboard.press('Enter');
     await expect(page).toHaveURL(new RegExp(`${destination}$`));
     await expect(page.getByRole('heading', { level: 1 }).first()).toBeVisible();
-    await tabTo(page, page.getByRole('link', { name: 'Skip to content' }));
+    // These controls precede the current focus in document order. Traverse
+    // backward rather than assuming Tab wraps through browser chrome identically.
+    await tabTo(page, page.getByRole('link', { name: 'Skip to content' }), 'Shift+Tab');
     await page.keyboard.press('Enter');
     await expect(page.locator('#content')).toBeFocused();
-    await tabTo(page, page.getByRole('button', { name: 'Sign out', exact: true }));
+    await tabTo(page, page.getByRole('button', { name: 'Sign out', exact: true }), 'Shift+Tab');
     await page.keyboard.press('Enter');
     await expect(page.getByRole('button', { name: 'Sign in', exact: true })).toBeVisible();
   });
