@@ -35,6 +35,7 @@ router.get('/leave', async (req, res, next) => {
     if (u.role === 'student') { where.push('l.student_id = ?'); vals.push(u.id); }
     if (req.query.status) { where.push('l.status = ?'); vals.push(String(req.query.status)); }
     const [rows] = await pool.query(`${SELECT} ${where.length ? `WHERE ${where.join(' AND ')}` : ''} ORDER BY l.id DESC LIMIT 500`, vals);
+    if (req.session.user.role !== 'student') await audit(req, 'LEAVE_RECORD_VIEW', 'leave', null, { count: rows.length }, { strict: true });
     res.json(rows);
   } catch (e) { next(e); }
 });
