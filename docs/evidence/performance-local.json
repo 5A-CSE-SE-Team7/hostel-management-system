@@ -1,0 +1,4315 @@
+{
+  "startedAt": "2026-11-04T17:17:16.277Z",
+  "endedAt": "2026-11-04T17:17:23.981Z",
+  "environment": {
+    "node": "v24.19.0",
+    "cpus": 3,
+    "memoryBytes": 10452459520
+  },
+  "concurrency": 5,
+  "iterations": 20,
+  "thresholdMs": 3000,
+  "timeoutMs": 5000,
+  "includesLogin": true,
+  "warmupExcluded": 0,
+  "browserRenderMeasured": false,
+  "endpoints": {
+    "login": {
+      "expected": 5,
+      "count": 5,
+      "errors": 0,
+      "p90Ms": 2223.07,
+      "maxMs": 2223.07,
+      "status": "PASS"
+    },
+    "inventory": {
+      "expected": 100,
+      "count": 100,
+      "errors": 0,
+      "p90Ms": 36.33,
+      "maxMs": 173.89,
+      "status": "PASS"
+    },
+    "allocation_occupancy": {
+      "expected": 100,
+      "count": 100,
+      "errors": 0,
+      "p90Ms": 31.9,
+      "maxMs": 126.19,
+      "status": "PASS"
+    },
+    "available_beds": {
+      "expected": 100,
+      "count": 100,
+      "errors": 0,
+      "p90Ms": 30.99,
+      "maxMs": 161.25,
+      "status": "PASS"
+    },
+    "complaint_tracking": {
+      "expected": 100,
+      "count": 100,
+      "errors": 0,
+      "p90Ms": 91.64,
+      "maxMs": 154.04,
+      "status": "PASS"
+    },
+    "dashboard_fee_dues": {
+      "expected": 100,
+      "count": 100,
+      "errors": 0,
+      "p90Ms": 80.15,
+      "maxMs": 115,
+      "status": "PASS"
+    },
+    "occupancy_report": {
+      "expected": 100,
+      "count": 100,
+      "errors": 0,
+      "p90Ms": 85.67,
+      "maxMs": 157.87,
+      "status": "PASS"
+    },
+    "complaint_report": {
+      "expected": 100,
+      "count": 100,
+      "errors": 0,
+      "p90Ms": 102.34,
+      "maxMs": 159.1,
+      "status": "PASS"
+    }
+  },
+  "status": "PASS",
+  "samples": [
+    {
+      "name": "login",
+      "status": 200,
+      "ok": true,
+      "durationMs": 1027.97
+    },
+    {
+      "name": "login",
+      "status": 200,
+      "ok": true,
+      "durationMs": 1048.24
+    },
+    {
+      "name": "inventory",
+      "status": 200,
+      "ok": true,
+      "durationMs": 115.9
+    },
+    {
+      "name": "inventory",
+      "status": 200,
+      "ok": true,
+      "durationMs": 173.89
+    },
+    {
+      "name": "allocation_occupancy",
+      "status": 200,
+      "ok": true,
+      "durationMs": 80
+    },
+    {
+      "name": "allocation_occupancy",
+      "status": 200,
+      "ok": true,
+      "durationMs": 126.19
+    },
+    {
+      "name": "available_beds",
+      "status": 200,
+      "ok": true,
+      "durationMs": 161.25
+    },
+    {
+      "name": "available_beds",
+      "status": 200,
+      "ok": true,
+      "durationMs": 101.22
+    },
+    {
+      "name": "login",
+      "status": 200,
+      "ok": true,
+      "durationMs": 1555.22
+    },
+    {
+      "name": "complaint_tracking",
+      "status": 200,
+      "ok": true,
+      "durationMs": 134.95
+    },
+    {
+      "name": "inventory",
+      "status": 200,
+      "ok": true,
+      "durationMs": 144.92
+    },
+    {
+      "name": "complaint_tracking",
+      "status": 200,
+      "ok": true,
+      "durationMs": 154.04
+    },
+    {
+      "name": "allocation_occupancy",
+      "status": 200,
+      "ok": true,
+      "durationMs": 16.95
+    },
+    {
+      "name": "dashboard_fee_dues",
+      "status": 200,
+      "ok": true,
+      "durationMs": 111.29
+    },
+    {
+      "name": "available_beds",
+      "status": 200,
+      "ok": true,
+      "durationMs": 36.3
+    },
+    {
+      "name": "dashboard_fee_dues",
+      "status": 200,
+      "ok": true,
+      "durationMs": 47.98
+    },
+    {
+      "name": "occupancy_report",
+      "status": 200,
+      "ok": true,
+      "durationMs": 78.85
+    },
+    {
+      "name": "complaint_tracking",
+      "status": 200,
+      "ok": true,
+      "durationMs": 81.8
+    },
+    {
+      "name": "occupancy_report",
+      "status": 200,
+      "ok": true,
+      "durationMs": 112.02
+    },
+    {
+      "name": "login",
+      "status": 200,
+      "ok": true,
+      "durationMs": 1813.64
+    },
+    {
+      "name": "complaint_report",
+      "status": 200,
+      "ok": true,
+      "durationMs": 121.73
+    },
+    {
+      "name": "dashboard_fee_dues",
+      "status": 200,
+      "ok": true,
+      "durationMs": 114.26
+    },
+    {
+      "name": "inventory",
+      "status": 200,
+      "ok": true,
+      "durationMs": 33.83
+    },
+    {
+      "name": "inventory",
+      "status": 200,
+      "ok": true,
+      "durationMs": 14.86
+    },
+    {
+      "name": "complaint_report",
+      "status": 200,
+      "ok": true,
+      "durationMs": 92.42
+    },
+    {
+      "name": "inventory",
+      "status": 200,
+      "ok": true,
+      "durationMs": 36.33
+    },
+    {
+      "name": "allocation_occupancy",
+      "status": 200,
+      "ok": true,
+      "durationMs": 44.03
+    },
+    {
+      "name": "allocation_occupancy",
+      "status": 200,
+      "ok": true,
+      "durationMs": 44.16
+    },
+    {
+      "name": "occupancy_report",
+      "status": 200,
+      "ok": true,
+      "durationMs": 61.25
+    },
+    {
+      "name": "available_beds",
+      "status": 200,
+      "ok": true,
+      "durationMs": 25.3
+    },
+    {
+      "name": "allocation_occupancy",
+      "status": 200,
+      "ok": true,
+      "durationMs": 27.81
+    },
+    {
+      "name": "available_beds",
+      "status": 200,
+      "ok": true,
+      "durationMs": 24.66
+    },
+    {
+      "name": "available_beds",
+      "status": 200,
+      "ok": true,
+      "durationMs": 24.19
+    },
+    {
+      "name": "complaint_tracking",
+      "status": 200,
+      "ok": true,
+      "durationMs": 83.9
+    },
+    {
+      "name": "complaint_report",
+      "status": 200,
+      "ok": true,
+      "durationMs": 104.31
+    },
+    {
+      "name": "complaint_tracking",
+      "status": 200,
+      "ok": true,
+      "durationMs": 98.58
+    },
+    {
+      "name": "inventory",
+      "status": 200,
+      "ok": true,
+      "durationMs": 38.24
+    },
+    {
+      "name": "complaint_tracking",
+      "status": 200,
+      "ok": true,
+      "durationMs": 109.41
+    },
+    {
+      "name": "allocation_occupancy",
+      "status": 200,
+      "ok": true,
+      "durationMs": 20.29
+    },
+    {
+      "name": "dashboard_fee_dues",
+      "status": 200,
+      "ok": true,
+      "durationMs": 94.35
+    },
+    {
+      "name": "available_beds",
+      "status": 200,
+      "ok": true,
+      "durationMs": 30.4
+    },
+    {
+      "name": "dashboard_fee_dues",
+      "status": 200,
+      "ok": true,
+      "durationMs": 95.93
+    },
+    {
+      "name": "dashboard_fee_dues",
+      "status": 200,
+      "ok": true,
+      "durationMs": 74.85
+    },
+    {
+      "name": "complaint_tracking",
+      "status": 200,
+      "ok": true,
+      "durationMs": 41.89
+    },
+    {
+      "name": "occupancy_report",
+      "status": 200,
+      "ok": true,
+      "durationMs": 59.1
+    },
+    {
+      "name": "occupancy_report",
+      "status": 200,
+      "ok": true,
+      "durationMs": 55.64
+    },
+    {
+      "name": "occupancy_report",
+      "status": 200,
+      "ok": true,
+      "durationMs": 66.92
+    },
+    {
+      "name": "dashboard_fee_dues",
+      "status": 200,
+      "ok": true,
+      "durationMs": 71.16
+    },
+    {
+      "name": "login",
+      "status": 200,
+      "ok": true,
+      "durationMs": 2223.07
+    },
+    {
+      "name": "complaint_report",
+      "status": 200,
+      "ok": true,
+      "durationMs": 94.11
+    },
+    {
+      "name": "inventory",
+      "status": 200,
+      "ok": true,
+      "durationMs": 27.62
+    },
+    {
+      "name": "complaint_report",
+      "status": 200,
+      "ok": true,
+      "durationMs": 102.93
+    },
+    {
+      "name": "allocation_occupancy",
+      "status": 200,
+      "ok": true,
+      "durationMs": 22.58
+    },
+    {
+      "name": "inventory",
+      "status": 200,
+      "ok": true,
+      "durationMs": 25.8
+    },
+    {
+      "name": "complaint_report",
+      "status": 200,
+      "ok": true,
+      "durationMs": 91.09
+    },
+    {
+      "name": "inventory",
+      "status": 200,
+      "ok": true,
+      "durationMs": 15.71
+    },
+    {
+      "name": "available_beds",
+      "status": 200,
+      "ok": true,
+      "durationMs": 20.79
+    },
+    {
+      "name": "occupancy_report",
+      "status": 200,
+      "ok": true,
+      "durationMs": 85.67
+    },
+    {
+      "name": "inventory",
+      "status": 200,
+      "ok": true,
+      "durationMs": 13.31
+    },
+    {
+      "name": "allocation_occupancy",
+      "status": 200,
+      "ok": true,
+      "durationMs": 26.53
+    },
+    {
+      "name": "allocation_occupancy",
+      "status": 200,
+      "ok": true,
+      "durationMs": 22.3
+    },
+    {
+      "name": "allocation_occupancy",
+      "status": 200,
+      "ok": true,
+      "durationMs": 19.66
+    },
+    {
+      "name": "available_beds",
+      "status": 200,
+      "ok": true,
+      "durationMs": 35.97
+    },
+    {
+      "name": "available_beds",
+      "status": 200,
+      "ok": true,
+      "durationMs": 33.85
+    },
+    {
+      "name": "available_beds",
+      "status": 200,
+      "ok": true,
+      "durationMs": 28.25
+    },
+    {
+      "name": "complaint_tracking",
+      "status": 200,
+      "ok": true,
+      "durationMs": 55.19
+    },
+    {
+      "name": "complaint_report",
+      "status": 200,
+      "ok": true,
+      "durationMs": 74.37
+    },
+    {
+      "name": "complaint_tracking",
+      "status": 200,
+      "ok": true,
+      "durationMs": 40.22
+    },
+    {
+      "name": "complaint_tracking",
+      "status": 200,
+      "ok": true,
+      "durationMs": 45.49
+    },
+    {
+      "name": "inventory",
+      "status": 200,
+      "ok": true,
+      "durationMs": 16.86
+    },
+    {
+      "name": "complaint_tracking",
+      "status": 200,
+      "ok": true,
+      "durationMs": 50.14
+    },
+    {
+      "name": "allocation_occupancy",
+      "status": 200,
+      "ok": true,
+      "durationMs": 9.78
+    },
+    {
+      "name": "dashboard_fee_dues",
+      "status": 200,
+      "ok": true,
+      "durationMs": 60
+    },
+    {
+      "name": "available_beds",
+      "status": 200,
+      "ok": true,
+      "durationMs": 13.31
+    },
+    {
+      "name": "dashboard_fee_dues",
+      "status": 200,
+      "ok": true,
+      "durationMs": 44.7
+    },
+    {
+      "name": "dashboard_fee_dues",
+      "status": 200,
+      "ok": true,
+      "durationMs": 46.86
+    },
+    {
+      "name": "dashboard_fee_dues",
+      "status": 200,
+      "ok": true,
+      "durationMs": 44.44
+    },
+    {
+      "name": "complaint_tracking",
+      "status": 200,
+      "ok": true,
+      "durationMs": 37.81
+    },
+    {
+      "name": "occupancy_report",
+      "status": 200,
+      "ok": true,
+      "durationMs": 46.15
+    },
+    {
+      "name": "occupancy_report",
+      "status": 200,
+      "ok": true,
+      "durationMs": 41.37
+    },
+    {
+      "name": "occupancy_report",
+      "status": 200,
+      "ok": true,
+      "durationMs": 38.62
+    },
+    {
+      "name": "occupancy_report",
+      "status": 200,
+      "ok": true,
+      "durationMs": 49.42
+    },
+    {
+      "name": "dashboard_fee_dues",
+      "status": 200,
+      "ok": true,
+      "durationMs": 49.26
+    },
+    {
+      "name": "complaint_report",
+      "status": 200,
+      "ok": true,
+      "durationMs": 74.18
+    },
+    {
+      "name": "complaint_report",
+      "status": 200,
+      "ok": true,
+      "durationMs": 125.71
+    },
+    {
+      "name": "complaint_report",
+      "status": 200,
+      "ok": true,
+      "durationMs": 147.15
+    },
+    {
+      "name": "inventory",
+      "status": 200,
+      "ok": true,
+      "durationMs": 94.4
+    },
+    {
+      "name": "inventory",
+      "status": 200,
+      "ok": true,
+      "durationMs": 42.31
+    },
+    {
+      "name": "complaint_report",
+      "status": 200,
+      "ok": true,
+      "durationMs": 159.1
+    },
+    {
+      "name": "occupancy_report",
+      "status": 200,
+      "ok": true,
+      "durationMs": 157.87
+    },
+    {
+      "name": "inventory",
+      "status": 200,
+      "ok": true,
+      "durationMs": 40.48
+    },
+    {
+      "name": "allocation_occupancy",
+      "status": 200,
+      "ok": true,
+      "durationMs": 45.82
+    },
+    {
+      "name": "allocation_occupancy",
+      "status": 200,
+      "ok": true,
+      "durationMs": 39.45
+    },
+    {
+      "name": "inventory",
+      "status": 200,
+      "ok": true,
+      "durationMs": 29.04
+    },
+    {
+      "name": "allocation_occupancy",
+      "status": 200,
+      "ok": true,
+      "durationMs": 19.52
+    },
+    {
+      "name": "available_beds",
+      "status": 200,
+      "ok": true,
+      "durationMs": 16.39
+    },
+    {
+      "name": "available_beds",
+      "status": 200,
+      "ok": true,
+      "durationMs": 16.29
+    },
+    {
+      "name": "available_beds",
+      "status": 200,
+      "ok": true,
+      "durationMs": 18.77
+    },
+    {
+      "name": "complaint_report",
+      "status": 200,
+      "ok": true,
+      "durationMs": 45.66
+    },
+    {
+      "name": "allocation_occupancy",
+      "status": 200,
+      "ok": true,
+      "durationMs": 24.99
+    },
+    {
+      "name": "complaint_tracking",
+      "status": 200,
+      "ok": true,
+      "durationMs": 23.06
+    },
+    {
+      "name": "inventory",
+      "status": 200,
+      "ok": true,
+      "durationMs": 14.19
+    },
+    {
+      "name": "available_beds",
+      "status": 200,
+      "ok": true,
+      "durationMs": 13.55
+    },
+    {
+      "name": "complaint_tracking",
+      "status": 200,
+      "ok": true,
+      "durationMs": 34.45
+    },
+    {
+      "name": "allocation_occupancy",
+      "status": 200,
+      "ok": true,
+      "durationMs": 21.43
+    },
+    {
+      "name": "complaint_tracking",
+      "status": 200,
+      "ok": true,
+      "durationMs": 48.71
+    },
+    {
+      "name": "available_beds",
+      "status": 200,
+      "ok": true,
+      "durationMs": 10.98
+    },
+    {
+      "name": "dashboard_fee_dues",
+      "status": 200,
+      "ok": true,
+      "durationMs": 47.17
+    },
+    {
+      "name": "complaint_tracking",
+      "status": 200,
+      "ok": true,
+      "durationMs": 54.61
+    },
+    {
+      "name": "dashboard_fee_dues",
+      "status": 200,
+      "ok": true,
+      "durationMs": 57.21
+    },
+    {
+      "name": "dashboard_fee_dues",
+      "status": 200,
+      "ok": true,
+      "durationMs": 45.42
+    },
+    {
+      "name": "complaint_tracking",
+      "status": 200,
+      "ok": true,
+      "durationMs": 59.72
+    },
+    {
+      "name": "occupancy_report",
+      "status": 200,
+      "ok": true,
+      "durationMs": 57.91
+    },
+    {
+      "name": "dashboard_fee_dues",
+      "status": 200,
+      "ok": true,
+      "durationMs": 67.12
+    },
+    {
+      "name": "occupancy_report",
+      "status": 200,
+      "ok": true,
+      "durationMs": 68.25
+    },
+    {
+      "name": "occupancy_report",
+      "status": 200,
+      "ok": true,
+      "durationMs": 59.41
+    },
+    {
+      "name": "dashboard_fee_dues",
+      "status": 200,
+      "ok": true,
+      "durationMs": 59.44
+    },
+    {
+      "name": "complaint_report",
+      "status": 200,
+      "ok": true,
+      "durationMs": 60.24
+    },
+    {
+      "name": "inventory",
+      "status": 200,
+      "ok": true,
+      "durationMs": 18.07
+    },
+    {
+      "name": "occupancy_report",
+      "status": 200,
+      "ok": true,
+      "durationMs": 55.94
+    },
+    {
+      "name": "complaint_report",
+      "status": 200,
+      "ok": true,
+      "durationMs": 57.21
+    },
+    {
+      "name": "allocation_occupancy",
+      "status": 200,
+      "ok": true,
+      "durationMs": 14.76
+    },
+    {
+      "name": "complaint_report",
+      "status": 200,
+      "ok": true,
+      "durationMs": 62.01
+    },
+    {
+      "name": "inventory",
+      "status": 200,
+      "ok": true,
+      "durationMs": 12.68
+    },
+    {
+      "name": "available_beds",
+      "status": 200,
+      "ok": true,
+      "durationMs": 15.15
+    },
+    {
+      "name": "occupancy_report",
+      "status": 200,
+      "ok": true,
+      "durationMs": 62.99
+    },
+    {
+      "name": "inventory",
+      "status": 200,
+      "ok": true,
+      "durationMs": 17.28
+    },
+    {
+      "name": "allocation_occupancy",
+      "status": 200,
+      "ok": true,
+      "durationMs": 23.75
+    },
+    {
+      "name": "complaint_report",
+      "status": 200,
+      "ok": true,
+      "durationMs": 58.37
+    },
+    {
+      "name": "allocation_occupancy",
+      "status": 200,
+      "ok": true,
+      "durationMs": 23.7
+    },
+    {
+      "name": "complaint_tracking",
+      "status": 200,
+      "ok": true,
+      "durationMs": 38.29
+    },
+    {
+      "name": "available_beds",
+      "status": 200,
+      "ok": true,
+      "durationMs": 12.28
+    },
+    {
+      "name": "inventory",
+      "status": 200,
+      "ok": true,
+      "durationMs": 18.01
+    },
+    {
+      "name": "available_beds",
+      "status": 200,
+      "ok": true,
+      "durationMs": 30.99
+    },
+    {
+      "name": "complaint_report",
+      "status": 200,
+      "ok": true,
+      "durationMs": 59.51
+    },
+    {
+      "name": "dashboard_fee_dues",
+      "status": 200,
+      "ok": true,
+      "durationMs": 38.69
+    },
+    {
+      "name": "allocation_occupancy",
+      "status": 200,
+      "ok": true,
+      "durationMs": 31.51
+    },
+    {
+      "name": "inventory",
+      "status": 200,
+      "ok": true,
+      "durationMs": 13.73
+    },
+    {
+      "name": "complaint_tracking",
+      "status": 200,
+      "ok": true,
+      "durationMs": 36.73
+    },
+    {
+      "name": "available_beds",
+      "status": 200,
+      "ok": true,
+      "durationMs": 9.78
+    },
+    {
+      "name": "allocation_occupancy",
+      "status": 200,
+      "ok": true,
+      "durationMs": 10.41
+    },
+    {
+      "name": "complaint_tracking",
+      "status": 200,
+      "ok": true,
+      "durationMs": 50.55
+    },
+    {
+      "name": "available_beds",
+      "status": 200,
+      "ok": true,
+      "durationMs": 10.84
+    },
+    {
+      "name": "occupancy_report",
+      "status": 200,
+      "ok": true,
+      "durationMs": 40.29
+    },
+    {
+      "name": "complaint_tracking",
+      "status": 200,
+      "ok": true,
+      "durationMs": 46.27
+    },
+    {
+      "name": "dashboard_fee_dues",
+      "status": 200,
+      "ok": true,
+      "durationMs": 57.24
+    },
+    {
+      "name": "dashboard_fee_dues",
+      "status": 200,
+      "ok": true,
+      "durationMs": 56.21
+    },
+    {
+      "name": "complaint_tracking",
+      "status": 200,
+      "ok": true,
+      "durationMs": 59.37
+    },
+    {
+      "name": "complaint_report",
+      "status": 200,
+      "ok": true,
+      "durationMs": 52.14
+    },
+    {
+      "name": "dashboard_fee_dues",
+      "status": 200,
+      "ok": true,
+      "durationMs": 39.54
+    },
+    {
+      "name": "inventory",
+      "status": 200,
+      "ok": true,
+      "durationMs": 9.58
+    },
+    {
+      "name": "occupancy_report",
+      "status": 200,
+      "ok": true,
+      "durationMs": 40.32
+    },
+    {
+      "name": "allocation_occupancy",
+      "status": 200,
+      "ok": true,
+      "durationMs": 9.87
+    },
+    {
+      "name": "available_beds",
+      "status": 200,
+      "ok": true,
+      "durationMs": 10.75
+    },
+    {
+      "name": "occupancy_report",
+      "status": 200,
+      "ok": true,
+      "durationMs": 50.39
+    },
+    {
+      "name": "dashboard_fee_dues",
+      "status": 200,
+      "ok": true,
+      "durationMs": 54.58
+    },
+    {
+      "name": "occupancy_report",
+      "status": 200,
+      "ok": true,
+      "durationMs": 55.26
+    },
+    {
+      "name": "complaint_report",
+      "status": 200,
+      "ok": true,
+      "durationMs": 62.55
+    },
+    {
+      "name": "complaint_tracking",
+      "status": 200,
+      "ok": true,
+      "durationMs": 48.25
+    },
+    {
+      "name": "inventory",
+      "status": 200,
+      "ok": true,
+      "durationMs": 16.9
+    },
+    {
+      "name": "complaint_report",
+      "status": 200,
+      "ok": true,
+      "durationMs": 71.99
+    },
+    {
+      "name": "allocation_occupancy",
+      "status": 200,
+      "ok": true,
+      "durationMs": 15.74
+    },
+    {
+      "name": "occupancy_report",
+      "status": 200,
+      "ok": true,
+      "durationMs": 69.84
+    },
+    {
+      "name": "inventory",
+      "status": 200,
+      "ok": true,
+      "durationMs": 15.12
+    },
+    {
+      "name": "complaint_report",
+      "status": 200,
+      "ok": true,
+      "durationMs": 61.63
+    },
+    {
+      "name": "available_beds",
+      "status": 200,
+      "ok": true,
+      "durationMs": 14.81
+    },
+    {
+      "name": "dashboard_fee_dues",
+      "status": 200,
+      "ok": true,
+      "durationMs": 51.22
+    },
+    {
+      "name": "inventory",
+      "status": 200,
+      "ok": true,
+      "durationMs": 12.99
+    },
+    {
+      "name": "allocation_occupancy",
+      "status": 200,
+      "ok": true,
+      "durationMs": 22.53
+    },
+    {
+      "name": "allocation_occupancy",
+      "status": 200,
+      "ok": true,
+      "durationMs": 15.72
+    },
+    {
+      "name": "complaint_report",
+      "status": 200,
+      "ok": true,
+      "durationMs": 45.89
+    },
+    {
+      "name": "available_beds",
+      "status": 200,
+      "ok": true,
+      "durationMs": 11.64
+    },
+    {
+      "name": "available_beds",
+      "status": 200,
+      "ok": true,
+      "durationMs": 22.31
+    },
+    {
+      "name": "complaint_tracking",
+      "status": 200,
+      "ok": true,
+      "durationMs": 48.55
+    },
+    {
+      "name": "inventory",
+      "status": 200,
+      "ok": true,
+      "durationMs": 15.17
+    },
+    {
+      "name": "occupancy_report",
+      "status": 200,
+      "ok": true,
+      "durationMs": 53.86
+    },
+    {
+      "name": "allocation_occupancy",
+      "status": 200,
+      "ok": true,
+      "durationMs": 17.93
+    },
+    {
+      "name": "complaint_tracking",
+      "status": 200,
+      "ok": true,
+      "durationMs": 48.47
+    },
+    {
+      "name": "available_beds",
+      "status": 200,
+      "ok": true,
+      "durationMs": 24.9
+    },
+    {
+      "name": "complaint_tracking",
+      "status": 200,
+      "ok": true,
+      "durationMs": 64.35
+    },
+    {
+      "name": "dashboard_fee_dues",
+      "status": 200,
+      "ok": true,
+      "durationMs": 60.58
+    },
+    {
+      "name": "dashboard_fee_dues",
+      "status": 200,
+      "ok": true,
+      "durationMs": 29.88
+    },
+    {
+      "name": "complaint_report",
+      "status": 200,
+      "ok": true,
+      "durationMs": 75.3
+    },
+    {
+      "name": "complaint_tracking",
+      "status": 200,
+      "ok": true,
+      "durationMs": 49.58
+    },
+    {
+      "name": "inventory",
+      "status": 200,
+      "ok": true,
+      "durationMs": 12.7
+    },
+    {
+      "name": "dashboard_fee_dues",
+      "status": 200,
+      "ok": true,
+      "durationMs": 55.87
+    },
+    {
+      "name": "allocation_occupancy",
+      "status": 200,
+      "ok": true,
+      "durationMs": 23.63
+    },
+    {
+      "name": "available_beds",
+      "status": 200,
+      "ok": true,
+      "durationMs": 8.96
+    },
+    {
+      "name": "occupancy_report",
+      "status": 200,
+      "ok": true,
+      "durationMs": 71.85
+    },
+    {
+      "name": "occupancy_report",
+      "status": 200,
+      "ok": true,
+      "durationMs": 73.91
+    },
+    {
+      "name": "dashboard_fee_dues",
+      "status": 200,
+      "ok": true,
+      "durationMs": 54.87
+    },
+    {
+      "name": "occupancy_report",
+      "status": 200,
+      "ok": true,
+      "durationMs": 51.42
+    },
+    {
+      "name": "complaint_tracking",
+      "status": 200,
+      "ok": true,
+      "durationMs": 42.56
+    },
+    {
+      "name": "complaint_report",
+      "status": 200,
+      "ok": true,
+      "durationMs": 56.55
+    },
+    {
+      "name": "complaint_report",
+      "status": 200,
+      "ok": true,
+      "durationMs": 53.14
+    },
+    {
+      "name": "inventory",
+      "status": 200,
+      "ok": true,
+      "durationMs": 10.62
+    },
+    {
+      "name": "occupancy_report",
+      "status": 200,
+      "ok": true,
+      "durationMs": 54.92
+    },
+    {
+      "name": "inventory",
+      "status": 200,
+      "ok": true,
+      "durationMs": 12.04
+    },
+    {
+      "name": "allocation_occupancy",
+      "status": 200,
+      "ok": true,
+      "durationMs": 13.42
+    },
+    {
+      "name": "dashboard_fee_dues",
+      "status": 200,
+      "ok": true,
+      "durationMs": 43.54
+    },
+    {
+      "name": "allocation_occupancy",
+      "status": 200,
+      "ok": true,
+      "durationMs": 10.76
+    },
+    {
+      "name": "complaint_report",
+      "status": 200,
+      "ok": true,
+      "durationMs": 67.05
+    },
+    {
+      "name": "available_beds",
+      "status": 200,
+      "ok": true,
+      "durationMs": 19.93
+    },
+    {
+      "name": "available_beds",
+      "status": 200,
+      "ok": true,
+      "durationMs": 15.47
+    },
+    {
+      "name": "inventory",
+      "status": 200,
+      "ok": true,
+      "durationMs": 52.53
+    },
+    {
+      "name": "complaint_report",
+      "status": 200,
+      "ok": true,
+      "durationMs": 78.49
+    },
+    {
+      "name": "occupancy_report",
+      "status": 200,
+      "ok": true,
+      "durationMs": 82.34
+    },
+    {
+      "name": "allocation_occupancy",
+      "status": 200,
+      "ok": true,
+      "durationMs": 28.63
+    },
+    {
+      "name": "inventory",
+      "status": 200,
+      "ok": true,
+      "durationMs": 27
+    },
+    {
+      "name": "available_beds",
+      "status": 200,
+      "ok": true,
+      "durationMs": 25.12
+    },
+    {
+      "name": "complaint_tracking",
+      "status": 200,
+      "ok": true,
+      "durationMs": 103.5
+    },
+    {
+      "name": "allocation_occupancy",
+      "status": 200,
+      "ok": true,
+      "durationMs": 27.91
+    },
+    {
+      "name": "complaint_tracking",
+      "status": 200,
+      "ok": true,
+      "durationMs": 116.19
+    },
+    {
+      "name": "available_beds",
+      "status": 200,
+      "ok": true,
+      "durationMs": 12.37
+    },
+    {
+      "name": "complaint_report",
+      "status": 200,
+      "ok": true,
+      "durationMs": 63.69
+    },
+    {
+      "name": "complaint_tracking",
+      "status": 200,
+      "ok": true,
+      "durationMs": 39.55
+    },
+    {
+      "name": "inventory",
+      "status": 200,
+      "ok": true,
+      "durationMs": 12.67
+    },
+    {
+      "name": "dashboard_fee_dues",
+      "status": 200,
+      "ok": true,
+      "durationMs": 48.53
+    },
+    {
+      "name": "allocation_occupancy",
+      "status": 200,
+      "ok": true,
+      "durationMs": 17.34
+    },
+    {
+      "name": "dashboard_fee_dues",
+      "status": 200,
+      "ok": true,
+      "durationMs": 44.13
+    },
+    {
+      "name": "complaint_tracking",
+      "status": 200,
+      "ok": true,
+      "durationMs": 56.64
+    },
+    {
+      "name": "available_beds",
+      "status": 200,
+      "ok": true,
+      "durationMs": 20.12
+    },
+    {
+      "name": "dashboard_fee_dues",
+      "status": 200,
+      "ok": true,
+      "durationMs": 42.64
+    },
+    {
+      "name": "occupancy_report",
+      "status": 200,
+      "ok": true,
+      "durationMs": 40.72
+    },
+    {
+      "name": "occupancy_report",
+      "status": 200,
+      "ok": true,
+      "durationMs": 42.49
+    },
+    {
+      "name": "dashboard_fee_dues",
+      "status": 200,
+      "ok": true,
+      "durationMs": 37.34
+    },
+    {
+      "name": "complaint_tracking",
+      "status": 200,
+      "ok": true,
+      "durationMs": 50.49
+    },
+    {
+      "name": "occupancy_report",
+      "status": 200,
+      "ok": true,
+      "durationMs": 69.73
+    },
+    {
+      "name": "complaint_report",
+      "status": 200,
+      "ok": true,
+      "durationMs": 87.31
+    },
+    {
+      "name": "inventory",
+      "status": 200,
+      "ok": true,
+      "durationMs": 10.25
+    },
+    {
+      "name": "complaint_report",
+      "status": 200,
+      "ok": true,
+      "durationMs": 103.63
+    },
+    {
+      "name": "occupancy_report",
+      "status": 200,
+      "ok": true,
+      "durationMs": 105.06
+    },
+    {
+      "name": "allocation_occupancy",
+      "status": 200,
+      "ok": true,
+      "durationMs": 32.7
+    },
+    {
+      "name": "inventory",
+      "status": 200,
+      "ok": true,
+      "durationMs": 16.87
+    },
+    {
+      "name": "dashboard_fee_dues",
+      "status": 200,
+      "ok": true,
+      "durationMs": 104.06
+    },
+    {
+      "name": "available_beds",
+      "status": 200,
+      "ok": true,
+      "durationMs": 18.33
+    },
+    {
+      "name": "allocation_occupancy",
+      "status": 200,
+      "ok": true,
+      "durationMs": 18.3
+    },
+    {
+      "name": "complaint_report",
+      "status": 200,
+      "ok": true,
+      "durationMs": 100.38
+    },
+    {
+      "name": "available_beds",
+      "status": 200,
+      "ok": true,
+      "durationMs": 12.77
+    },
+    {
+      "name": "complaint_report",
+      "status": 200,
+      "ok": true,
+      "durationMs": 44.59
+    },
+    {
+      "name": "inventory",
+      "status": 200,
+      "ok": true,
+      "durationMs": 10.36
+    },
+    {
+      "name": "occupancy_report",
+      "status": 200,
+      "ok": true,
+      "durationMs": 41.57
+    },
+    {
+      "name": "inventory",
+      "status": 200,
+      "ok": true,
+      "durationMs": 15.85
+    },
+    {
+      "name": "complaint_tracking",
+      "status": 200,
+      "ok": true,
+      "durationMs": 43.89
+    },
+    {
+      "name": "allocation_occupancy",
+      "status": 200,
+      "ok": true,
+      "durationMs": 26.96
+    },
+    {
+      "name": "allocation_occupancy",
+      "status": 200,
+      "ok": true,
+      "durationMs": 16.27
+    },
+    {
+      "name": "available_beds",
+      "status": 200,
+      "ok": true,
+      "durationMs": 9.3
+    },
+    {
+      "name": "complaint_tracking",
+      "status": 200,
+      "ok": true,
+      "durationMs": 45.65
+    },
+    {
+      "name": "available_beds",
+      "status": 200,
+      "ok": true,
+      "durationMs": 12.54
+    },
+    {
+      "name": "complaint_report",
+      "status": 200,
+      "ok": true,
+      "durationMs": 36.52
+    },
+    {
+      "name": "inventory",
+      "status": 200,
+      "ok": true,
+      "durationMs": 7.15
+    },
+    {
+      "name": "dashboard_fee_dues",
+      "status": 200,
+      "ok": true,
+      "durationMs": 36.92
+    },
+    {
+      "name": "allocation_occupancy",
+      "status": 200,
+      "ok": true,
+      "durationMs": 17.3
+    },
+    {
+      "name": "dashboard_fee_dues",
+      "status": 200,
+      "ok": true,
+      "durationMs": 40.84
+    },
+    {
+      "name": "complaint_tracking",
+      "status": 200,
+      "ok": true,
+      "durationMs": 52.47
+    },
+    {
+      "name": "available_beds",
+      "status": 200,
+      "ok": true,
+      "durationMs": 15.86
+    },
+    {
+      "name": "complaint_tracking",
+      "status": 200,
+      "ok": true,
+      "durationMs": 61.67
+    },
+    {
+      "name": "occupancy_report",
+      "status": 200,
+      "ok": true,
+      "durationMs": 56.69
+    },
+    {
+      "name": "occupancy_report",
+      "status": 200,
+      "ok": true,
+      "durationMs": 62.7
+    },
+    {
+      "name": "dashboard_fee_dues",
+      "status": 200,
+      "ok": true,
+      "durationMs": 63.09
+    },
+    {
+      "name": "complaint_tracking",
+      "status": 200,
+      "ok": true,
+      "durationMs": 76.88
+    },
+    {
+      "name": "dashboard_fee_dues",
+      "status": 200,
+      "ok": true,
+      "durationMs": 78.22
+    },
+    {
+      "name": "complaint_report",
+      "status": 200,
+      "ok": true,
+      "durationMs": 85.28
+    },
+    {
+      "name": "complaint_report",
+      "status": 200,
+      "ok": true,
+      "durationMs": 73.2
+    },
+    {
+      "name": "inventory",
+      "status": 200,
+      "ok": true,
+      "durationMs": 15.66
+    },
+    {
+      "name": "occupancy_report",
+      "status": 200,
+      "ok": true,
+      "durationMs": 79.98
+    },
+    {
+      "name": "inventory",
+      "status": 200,
+      "ok": true,
+      "durationMs": 21.12
+    },
+    {
+      "name": "allocation_occupancy",
+      "status": 200,
+      "ok": true,
+      "durationMs": 21.64
+    },
+    {
+      "name": "dashboard_fee_dues",
+      "status": 200,
+      "ok": true,
+      "durationMs": 75.13
+    },
+    {
+      "name": "available_beds",
+      "status": 200,
+      "ok": true,
+      "durationMs": 15.34
+    },
+    {
+      "name": "allocation_occupancy",
+      "status": 200,
+      "ok": true,
+      "durationMs": 19.64
+    },
+    {
+      "name": "occupancy_report",
+      "status": 200,
+      "ok": true,
+      "durationMs": 73.08
+    },
+    {
+      "name": "complaint_report",
+      "status": 200,
+      "ok": true,
+      "durationMs": 36.43
+    },
+    {
+      "name": "inventory",
+      "status": 200,
+      "ok": true,
+      "durationMs": 13.11
+    },
+    {
+      "name": "available_beds",
+      "status": 200,
+      "ok": true,
+      "durationMs": 29.9
+    },
+    {
+      "name": "occupancy_report",
+      "status": 200,
+      "ok": true,
+      "durationMs": 48.13
+    },
+    {
+      "name": "allocation_occupancy",
+      "status": 200,
+      "ok": true,
+      "durationMs": 9.61
+    },
+    {
+      "name": "complaint_tracking",
+      "status": 200,
+      "ok": true,
+      "durationMs": 46.45
+    },
+    {
+      "name": "available_beds",
+      "status": 200,
+      "ok": true,
+      "durationMs": 17.08
+    },
+    {
+      "name": "complaint_report",
+      "status": 200,
+      "ok": true,
+      "durationMs": 61.95
+    },
+    {
+      "name": "complaint_tracking",
+      "status": 200,
+      "ok": true,
+      "durationMs": 36.31
+    },
+    {
+      "name": "dashboard_fee_dues",
+      "status": 200,
+      "ok": true,
+      "durationMs": 31.87
+    },
+    {
+      "name": "inventory",
+      "status": 200,
+      "ok": true,
+      "durationMs": 16.68
+    },
+    {
+      "name": "complaint_report",
+      "status": 200,
+      "ok": true,
+      "durationMs": 57.36
+    },
+    {
+      "name": "allocation_occupancy",
+      "status": 200,
+      "ok": true,
+      "durationMs": 19.89
+    },
+    {
+      "name": "inventory",
+      "status": 200,
+      "ok": true,
+      "durationMs": 12.26
+    },
+    {
+      "name": "complaint_tracking",
+      "status": 200,
+      "ok": true,
+      "durationMs": 55.6
+    },
+    {
+      "name": "available_beds",
+      "status": 200,
+      "ok": true,
+      "durationMs": 10.69
+    },
+    {
+      "name": "dashboard_fee_dues",
+      "status": 200,
+      "ok": true,
+      "durationMs": 47.28
+    },
+    {
+      "name": "allocation_occupancy",
+      "status": 200,
+      "ok": true,
+      "durationMs": 17.99
+    },
+    {
+      "name": "occupancy_report",
+      "status": 200,
+      "ok": true,
+      "durationMs": 54.51
+    },
+    {
+      "name": "available_beds",
+      "status": 200,
+      "ok": true,
+      "durationMs": 17.03
+    },
+    {
+      "name": "dashboard_fee_dues",
+      "status": 200,
+      "ok": true,
+      "durationMs": 31.64
+    },
+    {
+      "name": "complaint_tracking",
+      "status": 200,
+      "ok": true,
+      "durationMs": 41.74
+    },
+    {
+      "name": "occupancy_report",
+      "status": 200,
+      "ok": true,
+      "durationMs": 72.64
+    },
+    {
+      "name": "complaint_tracking",
+      "status": 200,
+      "ok": true,
+      "durationMs": 63.8
+    },
+    {
+      "name": "complaint_report",
+      "status": 200,
+      "ok": true,
+      "durationMs": 91.29
+    },
+    {
+      "name": "occupancy_report",
+      "status": 200,
+      "ok": true,
+      "durationMs": 91.22
+    },
+    {
+      "name": "inventory",
+      "status": 200,
+      "ok": true,
+      "durationMs": 11.53
+    },
+    {
+      "name": "dashboard_fee_dues",
+      "status": 200,
+      "ok": true,
+      "durationMs": 89.88
+    },
+    {
+      "name": "allocation_occupancy",
+      "status": 200,
+      "ok": true,
+      "durationMs": 13.47
+    },
+    {
+      "name": "complaint_report",
+      "status": 200,
+      "ok": true,
+      "durationMs": 65.66
+    },
+    {
+      "name": "dashboard_fee_dues",
+      "status": 200,
+      "ok": true,
+      "durationMs": 53.28
+    },
+    {
+      "name": "available_beds",
+      "status": 200,
+      "ok": true,
+      "durationMs": 12.13
+    },
+    {
+      "name": "inventory",
+      "status": 200,
+      "ok": true,
+      "durationMs": 23.42
+    },
+    {
+      "name": "complaint_report",
+      "status": 200,
+      "ok": true,
+      "durationMs": 46.19
+    },
+    {
+      "name": "occupancy_report",
+      "status": 200,
+      "ok": true,
+      "durationMs": 46.74
+    },
+    {
+      "name": "allocation_occupancy",
+      "status": 200,
+      "ok": true,
+      "durationMs": 17.01
+    },
+    {
+      "name": "inventory",
+      "status": 200,
+      "ok": true,
+      "durationMs": 15.28
+    },
+    {
+      "name": "complaint_tracking",
+      "status": 200,
+      "ok": true,
+      "durationMs": 46.05
+    },
+    {
+      "name": "available_beds",
+      "status": 200,
+      "ok": true,
+      "durationMs": 12.65
+    },
+    {
+      "name": "allocation_occupancy",
+      "status": 200,
+      "ok": true,
+      "durationMs": 13.89
+    },
+    {
+      "name": "occupancy_report",
+      "status": 200,
+      "ok": true,
+      "durationMs": 57.09
+    },
+    {
+      "name": "available_beds",
+      "status": 200,
+      "ok": true,
+      "durationMs": 8.21
+    },
+    {
+      "name": "complaint_report",
+      "status": 200,
+      "ok": true,
+      "durationMs": 38.05
+    },
+    {
+      "name": "inventory",
+      "status": 200,
+      "ok": true,
+      "durationMs": 10.63
+    },
+    {
+      "name": "dashboard_fee_dues",
+      "status": 200,
+      "ok": true,
+      "durationMs": 34.44
+    },
+    {
+      "name": "allocation_occupancy",
+      "status": 200,
+      "ok": true,
+      "durationMs": 8.53
+    },
+    {
+      "name": "complaint_tracking",
+      "status": 200,
+      "ok": true,
+      "durationMs": 43.18
+    },
+    {
+      "name": "available_beds",
+      "status": 200,
+      "ok": true,
+      "durationMs": 11.9
+    },
+    {
+      "name": "complaint_tracking",
+      "status": 200,
+      "ok": true,
+      "durationMs": 53.92
+    },
+    {
+      "name": "complaint_report",
+      "status": 200,
+      "ok": true,
+      "durationMs": 71.25
+    },
+    {
+      "name": "inventory",
+      "status": 200,
+      "ok": true,
+      "durationMs": 7.67
+    },
+    {
+      "name": "occupancy_report",
+      "status": 200,
+      "ok": true,
+      "durationMs": 59.05
+    },
+    {
+      "name": "allocation_occupancy",
+      "status": 200,
+      "ok": true,
+      "durationMs": 10.23
+    },
+    {
+      "name": "dashboard_fee_dues",
+      "status": 200,
+      "ok": true,
+      "durationMs": 55.73
+    },
+    {
+      "name": "available_beds",
+      "status": 200,
+      "ok": true,
+      "durationMs": 16.74
+    },
+    {
+      "name": "complaint_tracking",
+      "status": 200,
+      "ok": true,
+      "durationMs": 63.55
+    },
+    {
+      "name": "dashboard_fee_dues",
+      "status": 200,
+      "ok": true,
+      "durationMs": 58.01
+    },
+    {
+      "name": "complaint_report",
+      "status": 200,
+      "ok": true,
+      "durationMs": 53.36
+    },
+    {
+      "name": "occupancy_report",
+      "status": 200,
+      "ok": true,
+      "durationMs": 56.98
+    },
+    {
+      "name": "inventory",
+      "status": 200,
+      "ok": true,
+      "durationMs": 9.71
+    },
+    {
+      "name": "allocation_occupancy",
+      "status": 200,
+      "ok": true,
+      "durationMs": 7.29
+    },
+    {
+      "name": "dashboard_fee_dues",
+      "status": 200,
+      "ok": true,
+      "durationMs": 46.94
+    },
+    {
+      "name": "available_beds",
+      "status": 200,
+      "ok": true,
+      "durationMs": 9.16
+    },
+    {
+      "name": "complaint_tracking",
+      "status": 200,
+      "ok": true,
+      "durationMs": 58.93
+    },
+    {
+      "name": "occupancy_report",
+      "status": 200,
+      "ok": true,
+      "durationMs": 62.61
+    },
+    {
+      "name": "complaint_report",
+      "status": 200,
+      "ok": true,
+      "durationMs": 42.13
+    },
+    {
+      "name": "occupancy_report",
+      "status": 200,
+      "ok": true,
+      "durationMs": 40.11
+    },
+    {
+      "name": "inventory",
+      "status": 200,
+      "ok": true,
+      "durationMs": 8.46
+    },
+    {
+      "name": "dashboard_fee_dues",
+      "status": 200,
+      "ok": true,
+      "durationMs": 44.97
+    },
+    {
+      "name": "allocation_occupancy",
+      "status": 200,
+      "ok": true,
+      "durationMs": 17.33
+    },
+    {
+      "name": "complaint_tracking",
+      "status": 200,
+      "ok": true,
+      "durationMs": 54.74
+    },
+    {
+      "name": "available_beds",
+      "status": 200,
+      "ok": true,
+      "durationMs": 18.11
+    },
+    {
+      "name": "complaint_report",
+      "status": 200,
+      "ok": true,
+      "durationMs": 60.71
+    },
+    {
+      "name": "complaint_report",
+      "status": 200,
+      "ok": true,
+      "durationMs": 49.08
+    },
+    {
+      "name": "inventory",
+      "status": 200,
+      "ok": true,
+      "durationMs": 10.51
+    },
+    {
+      "name": "inventory",
+      "status": 200,
+      "ok": true,
+      "durationMs": 7.56
+    },
+    {
+      "name": "occupancy_report",
+      "status": 200,
+      "ok": true,
+      "durationMs": 45.06
+    },
+    {
+      "name": "allocation_occupancy",
+      "status": 200,
+      "ok": true,
+      "durationMs": 14.4
+    },
+    {
+      "name": "dashboard_fee_dues",
+      "status": 200,
+      "ok": true,
+      "durationMs": 43.62
+    },
+    {
+      "name": "allocation_occupancy",
+      "status": 200,
+      "ok": true,
+      "durationMs": 13.37
+    },
+    {
+      "name": "complaint_tracking",
+      "status": 200,
+      "ok": true,
+      "durationMs": 43.74
+    },
+    {
+      "name": "available_beds",
+      "status": 200,
+      "ok": true,
+      "durationMs": 30.49
+    },
+    {
+      "name": "available_beds",
+      "status": 200,
+      "ok": true,
+      "durationMs": 41.68
+    },
+    {
+      "name": "complaint_report",
+      "status": 200,
+      "ok": true,
+      "durationMs": 89.09
+    },
+    {
+      "name": "occupancy_report",
+      "status": 200,
+      "ok": true,
+      "durationMs": 98.54
+    },
+    {
+      "name": "inventory",
+      "status": 200,
+      "ok": true,
+      "durationMs": 19.15
+    },
+    {
+      "name": "allocation_occupancy",
+      "status": 200,
+      "ok": true,
+      "durationMs": 22.32
+    },
+    {
+      "name": "dashboard_fee_dues",
+      "status": 200,
+      "ok": true,
+      "durationMs": 115
+    },
+    {
+      "name": "available_beds",
+      "status": 200,
+      "ok": true,
+      "durationMs": 15.52
+    },
+    {
+      "name": "complaint_tracking",
+      "status": 200,
+      "ok": true,
+      "durationMs": 111.14
+    },
+    {
+      "name": "complaint_tracking",
+      "status": 200,
+      "ok": true,
+      "durationMs": 104.65
+    },
+    {
+      "name": "complaint_report",
+      "status": 200,
+      "ok": true,
+      "durationMs": 66.91
+    },
+    {
+      "name": "occupancy_report",
+      "status": 200,
+      "ok": true,
+      "durationMs": 39.77
+    },
+    {
+      "name": "inventory",
+      "status": 200,
+      "ok": true,
+      "durationMs": 8.23
+    },
+    {
+      "name": "complaint_tracking",
+      "status": 200,
+      "ok": true,
+      "durationMs": 44.69
+    },
+    {
+      "name": "allocation_occupancy",
+      "status": 200,
+      "ok": true,
+      "durationMs": 13.32
+    },
+    {
+      "name": "dashboard_fee_dues",
+      "status": 200,
+      "ok": true,
+      "durationMs": 48.54
+    },
+    {
+      "name": "available_beds",
+      "status": 200,
+      "ok": true,
+      "durationMs": 9.17
+    },
+    {
+      "name": "dashboard_fee_dues",
+      "status": 200,
+      "ok": true,
+      "durationMs": 47
+    },
+    {
+      "name": "complaint_report",
+      "status": 200,
+      "ok": true,
+      "durationMs": 35.07
+    },
+    {
+      "name": "inventory",
+      "status": 200,
+      "ok": true,
+      "durationMs": 7.43
+    },
+    {
+      "name": "dashboard_fee_dues",
+      "status": 200,
+      "ok": true,
+      "durationMs": 33.94
+    },
+    {
+      "name": "allocation_occupancy",
+      "status": 200,
+      "ok": true,
+      "durationMs": 13.83
+    },
+    {
+      "name": "occupancy_report",
+      "status": 200,
+      "ok": true,
+      "durationMs": 48.79
+    },
+    {
+      "name": "available_beds",
+      "status": 200,
+      "ok": true,
+      "durationMs": 15.74
+    },
+    {
+      "name": "complaint_tracking",
+      "status": 200,
+      "ok": true,
+      "durationMs": 52.94
+    },
+    {
+      "name": "occupancy_report",
+      "status": 200,
+      "ok": true,
+      "durationMs": 64.08
+    },
+    {
+      "name": "occupancy_report",
+      "status": 200,
+      "ok": true,
+      "durationMs": 49.42
+    },
+    {
+      "name": "complaint_tracking",
+      "status": 200,
+      "ok": true,
+      "durationMs": 64.69
+    },
+    {
+      "name": "complaint_report",
+      "status": 200,
+      "ok": true,
+      "durationMs": 77.46
+    },
+    {
+      "name": "inventory",
+      "status": 200,
+      "ok": true,
+      "durationMs": 11.02
+    },
+    {
+      "name": "dashboard_fee_dues",
+      "status": 200,
+      "ok": true,
+      "durationMs": 79.02
+    },
+    {
+      "name": "allocation_occupancy",
+      "status": 200,
+      "ok": true,
+      "durationMs": 15.45
+    },
+    {
+      "name": "complaint_report",
+      "status": 200,
+      "ok": true,
+      "durationMs": 90.95
+    },
+    {
+      "name": "complaint_report",
+      "status": 200,
+      "ok": true,
+      "durationMs": 86.99
+    },
+    {
+      "name": "available_beds",
+      "status": 200,
+      "ok": true,
+      "durationMs": 30.21
+    },
+    {
+      "name": "inventory",
+      "status": 200,
+      "ok": true,
+      "durationMs": 23.23
+    },
+    {
+      "name": "inventory",
+      "status": 200,
+      "ok": true,
+      "durationMs": 23.37
+    },
+    {
+      "name": "dashboard_fee_dues",
+      "status": 200,
+      "ok": true,
+      "durationMs": 73.54
+    },
+    {
+      "name": "allocation_occupancy",
+      "status": 200,
+      "ok": true,
+      "durationMs": 33.13
+    },
+    {
+      "name": "allocation_occupancy",
+      "status": 200,
+      "ok": true,
+      "durationMs": 31.9
+    },
+    {
+      "name": "occupancy_report",
+      "status": 200,
+      "ok": true,
+      "durationMs": 81.84
+    },
+    {
+      "name": "available_beds",
+      "status": 200,
+      "ok": true,
+      "durationMs": 17.25
+    },
+    {
+      "name": "complaint_tracking",
+      "status": 200,
+      "ok": true,
+      "durationMs": 56.6
+    },
+    {
+      "name": "available_beds",
+      "status": 200,
+      "ok": true,
+      "durationMs": 32.99
+    },
+    {
+      "name": "occupancy_report",
+      "status": 200,
+      "ok": true,
+      "durationMs": 101.24
+    },
+    {
+      "name": "complaint_report",
+      "status": 200,
+      "ok": true,
+      "durationMs": 102.34
+    },
+    {
+      "name": "complaint_tracking",
+      "status": 200,
+      "ok": true,
+      "durationMs": 91.96
+    },
+    {
+      "name": "dashboard_fee_dues",
+      "status": 200,
+      "ok": true,
+      "durationMs": 94.06
+    },
+    {
+      "name": "inventory",
+      "status": 200,
+      "ok": true,
+      "durationMs": 16.29
+    },
+    {
+      "name": "complaint_tracking",
+      "status": 200,
+      "ok": true,
+      "durationMs": 99.64
+    },
+    {
+      "name": "complaint_report",
+      "status": 200,
+      "ok": true,
+      "durationMs": 80.82
+    },
+    {
+      "name": "allocation_occupancy",
+      "status": 200,
+      "ok": true,
+      "durationMs": 33.02
+    },
+    {
+      "name": "dashboard_fee_dues",
+      "status": 200,
+      "ok": true,
+      "durationMs": 50.01
+    },
+    {
+      "name": "available_beds",
+      "status": 200,
+      "ok": true,
+      "durationMs": 11.56
+    },
+    {
+      "name": "inventory",
+      "status": 200,
+      "ok": true,
+      "durationMs": 19.33
+    },
+    {
+      "name": "occupancy_report",
+      "status": 200,
+      "ok": true,
+      "durationMs": 58.93
+    },
+    {
+      "name": "allocation_occupancy",
+      "status": 200,
+      "ok": true,
+      "durationMs": 17.93
+    },
+    {
+      "name": "dashboard_fee_dues",
+      "status": 200,
+      "ok": true,
+      "durationMs": 59.35
+    },
+    {
+      "name": "occupancy_report",
+      "status": 200,
+      "ok": true,
+      "durationMs": 52.07
+    },
+    {
+      "name": "available_beds",
+      "status": 200,
+      "ok": true,
+      "durationMs": 20.68
+    },
+    {
+      "name": "complaint_tracking",
+      "status": 200,
+      "ok": true,
+      "durationMs": 59.48
+    },
+    {
+      "name": "complaint_report",
+      "status": 200,
+      "ok": true,
+      "durationMs": 62.74
+    },
+    {
+      "name": "occupancy_report",
+      "status": 200,
+      "ok": true,
+      "durationMs": 51.15
+    },
+    {
+      "name": "inventory",
+      "status": 200,
+      "ok": true,
+      "durationMs": 8
+    },
+    {
+      "name": "allocation_occupancy",
+      "status": 200,
+      "ok": true,
+      "durationMs": 15.15
+    },
+    {
+      "name": "complaint_tracking",
+      "status": 200,
+      "ok": true,
+      "durationMs": 48.76
+    },
+    {
+      "name": "available_beds",
+      "status": 200,
+      "ok": true,
+      "durationMs": 5.08
+    },
+    {
+      "name": "complaint_report",
+      "status": 200,
+      "ok": true,
+      "durationMs": 64.37
+    },
+    {
+      "name": "dashboard_fee_dues",
+      "status": 200,
+      "ok": true,
+      "durationMs": 54.35
+    },
+    {
+      "name": "inventory",
+      "status": 200,
+      "ok": true,
+      "durationMs": 10
+    },
+    {
+      "name": "complaint_report",
+      "status": 200,
+      "ok": true,
+      "durationMs": 45.51
+    },
+    {
+      "name": "dashboard_fee_dues",
+      "status": 200,
+      "ok": true,
+      "durationMs": 32.83
+    },
+    {
+      "name": "inventory",
+      "status": 200,
+      "ok": true,
+      "durationMs": 8.73
+    },
+    {
+      "name": "allocation_occupancy",
+      "status": 200,
+      "ok": true,
+      "durationMs": 17.07
+    },
+    {
+      "name": "complaint_tracking",
+      "status": 200,
+      "ok": true,
+      "durationMs": 38.46
+    },
+    {
+      "name": "allocation_occupancy",
+      "status": 200,
+      "ok": true,
+      "durationMs": 7.6
+    },
+    {
+      "name": "occupancy_report",
+      "status": 200,
+      "ok": true,
+      "durationMs": 32.34
+    },
+    {
+      "name": "available_beds",
+      "status": 200,
+      "ok": true,
+      "durationMs": 10.55
+    },
+    {
+      "name": "occupancy_report",
+      "status": 200,
+      "ok": true,
+      "durationMs": 30.47
+    },
+    {
+      "name": "available_beds",
+      "status": 200,
+      "ok": true,
+      "durationMs": 18.72
+    },
+    {
+      "name": "dashboard_fee_dues",
+      "status": 200,
+      "ok": true,
+      "durationMs": 36.65
+    },
+    {
+      "name": "complaint_report",
+      "status": 200,
+      "ok": true,
+      "durationMs": 36.47
+    },
+    {
+      "name": "inventory",
+      "status": 200,
+      "ok": true,
+      "durationMs": 6.96
+    },
+    {
+      "name": "complaint_tracking",
+      "status": 200,
+      "ok": true,
+      "durationMs": 44.85
+    },
+    {
+      "name": "allocation_occupancy",
+      "status": 200,
+      "ok": true,
+      "durationMs": 6.06
+    },
+    {
+      "name": "complaint_tracking",
+      "status": 200,
+      "ok": true,
+      "durationMs": 42.12
+    },
+    {
+      "name": "available_beds",
+      "status": 200,
+      "ok": true,
+      "durationMs": 9.67
+    },
+    {
+      "name": "complaint_report",
+      "status": 200,
+      "ok": true,
+      "durationMs": 55.36
+    },
+    {
+      "name": "occupancy_report",
+      "status": 200,
+      "ok": true,
+      "durationMs": 44.75
+    },
+    {
+      "name": "inventory",
+      "status": 200,
+      "ok": true,
+      "durationMs": 8.89
+    },
+    {
+      "name": "dashboard_fee_dues",
+      "status": 200,
+      "ok": true,
+      "durationMs": 36.35
+    },
+    {
+      "name": "allocation_occupancy",
+      "status": 200,
+      "ok": true,
+      "durationMs": 13.51
+    },
+    {
+      "name": "dashboard_fee_dues",
+      "status": 200,
+      "ok": true,
+      "durationMs": 43.29
+    },
+    {
+      "name": "available_beds",
+      "status": 200,
+      "ok": true,
+      "durationMs": 10.89
+    },
+    {
+      "name": "complaint_tracking",
+      "status": 200,
+      "ok": true,
+      "durationMs": 51.19
+    },
+    {
+      "name": "complaint_report",
+      "status": 200,
+      "ok": true,
+      "durationMs": 47.15
+    },
+    {
+      "name": "occupancy_report",
+      "status": 200,
+      "ok": true,
+      "durationMs": 51.91
+    },
+    {
+      "name": "inventory",
+      "status": 200,
+      "ok": true,
+      "durationMs": 23.48
+    },
+    {
+      "name": "complaint_tracking",
+      "status": 200,
+      "ok": true,
+      "durationMs": 52.84
+    },
+    {
+      "name": "occupancy_report",
+      "status": 200,
+      "ok": true,
+      "durationMs": 59.71
+    },
+    {
+      "name": "allocation_occupancy",
+      "status": 200,
+      "ok": true,
+      "durationMs": 15.13
+    },
+    {
+      "name": "available_beds",
+      "status": 200,
+      "ok": true,
+      "durationMs": 12.9
+    },
+    {
+      "name": "dashboard_fee_dues",
+      "status": 200,
+      "ok": true,
+      "durationMs": 62.61
+    },
+    {
+      "name": "complaint_report",
+      "status": 200,
+      "ok": true,
+      "durationMs": 49.21
+    },
+    {
+      "name": "inventory",
+      "status": 200,
+      "ok": true,
+      "durationMs": 5.97
+    },
+    {
+      "name": "dashboard_fee_dues",
+      "status": 200,
+      "ok": true,
+      "durationMs": 37.02
+    },
+    {
+      "name": "complaint_report",
+      "status": 200,
+      "ok": true,
+      "durationMs": 41.45
+    },
+    {
+      "name": "allocation_occupancy",
+      "status": 200,
+      "ok": true,
+      "durationMs": 10.52
+    },
+    {
+      "name": "complaint_tracking",
+      "status": 200,
+      "ok": true,
+      "durationMs": 40.37
+    },
+    {
+      "name": "inventory",
+      "status": 200,
+      "ok": true,
+      "durationMs": 18.51
+    },
+    {
+      "name": "available_beds",
+      "status": 200,
+      "ok": true,
+      "durationMs": 22.78
+    },
+    {
+      "name": "occupancy_report",
+      "status": 200,
+      "ok": true,
+      "durationMs": 51.71
+    },
+    {
+      "name": "occupancy_report",
+      "status": 200,
+      "ok": true,
+      "durationMs": 47.93
+    },
+    {
+      "name": "dashboard_fee_dues",
+      "status": 200,
+      "ok": true,
+      "durationMs": 27.4
+    },
+    {
+      "name": "allocation_occupancy",
+      "status": 200,
+      "ok": true,
+      "durationMs": 22.35
+    },
+    {
+      "name": "available_beds",
+      "status": 200,
+      "ok": true,
+      "durationMs": 16.89
+    },
+    {
+      "name": "complaint_tracking",
+      "status": 200,
+      "ok": true,
+      "durationMs": 37.38
+    },
+    {
+      "name": "complaint_report",
+      "status": 200,
+      "ok": true,
+      "durationMs": 45.69
+    },
+    {
+      "name": "complaint_report",
+      "status": 200,
+      "ok": true,
+      "durationMs": 42.37
+    },
+    {
+      "name": "inventory",
+      "status": 200,
+      "ok": true,
+      "durationMs": 10.94
+    },
+    {
+      "name": "occupancy_report",
+      "status": 200,
+      "ok": true,
+      "durationMs": 50.52
+    },
+    {
+      "name": "inventory",
+      "status": 200,
+      "ok": true,
+      "durationMs": 12.54
+    },
+    {
+      "name": "allocation_occupancy",
+      "status": 200,
+      "ok": true,
+      "durationMs": 17.12
+    },
+    {
+      "name": "allocation_occupancy",
+      "status": 200,
+      "ok": true,
+      "durationMs": 12.68
+    },
+    {
+      "name": "dashboard_fee_dues",
+      "status": 200,
+      "ok": true,
+      "durationMs": 45.95
+    },
+    {
+      "name": "available_beds",
+      "status": 200,
+      "ok": true,
+      "durationMs": 13.93
+    },
+    {
+      "name": "complaint_tracking",
+      "status": 200,
+      "ok": true,
+      "durationMs": 56.77
+    },
+    {
+      "name": "available_beds",
+      "status": 200,
+      "ok": true,
+      "durationMs": 9.22
+    },
+    {
+      "name": "complaint_report",
+      "status": 200,
+      "ok": true,
+      "durationMs": 43.63
+    },
+    {
+      "name": "occupancy_report",
+      "status": 200,
+      "ok": true,
+      "durationMs": 36.07
+    },
+    {
+      "name": "inventory",
+      "status": 200,
+      "ok": true,
+      "durationMs": 15.82
+    },
+    {
+      "name": "complaint_tracking",
+      "status": 200,
+      "ok": true,
+      "durationMs": 39.66
+    },
+    {
+      "name": "allocation_occupancy",
+      "status": 200,
+      "ok": true,
+      "durationMs": 10.32
+    },
+    {
+      "name": "dashboard_fee_dues",
+      "status": 200,
+      "ok": true,
+      "durationMs": 53.51
+    },
+    {
+      "name": "available_beds",
+      "status": 200,
+      "ok": true,
+      "durationMs": 17.43
+    },
+    {
+      "name": "complaint_tracking",
+      "status": 200,
+      "ok": true,
+      "durationMs": 71.05
+    },
+    {
+      "name": "complaint_report",
+      "status": 200,
+      "ok": true,
+      "durationMs": 63.67
+    },
+    {
+      "name": "inventory",
+      "status": 200,
+      "ok": true,
+      "durationMs": 5.88
+    },
+    {
+      "name": "dashboard_fee_dues",
+      "status": 200,
+      "ok": true,
+      "durationMs": 73.12
+    },
+    {
+      "name": "allocation_occupancy",
+      "status": 200,
+      "ok": true,
+      "durationMs": 19.56
+    },
+    {
+      "name": "occupancy_report",
+      "status": 200,
+      "ok": true,
+      "durationMs": 71.52
+    },
+    {
+      "name": "available_beds",
+      "status": 200,
+      "ok": true,
+      "durationMs": 21.44
+    },
+    {
+      "name": "complaint_tracking",
+      "status": 200,
+      "ok": true,
+      "durationMs": 81.96
+    },
+    {
+      "name": "dashboard_fee_dues",
+      "status": 200,
+      "ok": true,
+      "durationMs": 80.15
+    },
+    {
+      "name": "occupancy_report",
+      "status": 200,
+      "ok": true,
+      "durationMs": 49.87
+    },
+    {
+      "name": "complaint_report",
+      "status": 200,
+      "ok": true,
+      "durationMs": 42.66
+    },
+    {
+      "name": "complaint_tracking",
+      "status": 200,
+      "ok": true,
+      "durationMs": 44.89
+    },
+    {
+      "name": "inventory",
+      "status": 200,
+      "ok": true,
+      "durationMs": 17.51
+    },
+    {
+      "name": "dashboard_fee_dues",
+      "status": 200,
+      "ok": true,
+      "durationMs": 40.77
+    },
+    {
+      "name": "allocation_occupancy",
+      "status": 200,
+      "ok": true,
+      "durationMs": 10.79
+    },
+    {
+      "name": "occupancy_report",
+      "status": 200,
+      "ok": true,
+      "durationMs": 45.88
+    },
+    {
+      "name": "complaint_report",
+      "status": 200,
+      "ok": true,
+      "durationMs": 104.29
+    },
+    {
+      "name": "available_beds",
+      "status": 200,
+      "ok": true,
+      "durationMs": 76.99
+    },
+    {
+      "name": "dashboard_fee_dues",
+      "status": 200,
+      "ok": true,
+      "durationMs": 94.74
+    },
+    {
+      "name": "occupancy_report",
+      "status": 200,
+      "ok": true,
+      "durationMs": 109.91
+    },
+    {
+      "name": "inventory",
+      "status": 200,
+      "ok": true,
+      "durationMs": 32.24
+    },
+    {
+      "name": "complaint_report",
+      "status": 200,
+      "ok": true,
+      "durationMs": 133.25
+    },
+    {
+      "name": "allocation_occupancy",
+      "status": 200,
+      "ok": true,
+      "durationMs": 64.84
+    },
+    {
+      "name": "complaint_tracking",
+      "status": 200,
+      "ok": true,
+      "durationMs": 91.64
+    },
+    {
+      "name": "occupancy_report",
+      "status": 200,
+      "ok": true,
+      "durationMs": 97.79
+    },
+    {
+      "name": "available_beds",
+      "status": 200,
+      "ok": true,
+      "durationMs": 26.93
+    },
+    {
+      "name": "inventory",
+      "status": 200,
+      "ok": true,
+      "durationMs": 58.6
+    },
+    {
+      "name": "complaint_report",
+      "status": 200,
+      "ok": true,
+      "durationMs": 108.52
+    },
+    {
+      "name": "allocation_occupancy",
+      "status": 200,
+      "ok": true,
+      "durationMs": 15.5
+    },
+    {
+      "name": "dashboard_fee_dues",
+      "status": 200,
+      "ok": true,
+      "durationMs": 45.06
+    },
+    {
+      "name": "complaint_report",
+      "status": 200,
+      "ok": true,
+      "durationMs": 40.91
+    },
+    {
+      "name": "available_beds",
+      "status": 200,
+      "ok": true,
+      "durationMs": 14.27
+    },
+    {
+      "name": "inventory",
+      "status": 200,
+      "ok": true,
+      "durationMs": 15.93
+    },
+    {
+      "name": "inventory",
+      "status": 200,
+      "ok": true,
+      "durationMs": 11.04
+    },
+    {
+      "name": "allocation_occupancy",
+      "status": 200,
+      "ok": true,
+      "durationMs": 13.71
+    },
+    {
+      "name": "complaint_tracking",
+      "status": 200,
+      "ok": true,
+      "durationMs": 49.15
+    },
+    {
+      "name": "allocation_occupancy",
+      "status": 200,
+      "ok": true,
+      "durationMs": 15.17
+    },
+    {
+      "name": "occupancy_report",
+      "status": 200,
+      "ok": true,
+      "durationMs": 36.13
+    },
+    {
+      "name": "available_beds",
+      "status": 200,
+      "ok": true,
+      "durationMs": 14.65
+    },
+    {
+      "name": "available_beds",
+      "status": 200,
+      "ok": true,
+      "durationMs": 24.28
+    },
+    {
+      "name": "complaint_tracking",
+      "status": 200,
+      "ok": true,
+      "durationMs": 44.36
+    },
+    {
+      "name": "dashboard_fee_dues",
+      "status": 200,
+      "ok": true,
+      "durationMs": 34.72
+    },
+    {
+      "name": "complaint_tracking",
+      "status": 200,
+      "ok": true,
+      "durationMs": 21.8
+    },
+    {
+      "name": "complaint_tracking",
+      "status": 200,
+      "ok": true,
+      "durationMs": 30.66
+    },
+    {
+      "name": "complaint_report",
+      "status": 200,
+      "ok": true,
+      "durationMs": 52.72
+    },
+    {
+      "name": "dashboard_fee_dues",
+      "status": 200,
+      "ok": true,
+      "durationMs": 40.06
+    },
+    {
+      "name": "inventory",
+      "status": 200,
+      "ok": true,
+      "durationMs": 9.54
+    },
+    {
+      "name": "allocation_occupancy",
+      "status": 200,
+      "ok": true,
+      "durationMs": 8.83
+    },
+    {
+      "name": "occupancy_report",
+      "status": 200,
+      "ok": true,
+      "durationMs": 44.42
+    },
+    {
+      "name": "available_beds",
+      "status": 200,
+      "ok": true,
+      "durationMs": 11.08
+    },
+    {
+      "name": "dashboard_fee_dues",
+      "status": 200,
+      "ok": true,
+      "durationMs": 50.19
+    },
+    {
+      "name": "dashboard_fee_dues",
+      "status": 200,
+      "ok": true,
+      "durationMs": 60.11
+    },
+    {
+      "name": "occupancy_report",
+      "status": 200,
+      "ok": true,
+      "durationMs": 51.36
+    },
+    {
+      "name": "complaint_report",
+      "status": 200,
+      "ok": true,
+      "durationMs": 64.8
+    },
+    {
+      "name": "complaint_tracking",
+      "status": 200,
+      "ok": true,
+      "durationMs": 59.42
+    },
+    {
+      "name": "inventory",
+      "status": 200,
+      "ok": true,
+      "durationMs": 9.94
+    },
+    {
+      "name": "occupancy_report",
+      "status": 200,
+      "ok": true,
+      "durationMs": 67.62
+    },
+    {
+      "name": "allocation_occupancy",
+      "status": 200,
+      "ok": true,
+      "durationMs": 7.13
+    },
+    {
+      "name": "available_beds",
+      "status": 200,
+      "ok": true,
+      "durationMs": 9
+    },
+    {
+      "name": "complaint_report",
+      "status": 200,
+      "ok": true,
+      "durationMs": 54.63
+    },
+    {
+      "name": "occupancy_report",
+      "status": 200,
+      "ok": true,
+      "durationMs": 67.04
+    },
+    {
+      "name": "inventory",
+      "status": 200,
+      "ok": true,
+      "durationMs": 6.48
+    },
+    {
+      "name": "dashboard_fee_dues",
+      "status": 200,
+      "ok": true,
+      "durationMs": 37.48
+    },
+    {
+      "name": "allocation_occupancy",
+      "status": 200,
+      "ok": true,
+      "durationMs": 11.72
+    },
+    {
+      "name": "available_beds",
+      "status": 200,
+      "ok": true,
+      "durationMs": 7.91
+    },
+    {
+      "name": "complaint_report",
+      "status": 200,
+      "ok": true,
+      "durationMs": 48.7
+    },
+    {
+      "name": "complaint_tracking",
+      "status": 200,
+      "ok": true,
+      "durationMs": 43.96
+    },
+    {
+      "name": "inventory",
+      "status": 200,
+      "ok": true,
+      "durationMs": 13.12
+    },
+    {
+      "name": "complaint_report",
+      "status": 200,
+      "ok": true,
+      "durationMs": 55.68
+    },
+    {
+      "name": "allocation_occupancy",
+      "status": 200,
+      "ok": true,
+      "durationMs": 15.37
+    },
+    {
+      "name": "occupancy_report",
+      "status": 200,
+      "ok": true,
+      "durationMs": 61.66
+    },
+    {
+      "name": "inventory",
+      "status": 200,
+      "ok": true,
+      "durationMs": 38.53
+    },
+    {
+      "name": "available_beds",
+      "status": 200,
+      "ok": true,
+      "durationMs": 36.18
+    },
+    {
+      "name": "complaint_tracking",
+      "status": 200,
+      "ok": true,
+      "durationMs": 83.13
+    },
+    {
+      "name": "allocation_occupancy",
+      "status": 200,
+      "ok": true,
+      "durationMs": 17.49
+    },
+    {
+      "name": "dashboard_fee_dues",
+      "status": 200,
+      "ok": true,
+      "durationMs": 79.09
+    },
+    {
+      "name": "available_beds",
+      "status": 200,
+      "ok": true,
+      "durationMs": 12.97
+    },
+    {
+      "name": "complaint_tracking",
+      "status": 200,
+      "ok": true,
+      "durationMs": 34.39
+    },
+    {
+      "name": "complaint_report",
+      "status": 200,
+      "ok": true,
+      "durationMs": 76.01
+    },
+    {
+      "name": "inventory",
+      "status": 200,
+      "ok": true,
+      "durationMs": 8.07
+    },
+    {
+      "name": "dashboard_fee_dues",
+      "status": 200,
+      "ok": true,
+      "durationMs": 56.03
+    },
+    {
+      "name": "allocation_occupancy",
+      "status": 200,
+      "ok": true,
+      "durationMs": 10.54
+    },
+    {
+      "name": "occupancy_report",
+      "status": 200,
+      "ok": true,
+      "durationMs": 55.9
+    },
+    {
+      "name": "available_beds",
+      "status": 200,
+      "ok": true,
+      "durationMs": 9.77
+    },
+    {
+      "name": "complaint_tracking",
+      "status": 200,
+      "ok": true,
+      "durationMs": 56.24
+    },
+    {
+      "name": "dashboard_fee_dues",
+      "status": 200,
+      "ok": true,
+      "durationMs": 62.63
+    },
+    {
+      "name": "occupancy_report",
+      "status": 200,
+      "ok": true,
+      "durationMs": 41.66
+    },
+    {
+      "name": "complaint_report",
+      "status": 200,
+      "ok": true,
+      "durationMs": 51.3
+    },
+    {
+      "name": "inventory",
+      "status": 200,
+      "ok": true,
+      "durationMs": 11.78
+    },
+    {
+      "name": "complaint_tracking",
+      "status": 200,
+      "ok": true,
+      "durationMs": 67.92
+    },
+    {
+      "name": "allocation_occupancy",
+      "status": 200,
+      "ok": true,
+      "durationMs": 14.26
+    },
+    {
+      "name": "dashboard_fee_dues",
+      "status": 200,
+      "ok": true,
+      "durationMs": 76
+    },
+    {
+      "name": "available_beds",
+      "status": 200,
+      "ok": true,
+      "durationMs": 8.86
+    },
+    {
+      "name": "occupancy_report",
+      "status": 200,
+      "ok": true,
+      "durationMs": 74.68
+    },
+    {
+      "name": "complaint_report",
+      "status": 200,
+      "ok": true,
+      "durationMs": 82.71
+    },
+    {
+      "name": "dashboard_fee_dues",
+      "status": 200,
+      "ok": true,
+      "durationMs": 44.03
+    },
+    {
+      "name": "inventory",
+      "status": 200,
+      "ok": true,
+      "durationMs": 6.14
+    },
+    {
+      "name": "complaint_tracking",
+      "status": 200,
+      "ok": true,
+      "durationMs": 42.68
+    },
+    {
+      "name": "allocation_occupancy",
+      "status": 200,
+      "ok": true,
+      "durationMs": 16.06
+    },
+    {
+      "name": "available_beds",
+      "status": 200,
+      "ok": true,
+      "durationMs": 9.77
+    },
+    {
+      "name": "occupancy_report",
+      "status": 200,
+      "ok": true,
+      "durationMs": 60.24
+    },
+    {
+      "name": "complaint_report",
+      "status": 200,
+      "ok": true,
+      "durationMs": 63.98
+    },
+    {
+      "name": "dashboard_fee_dues",
+      "status": 200,
+      "ok": true,
+      "durationMs": 43.34
+    },
+    {
+      "name": "inventory",
+      "status": 200,
+      "ok": true,
+      "durationMs": 20.86
+    },
+    {
+      "name": "occupancy_report",
+      "status": 200,
+      "ok": true,
+      "durationMs": 66.72
+    },
+    {
+      "name": "complaint_tracking",
+      "status": 200,
+      "ok": true,
+      "durationMs": 44.18
+    },
+    {
+      "name": "allocation_occupancy",
+      "status": 200,
+      "ok": true,
+      "durationMs": 12.7
+    },
+    {
+      "name": "complaint_report",
+      "status": 200,
+      "ok": true,
+      "durationMs": 62.43
+    },
+    {
+      "name": "available_beds",
+      "status": 200,
+      "ok": true,
+      "durationMs": 21
+    },
+    {
+      "name": "inventory",
+      "status": 200,
+      "ok": true,
+      "durationMs": 9.98
+    },
+    {
+      "name": "occupancy_report",
+      "status": 200,
+      "ok": true,
+      "durationMs": 51.03
+    },
+    {
+      "name": "allocation_occupancy",
+      "status": 200,
+      "ok": true,
+      "durationMs": 11.48
+    },
+    {
+      "name": "complaint_report",
+      "status": 200,
+      "ok": true,
+      "durationMs": 53.06
+    },
+    {
+      "name": "available_beds",
+      "status": 200,
+      "ok": true,
+      "durationMs": 13.92
+    },
+    {
+      "name": "inventory",
+      "status": 200,
+      "ok": true,
+      "durationMs": 10.37
+    },
+    {
+      "name": "dashboard_fee_dues",
+      "status": 200,
+      "ok": true,
+      "durationMs": 62.8
+    },
+    {
+      "name": "allocation_occupancy",
+      "status": 200,
+      "ok": true,
+      "durationMs": 11.26
+    },
+    {
+      "name": "complaint_tracking",
+      "status": 200,
+      "ok": true,
+      "durationMs": 47.88
+    },
+    {
+      "name": "available_beds",
+      "status": 200,
+      "ok": true,
+      "durationMs": 7.14
+    },
+    {
+      "name": "complaint_report",
+      "status": 200,
+      "ok": true,
+      "durationMs": 53.2
+    },
+    {
+      "name": "inventory",
+      "status": 200,
+      "ok": true,
+      "durationMs": 12.96
+    },
+    {
+      "name": "complaint_tracking",
+      "status": 200,
+      "ok": true,
+      "durationMs": 48.44
+    },
+    {
+      "name": "occupancy_report",
+      "status": 200,
+      "ok": true,
+      "durationMs": 50.63
+    },
+    {
+      "name": "allocation_occupancy",
+      "status": 200,
+      "ok": true,
+      "durationMs": 13.18
+    },
+    {
+      "name": "dashboard_fee_dues",
+      "status": 200,
+      "ok": true,
+      "durationMs": 54.01
+    },
+    {
+      "name": "available_beds",
+      "status": 200,
+      "ok": true,
+      "durationMs": 15.02
+    },
+    {
+      "name": "complaint_tracking",
+      "status": 200,
+      "ok": true,
+      "durationMs": 64.97
+    },
+    {
+      "name": "dashboard_fee_dues",
+      "status": 200,
+      "ok": true,
+      "durationMs": 44.64
+    },
+    {
+      "name": "complaint_report",
+      "status": 200,
+      "ok": true,
+      "durationMs": 43.25
+    },
+    {
+      "name": "inventory",
+      "status": 200,
+      "ok": true,
+      "durationMs": 7.22
+    },
+    {
+      "name": "occupancy_report",
+      "status": 200,
+      "ok": true,
+      "durationMs": 37.66
+    },
+    {
+      "name": "complaint_tracking",
+      "status": 200,
+      "ok": true,
+      "durationMs": 43.63
+    },
+    {
+      "name": "allocation_occupancy",
+      "status": 200,
+      "ok": true,
+      "durationMs": 13.22
+    },
+    {
+      "name": "dashboard_fee_dues",
+      "status": 200,
+      "ok": true,
+      "durationMs": 77.72
+    },
+    {
+      "name": "available_beds",
+      "status": 200,
+      "ok": true,
+      "durationMs": 42.3
+    },
+    {
+      "name": "occupancy_report",
+      "status": 200,
+      "ok": true,
+      "durationMs": 92.97
+    },
+    {
+      "name": "complaint_report",
+      "status": 200,
+      "ok": true,
+      "durationMs": 86.4
+    },
+    {
+      "name": "inventory",
+      "status": 200,
+      "ok": true,
+      "durationMs": 11.62
+    },
+    {
+      "name": "dashboard_fee_dues",
+      "status": 200,
+      "ok": true,
+      "durationMs": 90.85
+    },
+    {
+      "name": "allocation_occupancy",
+      "status": 200,
+      "ok": true,
+      "durationMs": 7.51
+    },
+    {
+      "name": "complaint_tracking",
+      "status": 200,
+      "ok": true,
+      "durationMs": 58.18
+    },
+    {
+      "name": "available_beds",
+      "status": 200,
+      "ok": true,
+      "durationMs": 17.48
+    },
+    {
+      "name": "occupancy_report",
+      "status": 200,
+      "ok": true,
+      "durationMs": 92.62
+    },
+    {
+      "name": "complaint_report",
+      "status": 200,
+      "ok": true,
+      "durationMs": 81.15
+    },
+    {
+      "name": "dashboard_fee_dues",
+      "status": 200,
+      "ok": true,
+      "durationMs": 46.15
+    },
+    {
+      "name": "occupancy_report",
+      "status": 200,
+      "ok": true,
+      "durationMs": 65.75
+    },
+    {
+      "name": "inventory",
+      "status": 200,
+      "ok": true,
+      "durationMs": 12.03
+    },
+    {
+      "name": "complaint_tracking",
+      "status": 200,
+      "ok": true,
+      "durationMs": 56.57
+    },
+    {
+      "name": "allocation_occupancy",
+      "status": 200,
+      "ok": true,
+      "durationMs": 15.09
+    },
+    {
+      "name": "complaint_report",
+      "status": 200,
+      "ok": true,
+      "durationMs": 52.34
+    },
+    {
+      "name": "available_beds",
+      "status": 200,
+      "ok": true,
+      "durationMs": 20.87
+    },
+    {
+      "name": "inventory",
+      "status": 200,
+      "ok": true,
+      "durationMs": 10.75
+    },
+    {
+      "name": "occupancy_report",
+      "status": 200,
+      "ok": true,
+      "durationMs": 59.16
+    },
+    {
+      "name": "allocation_occupancy",
+      "status": 200,
+      "ok": true,
+      "durationMs": 15.06
+    },
+    {
+      "name": "complaint_report",
+      "status": 200,
+      "ok": true,
+      "durationMs": 68.15
+    },
+    {
+      "name": "dashboard_fee_dues",
+      "status": 200,
+      "ok": true,
+      "durationMs": 57.85
+    },
+    {
+      "name": "available_beds",
+      "status": 200,
+      "ok": true,
+      "durationMs": 14.38
+    },
+    {
+      "name": "inventory",
+      "status": 200,
+      "ok": true,
+      "durationMs": 12.55
+    },
+    {
+      "name": "complaint_tracking",
+      "status": 200,
+      "ok": true,
+      "durationMs": 48.04
+    },
+    {
+      "name": "allocation_occupancy",
+      "status": 200,
+      "ok": true,
+      "durationMs": 11.24
+    },
+    {
+      "name": "complaint_report",
+      "status": 200,
+      "ok": true,
+      "durationMs": 45.02
+    },
+    {
+      "name": "available_beds",
+      "status": 200,
+      "ok": true,
+      "durationMs": 7.2
+    },
+    {
+      "name": "occupancy_report",
+      "status": 200,
+      "ok": true,
+      "durationMs": 33.61
+    },
+    {
+      "name": "inventory",
+      "status": 200,
+      "ok": true,
+      "durationMs": 10.1
+    },
+    {
+      "name": "allocation_occupancy",
+      "status": 200,
+      "ok": true,
+      "durationMs": 8.74
+    },
+    {
+      "name": "complaint_tracking",
+      "status": 200,
+      "ok": true,
+      "durationMs": 43.51
+    },
+    {
+      "name": "dashboard_fee_dues",
+      "status": 200,
+      "ok": true,
+      "durationMs": 35.91
+    },
+    {
+      "name": "available_beds",
+      "status": 200,
+      "ok": true,
+      "durationMs": 10.32
+    },
+    {
+      "name": "complaint_tracking",
+      "status": 200,
+      "ok": true,
+      "durationMs": 37.09
+    },
+    {
+      "name": "complaint_report",
+      "status": 200,
+      "ok": true,
+      "durationMs": 38.65
+    },
+    {
+      "name": "dashboard_fee_dues",
+      "status": 200,
+      "ok": true,
+      "durationMs": 31.18
+    },
+    {
+      "name": "inventory",
+      "status": 200,
+      "ok": true,
+      "durationMs": 8.04
+    },
+    {
+      "name": "occupancy_report",
+      "status": 200,
+      "ok": true,
+      "durationMs": 34.84
+    },
+    {
+      "name": "allocation_occupancy",
+      "status": 200,
+      "ok": true,
+      "durationMs": 7.15
+    },
+    {
+      "name": "complaint_tracking",
+      "status": 200,
+      "ok": true,
+      "durationMs": 39.96
+    },
+    {
+      "name": "available_beds",
+      "status": 200,
+      "ok": true,
+      "durationMs": 20.19
+    },
+    {
+      "name": "dashboard_fee_dues",
+      "status": 200,
+      "ok": true,
+      "durationMs": 43.92
+    },
+    {
+      "name": "occupancy_report",
+      "status": 200,
+      "ok": true,
+      "durationMs": 42.29
+    },
+    {
+      "name": "complaint_report",
+      "status": 200,
+      "ok": true,
+      "durationMs": 42.49
+    },
+    {
+      "name": "dashboard_fee_dues",
+      "status": 200,
+      "ok": true,
+      "durationMs": 44.86
+    },
+    {
+      "name": "inventory",
+      "status": 200,
+      "ok": true,
+      "durationMs": 12.6
+    },
+    {
+      "name": "complaint_tracking",
+      "status": 200,
+      "ok": true,
+      "durationMs": 37.6
+    },
+    {
+      "name": "allocation_occupancy",
+      "status": 200,
+      "ok": true,
+      "durationMs": 15.67
+    },
+    {
+      "name": "occupancy_report",
+      "status": 200,
+      "ok": true,
+      "durationMs": 53.66
+    },
+    {
+      "name": "available_beds",
+      "status": 200,
+      "ok": true,
+      "durationMs": 7.14
+    },
+    {
+      "name": "complaint_report",
+      "status": 200,
+      "ok": true,
+      "durationMs": 57.89
+    },
+    {
+      "name": "occupancy_report",
+      "status": 200,
+      "ok": true,
+      "durationMs": 37.65
+    },
+    {
+      "name": "dashboard_fee_dues",
+      "status": 200,
+      "ok": true,
+      "durationMs": 40.03
+    },
+    {
+      "name": "inventory",
+      "status": 200,
+      "ok": true,
+      "durationMs": 11.31
+    },
+    {
+      "name": "complaint_tracking",
+      "status": 200,
+      "ok": true,
+      "durationMs": 38.21
+    },
+    {
+      "name": "allocation_occupancy",
+      "status": 200,
+      "ok": true,
+      "durationMs": 16.41
+    },
+    {
+      "name": "available_beds",
+      "status": 200,
+      "ok": true,
+      "durationMs": 14.77
+    },
+    {
+      "name": "complaint_report",
+      "status": 200,
+      "ok": true,
+      "durationMs": 59.19
+    },
+    {
+      "name": "complaint_report",
+      "status": 200,
+      "ok": true,
+      "durationMs": 52.06
+    },
+    {
+      "name": "occupancy_report",
+      "status": 200,
+      "ok": true,
+      "durationMs": 49.23
+    },
+    {
+      "name": "inventory",
+      "status": 200,
+      "ok": true,
+      "durationMs": 17.94
+    },
+    {
+      "name": "dashboard_fee_dues",
+      "status": 200,
+      "ok": true,
+      "durationMs": 47.49
+    },
+    {
+      "name": "allocation_occupancy",
+      "status": 200,
+      "ok": true,
+      "durationMs": 18.73
+    },
+    {
+      "name": "complaint_tracking",
+      "status": 200,
+      "ok": true,
+      "durationMs": 54.98
+    },
+    {
+      "name": "available_beds",
+      "status": 200,
+      "ok": true,
+      "durationMs": 11.67
+    },
+    {
+      "name": "complaint_report",
+      "status": 200,
+      "ok": true,
+      "durationMs": 52.1
+    },
+    {
+      "name": "occupancy_report",
+      "status": 200,
+      "ok": true,
+      "durationMs": 44.46
+    },
+    {
+      "name": "dashboard_fee_dues",
+      "status": 200,
+      "ok": true,
+      "durationMs": 32.85
+    },
+    {
+      "name": "complaint_tracking",
+      "status": 200,
+      "ok": true,
+      "durationMs": 39.4
+    },
+    {
+      "name": "complaint_report",
+      "status": 200,
+      "ok": true,
+      "durationMs": 40
+    },
+    {
+      "name": "occupancy_report",
+      "status": 200,
+      "ok": true,
+      "durationMs": 31.03
+    },
+    {
+      "name": "dashboard_fee_dues",
+      "status": 200,
+      "ok": true,
+      "durationMs": 25.48
+    },
+    {
+      "name": "complaint_report",
+      "status": 200,
+      "ok": true,
+      "durationMs": 22.88
+    },
+    {
+      "name": "inventory",
+      "status": 200,
+      "ok": true,
+      "durationMs": 15.78
+    },
+    {
+      "name": "occupancy_report",
+      "status": 200,
+      "ok": true,
+      "durationMs": 34.09
+    },
+    {
+      "name": "allocation_occupancy",
+      "status": 200,
+      "ok": true,
+      "durationMs": 7.81
+    },
+    {
+      "name": "available_beds",
+      "status": 200,
+      "ok": true,
+      "durationMs": 8.62
+    },
+    {
+      "name": "complaint_report",
+      "status": 200,
+      "ok": true,
+      "durationMs": 24.57
+    },
+    {
+      "name": "complaint_tracking",
+      "status": 200,
+      "ok": true,
+      "durationMs": 23.74
+    },
+    {
+      "name": "dashboard_fee_dues",
+      "status": 200,
+      "ok": true,
+      "durationMs": 13.07
+    },
+    {
+      "name": "occupancy_report",
+      "status": 200,
+      "ok": true,
+      "durationMs": 13
+    },
+    {
+      "name": "complaint_report",
+      "status": 200,
+      "ok": true,
+      "durationMs": 31.17
+    }
+  ]
+}
