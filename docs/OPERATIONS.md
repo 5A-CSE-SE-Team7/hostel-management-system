@@ -8,9 +8,9 @@ Browser --HTTPS/TLS1.2+--> nginx (static React build + reverse proxy, `deploy/ng
 Monthly availability = observed uptime excluding announced maintenance / planned time. Record scheduled maintenance windows in advance.
 
 ## Backups and restore drill
-- Daily backup (cron): `0 2 * * *  DB_PASSWORD=... /opt/hms/backend/scripts/backup.sh` (gzip dump, 14-day retention by default).
-- Restore drill: `DB_PASSWORD=... backend/scripts/restore.sh backups/hms_YYYYMMDD_HHMMSS.sql.gz` - note the printed duration (target <= 30 min).
-- After restoring, log in as admin and call `GET /api/admin/audit/verify` (or press *Verify integrity* on the Audit page) to confirm the audit chain is intact.
+- Schedule a daily cron job (example assumes `/opt/hms` is the checkout and `/etc/hms/backup.env` is readable only by the backup account): `0 2 * * * set -a; . /etc/hms/backup.env; set +a; BACKUP_DIR=/var/backups/hms RETENTION_DAYS=14 /opt/hms/backend/scripts/backup.sh >> /var/log/hms/backup.log 2>&1`. The environment file supplies `DB_PASSWORD` and may override `DB_HOST`, `DB_PORT`, `DB_USER`, and `DB_NAME`. Backups are gzip-compressed, written with private file permissions, and published only after `mysqldump` succeeds. Retention defaults to 14 days and is configurable with `RETENTION_DAYS`.
+- For a restore drill, first create an isolated, empty database such as `hms_restore_drill` using an account authorized to create databases. Restore a known backup into it with explicit target confirmation: `DB_PASSWORD=... RESTORE_TARGET_DB=hms_restore_drill RESTORE_CONFIRM_DB=hms_restore_drill backend/scripts/restore.sh /var/backups/hms/hms_YYYYMMDD_HHMMSS.sql.gz`. The script validates the gzip archive and prints elapsed seconds. Keep the source database untouched during a drill.
+- Start the API against the restored database, log in as the synthetic admin, then call `GET /api/admin/audit/verify` (or use *Verify integrity* on the Audit page). Record the backup timestamp, restore duration, and audit verification result; acceptance requires a duration of at most 1800 seconds and a valid audit chain.
 
 ## TLS evidence
 `nmap --script ssl-enum-ciphers -p 443 <host>` or testssl.sh; expect only TLSv1.2/1.3. Plain HTTP on the API port returns 426 when `REQUIRE_HTTPS=true`.

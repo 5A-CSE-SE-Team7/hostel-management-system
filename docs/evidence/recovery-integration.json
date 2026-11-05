@@ -1,0 +1,46 @@
+{
+  "applicationCommit": "8982493ffbb42d343308d85af2a24c826d05d532",
+  "synthetic": true,
+  "restoreSeconds": 2,
+  "before": {
+    "db": "hms_integration_backup_test",
+    "audit": {
+      "valid": true,
+      "checked": 14
+    },
+    "counts": {
+      "users": 10,
+      "auditEvents": 14
+    }
+  },
+  "after": {
+    "db": "hms_integration_restore_test",
+    "audit": {
+      "valid": true,
+      "checked": 16
+    },
+    "counts": {
+      "users": 10,
+      "auditEvents": 16
+    }
+  },
+  "comparison": {
+    "tableCounts": {
+      "users": 10,
+      "students": 6,
+      "blocks": 2,
+      "rooms": 6,
+      "beds": 12,
+      "allocations": 1,
+      "complaints": 1,
+      "complaint_categories": 6,
+      "fee_assessments": 1,
+      "fee_payments": 1,
+      "visitors": 1,
+      "leave_requests": 1,
+      "notifications": 5
+    },
+    "preservedAuditRows": 14,
+    "auditHashesIdentical": true
+  }
+}

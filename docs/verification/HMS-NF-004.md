@@ -1,0 +1,9 @@
+> **Current cumulative integration drill: PASS locally.** The actual backup/restore scripts restored a populated synthetic database in 2 seconds. Counts matched across 13 business tables, including allocation, complaint, assessment/payment, visitor, leave and notification records. All 14 original audit rows/hashes were preserved; the restored authenticated API verified a valid 16-event chain after additional reads. Evidence: `docs/evidence/recovery-integration.json`, measured application `8982493ffbb42d343308d85af2a24c826d05d532`. Production scheduling and a production-sized drill remain unverified. The preceding #59 scalability acceptance remains blocked despite this restore PASS.
+
+# Backup and restore verification — 2026-11-01
+
+Executed real MySQL 8 backup/restore on synthetic, isolated `hms_backup_fixture` -> `hms_restore_drill`; the source was retained. The first attempt exposed missing PROCESS privilege for tablespace dumping. The corrected script uses `--no-tablespaces --set-gtid-purged=OFF` and succeeded without that privilege.
+
+A real admin login and staff record read produced two audit records before backup. The corrected dump restored in **2 seconds**. The restored API accepted a genuine admin login; `GET /api/admin/audit/verify` returned `{valid:true, checked:4}` after that login and critical read. Ten synthetic users were restored. MySQL client commands were provided by the existing MySQL Docker container; application/API verification used the actual branch code.
+
+Automated guard coverage: failed dump publishes no backup, partial output is cleaned up, invalid gzip is rejected before restore. Neither an actual daily production schedule nor production-sized recovery is claimed. Cron installation and deployment storage/retention ownership remain operational acceptance items. The isolated result meets the timing target only for the declared synthetic fixture.
