@@ -17,13 +17,13 @@ Monthly availability = observed uptime excluding announced maintenance / planned
 
 ## Load testing
 
-Use the explicit authenticated workload; health-only requests do not establish scalability. To run the authenticated 500-user scenario, start a dedicated local or staging API with the M1 authentication routes and a synthetic seeded account, then run:
+Use the explicit authenticated workload; health-only requests do not establish scalability. The current approved target is 100 distinct sessions; see `requirements/HMS-NF-002-approved-change.md`. Prefer `bash scripts/validate-scalability.sh` from the repository root on the documented local MySQL Docker fixture: it creates/drops only a disposable `hms_load_*` database, sets a cost12 synthetic password and pool20, preserves historical reports, and verifies audit counts/chain and persisted sessions after the workload. For an already prepared dedicated test API:
 
 ```bash
 cd backend
 PERF_EMAIL=admin@hms.test PERF_PASSWORD='Hostel@123' \
-LOADTEST_VUS=500 LOADTEST_DURATION_SECONDS=30 LOADTEST_RAMP_UP_SECONDS=30 \
-bash scripts/loadtest.sh --authenticated http://127.0.0.1:4000 perf-results.json
+LOADTEST_VUS=100 LOADTEST_DURATION_SECONDS=30 LOADTEST_RAMP_UP_SECONDS=300 LOADTEST_TIMEOUT_MS=5000 \
+bash scripts/loadtest.sh --authenticated http://127.0.0.1:4000 approved-100-results.json
 ```
 
 

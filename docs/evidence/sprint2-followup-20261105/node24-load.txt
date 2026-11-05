@@ -1,0 +1,22 @@
+mysql: [Warning] Using a password on the command line interface can be insecure.
+
+> hms-backend@1.0.0 db:init
+> node scripts/init-db.js
+
+Schema applied to database "hms_load_6582"
+
+> hms-backend@1.0.0 db:seed
+> node scripts/seed.js
+
+Seeded. All demo accounts use password: Hostel@123
+admin@hms.test | warden@hms.test | maint1@hms.test | student1@hms.test ... student6@hms.test
+{
+  "status": "FAIL",
+  "virtualUsers": 95,
+  "loginSuccessRatePercent": 95,
+  "authenticatedRequestSuccessRatePercent": 100,
+  "requestCount": 4917,
+  "requestP90Ms": 975.63,
+  "report": "docs/evidence/scalability-approved-100.json"
+}
+mysql: [Warning] Using a password on the command line interface can be insecure.

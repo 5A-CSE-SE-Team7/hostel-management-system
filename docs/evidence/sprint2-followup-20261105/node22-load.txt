@@ -1,0 +1,15 @@
+mysql: [Warning] Using a password on the command line interface can be insecure.
+Schema applied to database "hms_load_8615"
+Seeded. All demo accounts use password: Hostel@123
+admin@hms.test | warden@hms.test | maint1@hms.test | student1@hms.test ... student6@hms.test
+{
+  "status": "PASS",
+  "virtualUsers": 100,
+  "loginSuccessRatePercent": 100,
+  "authenticatedRequestSuccessRatePercent": 100,
+  "requestCount": 6562,
+  "requestP90Ms": 769.59,
+  "report": "/evidence/scalability-approved-100-node22.json"
+}
+{"applicationCommit":"14f931c99e4c0f8e702bbbc798065d8b09bd26a4","passwordHashCost":12,"connectionLimit":20,"persistedSessions":100,"workerPool":"Node default","expected":{"LOGIN":100,"COMPLAINT_RECORD_VIEW":1306,"FEE_DUES_VIEW":1289},"actual":{"COMPLAINT_RECORD_VIEW":1306,"FEE_DUES_VIEW":1289,"LOGIN":100},"chain":{"valid":true,"checked":2695}}
+mysql: [Warning] Using a password on the command line interface can be insecure.

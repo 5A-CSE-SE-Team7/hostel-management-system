@@ -1,0 +1,11 @@
+✔ load audit verifier rejects non-load database without publishing evidence (168.882944ms)
+✔ load audit verifier rejects failed workload without publishing evidence (171.478111ms)
+✔ load audit verifier rejects changed deadline without publishing evidence (177.415161ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 3
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 660.79033

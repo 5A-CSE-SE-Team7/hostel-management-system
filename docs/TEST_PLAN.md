@@ -4,6 +4,8 @@ Authority: submitted HMS SRS v1.0 (11 September 2026), SAD v1.0 (14 September 20
 
 Scope: accounts, inventory/allocation/transfer/check-in/out, complaint lifecycle/notifications, fee records, visitors, leave, reporting, server authorization, critical-read auditing, TLS, performance/scalability, recoverability and accessibility. Payment gateways, biometric hardware and unspecified external integrations remain excluded.
 
+Current scalability scope: SRS HMS-NF-002 / STP TC-Perf-02 uses the instructor-approved **100 concurrent authenticated users**, as recorded in [the focused requirement addendum](requirements/HMS-NF-002-approved-change.md). Retain cost12, pool20, 300-second preparation, 30-second sustained traffic, 5,000 ms timeout, distinct persisted sessions, zero failed protected requests and audit integrity. The original 500-user scope and results remain historical evidence, not current-target test results.
+
 Levels: unit/component; API + real MySQL integration; browser journeys with real sessions; operational/manual acceptance. Use synthetic identities only. Backend tests may reset only a database ending `_test`; the main suite explicitly uses `hms_test`. Browser tests use separately seeded `hms_e2e`. Performance and restore drills must use disposable named fixtures and retain source identity and environment metadata.
 
 Entry criteria: immutable source identified, locked dependencies installed, MySQL reachable, fixtures isolated, prerequisite branches integrated. Required CI tests must remain nonzero on failure. Compare tested code with latest main and inspect code-owner review requirements before integration.

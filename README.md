@@ -54,3 +54,5 @@ deploy/    nginx.conf          docs/   GITHUB_ISSUES.txt, OPERATIONS.md
 
 ## Known deviations from the submitted documents
 See section 7 of `docs/GITHUB_ISSUES.txt`; record the final list in `docs/DEVIATIONS.md`.
+
+Current HMS-NF-002 / TC-Perf-02 scope is **100 concurrent authenticated users**, under the [approved SRS/STP addendum](docs/requirements/HMS-NF-002-approved-change.md). The archived backlog and original 500-user measurements remain historical; see the deviation register and current verification report for actual results and limitations.

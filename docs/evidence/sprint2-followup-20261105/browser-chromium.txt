@@ -1,0 +1,24 @@
+
+> hms-frontend@1.0.0 test:e2e
+> playwright test --project=chrome
+
+[WebServer] (node:10639) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:10665) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 9 tests using 1 worker
+
+(node:10705) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  1 [chrome] › e2e/accessibility.spec.js:16:1 › available role pages have no WCAG 2.1 A/AA axe violations at target widths (29.9s)
+  ✓  2 [chrome] › e2e/auth.spec.js:4:1 › student registration displays inline server validation and success feedback (2.0s)
+  ✓  3 [chrome] › e2e/auth.spec.js:37:1 › student can sign in, reach profile, and sign out using keyboard navigation (2.2s)
+  ✓  4 [chrome] › e2e/keyboard-roles.spec.js:24:3 › TC-UX-01 student: keyboard login, navigation, skip link and logout (3.0s)
+  ✓  5 [chrome] › e2e/keyboard-roles.spec.js:24:3 › TC-UX-01 warden: keyboard login, navigation, skip link and logout (5.1s)
+  ✓  6 [chrome] › e2e/keyboard-roles.spec.js:24:3 › TC-UX-01 maintenance: keyboard login, navigation, skip link and logout (3.1s)
+  ✓  7 [chrome] › e2e/keyboard-roles.spec.js:24:3 › TC-UX-01 admin: keyboard login, navigation, skip link and logout (7.0s)
+  ✓  8 [chrome] › e2e/live.spec.js:5:1 › TC-Auth/Room/Comp live registration, complaint, bed allocation and maintenance resolution (10.3s)
+  ✓  9 [chrome] › e2e/live.spec.js:15:1 › TC-UX-01 real role pages pass automated WCAG scans and responsive overflow checks (1.8m)
+
+  9 passed (3.0m)

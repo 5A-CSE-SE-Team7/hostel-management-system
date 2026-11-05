@@ -1,0 +1,15 @@
+#!/bin/sh
+set -eu
+cd /candidate
+api_pid=''
+cleanup(){ if [ -n "$api_pid" ];then kill "$api_pid" 2>/dev/null || true;wait "$api_pid" 2>/dev/null || true;fi; }
+trap cleanup EXIT
+node backend/scripts/init-db.js
+node backend/scripts/seed.js
+node -e 'const b=require("./backend/node_modules/bcryptjs");const {pool}=require("./backend/src/db");b.hash("Hostel@123",12).then(hash=>pool.query("UPDATE users SET password_hash=? WHERE email=?",[hash,"admin@hms.test"])).finally(()=>pool.end());'
+node -e 'const fs=require("fs");const app=require("./backend/src/app").createApp();const s=require("http").createServer(app);s.listen(0,"127.0.0.1",()=>fs.writeFileSync("/tmp/hms100.port",String(s.address().port)));process.on("SIGTERM",()=>s.close(()=>process.exit(0)));' > /evidence/node22-server.log 2>&1 &
+api_pid=$!
+i=0
+while [ ! -f /tmp/hms100.port ];do i=$((i+1));[ "$i" -lt 100 ] || exit 2;sleep .1;done
+LOADTEST_RAMP_UP_SECONDS=300 LOADTEST_VUS=100 LOADTEST_DURATION_SECONDS=30 LOADTEST_TIMEOUT_MS=5000 PERF_EMAIL=admin@hms.test PERF_PASSWORD=Hostel@123 LOADTEST_BASE_URL="http://127.0.0.1:$(cat /tmp/hms100.port)" node backend/scripts/perf/authenticated-loadtest.mjs /evidence/scalability-approved-100-node22.json
+node backend/scripts/perf/verify-load-audit.cjs /evidence/scalability-approved-100-node22.json /evidence/scalability-approved-100-node22-audit.json
