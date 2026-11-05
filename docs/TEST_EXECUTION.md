@@ -1,4 +1,4 @@
-> Current integration acceptance (2026-11-04): TC-Perf-02 / HMS-NF-002 is **F**. Both current 500-user runs failed; do not close #27 or infer scale readiness from functional CI. See verification/HMS-NF-002.md and the committed scalability-integration failure samples. Historical results below remain dated evidence.
+> Historical 500-user integration acceptance (2026-11-04): TC-Perf-02 / HMS-NF-002 is **F**. Both current 500-user runs failed; do not close #27 or infer scale readiness from functional CI. See verification/HMS-NF-002.md and the committed scalability-integration failure samples. Historical results below remain dated evidence.
 
 # Sprint 2 test execution and residual acceptance
 
@@ -13,3 +13,14 @@ Exceptions: Firefox could not be downloaded locally because the environment bloc
 Issue36 remains incomplete: the team removed the earlier recording in commit `04b82ce` for a replacement team recording. No current `docs/demo/sprint2.mp4` is present; record all four roles/modules and obtain reviewer acceptance. Issue38 remains incomplete: no v1.0 tag, sprint closure or development freeze was performed. Issue34 requires reviewer reconciliation of all evidence/exceptions with the submitted RTM before sign-off. Historical files saying “main unchanged” refer to earlier snapshots and must not override current GitHub state. No PR merge or approval is authorized by these results.
 
 Final broader local verification passed 107 backend tests and 67 frontend tests/build; real Chrome/Firefox CI passed ten browser scenarios. Final isolated performance/scalability results and earlier failures remain in the owning PR evidence; local results do not certify production sizing.
+
+
+## Focused seven-issue continuation — 2026-11-05
+
+Scope is limited to #20, #30, #27, #29, #28, #37 and #34. The supplied official instructor approval changes only HMS-NF-002's concurrent-user threshold to 100; requirements/HMS-NF-002-approved-change.md is the SRS/STP addendum. All dated 500-user samples and findings remain unchanged. No source-document identifier cleanup, deployment, tag or release action is part of this work.
+
+Reused credible evidence: main 40c513593eff3971f4daa0145ec8ddcb89ba2508 CI run [41976914388](https://github.com/5A-CSE-SE-Team7/hostel-management-system/actions/runs/41976914388) passed backend, frontend/build, combined real MySQL/UI integration, workflow validation and both dependency audits. Its inspected browser job 127077782484 passed all ten branded Chrome/Firefox scenarios, including real application journeys and role-page axe/overflow checks. Frontend tests: 67; live frontend/API integration: four. Runtime/dependency/application source is preserved in this continuation; changed verification tooling is tested separately.
+
+The RTM reconciliation maps every planned TC family to measured scope or an explicit A exception. Missing live TLS, human assistive-technology sign-off, installed daily backups and the real observation month are exceptions, not fabricated passing results. Optional live SMTP is not claimed. See verification/PENDING_EXTERNAL_EVIDENCE.md for the exact evidence checklist. Local scheduled-job simulation would not demonstrate production scheduling, so no fake cron installation is offered as completion.
+
+Current-run results are appended after execution, with immutable source identities, raw reports and limitations. An open evidence/documentation PR does not meet the merged-change closure gate.
