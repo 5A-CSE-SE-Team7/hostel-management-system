@@ -38,8 +38,8 @@ export default function Register() {
   };
 
   const field = (name, label, options = {}) => (
-    <label className="field" htmlFor={name} key={name}>
-      <span>{label}</span>
+    <div className="field" key={name}>
+      <label htmlFor={name}>{label}</label>
       <input
         id={name}
         name={name}
@@ -55,7 +55,7 @@ export default function Register() {
       />
       {fieldErrors[name] && <small className="field-error" id={`${name}-error`} role="alert">{fieldErrors[name]}</small>}
       {options.hint && <small className="hint">{options.hint}</small>}
-    </label>
+    </div>
   );
 
   return (

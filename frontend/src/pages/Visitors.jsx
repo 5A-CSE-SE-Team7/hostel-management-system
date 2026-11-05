@@ -5,7 +5,7 @@ import { Alert, Badge, Input, Select, Table, fmtDate, useAction, useLoad, toUtc 
 
 export default function Visitors() {
   const { user } = useAuth();
-  if (!['student','warden','admin'].includes(user?.role)) return <><h2>Access denied</h2><Alert>You do not have permission to view these records.</Alert></>;
+  if (!['student','warden','admin'].includes(user?.role)) return <><h1>Access denied</h1><Alert>You do not have permission to view these records.</Alert></>;
   return <VisitorsRecords user={user} />;
 }
 function VisitorsRecords({ user }) {
@@ -28,8 +28,8 @@ function VisitorsRecords({ user }) {
 
   return (
     <>
-      <h2>Visitors</h2>
-      <form className="card" onSubmit={submit} noValidate><h3>{isStaff ? 'Record a visitor' : 'Register a visitor'}</h3><Alert>{st.error}</Alert><Alert kind="success">{st.ok}</Alert>
+      <h1>Visitors</h1>
+      <form className="card" onSubmit={submit} noValidate><h2>{isStaff ? 'Record a visitor' : 'Register a visitor'}</h2><Alert>{st.error}</Alert><Alert kind="success">{st.ok}</Alert>
         <div className="form-grid">
           {isStaff && <Select {...p} name="studentId" label="Student" required options={(students.data || []).map((s) => ({ value: s.id, label: `${s.srn} – ${s.name}` }))} />}
           <Input {...p} name="visitorName" label="Visitor name" required />

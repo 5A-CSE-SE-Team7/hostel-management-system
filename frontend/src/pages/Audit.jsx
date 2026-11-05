@@ -92,7 +92,7 @@ export default function Audit() {
           <p role="status">Loading audit events…</p>
         ) : (
           <>
-            <div style={{ overflowX: 'auto' }}>
+            <div tabIndex={0} style={{ overflowX: 'auto' }}>
               <table>
                 <thead>
                   <tr>

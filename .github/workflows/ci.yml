@@ -85,6 +85,42 @@ jobs:
         if: ${{ !cancelled() && steps.install.outcome == 'success' }}
         run: npm run build
 
+  browser-smoke:
+    name: Browser smoke + accessibility checks
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    services:
+      mysql:
+        image: mysql:8.0
+        env:
+          MYSQL_ROOT_PASSWORD: root_pass
+          MYSQL_DATABASE: hms_e2e
+          MYSQL_USER: hms
+          MYSQL_PASSWORD: hms_pass
+        ports: ["3306:3306"]
+        options: >-
+          --health-cmd="mysqladmin ping -h 127.0.0.1 -uroot -proot_pass"
+          --health-interval=5s --health-timeout=5s --health-retries=20
+    env:
+      NODE_ENV: test
+      DB_NAME: hms_e2e
+      DB_HOST: 127.0.0.1
+      DB_USER: hms
+      DB_PASSWORD: hms_pass
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+      - run: npm ci --prefix backend && npm ci --prefix frontend
+      - run: npm run db:init --prefix backend && npm run db:seed --prefix backend
+      - run: npx --prefix frontend playwright install --with-deps chrome firefox
+      - run: npm run test:e2e --prefix frontend
+
   audit:
     name: Dependency audit (${{ matrix.component }}, high+)
     runs-on: ubuntu-latest
