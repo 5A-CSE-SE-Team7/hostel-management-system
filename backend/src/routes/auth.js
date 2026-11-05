@@ -1,5 +1,7 @@
 const router = require('express').Router();
-const bcrypt = require('bcryptjs');
+// Native asynchronous bcrypt keeps password work off the HTTP event loop.
+// The hash format and configured work factor remain compatible with bcryptjs.
+const bcrypt = require('bcrypt');
 const rateLimit = require('express-rate-limit');
 const config = require('../config');
 const { pool, withTransaction } = require('../db');
@@ -45,6 +47,7 @@ router.post('/register', authLimiter, async (req, res, next) => {
       throw E.validation({ email: `Email must belong to @${config.emailDomain}` });
     }
 
+    if (Buffer.byteLength(data.password, 'utf8') > 72) throw E.validation({ password: 'Password must be at most 72 UTF-8 bytes' });
     const srn = data.srn.toUpperCase();
     const passwordHash = await bcrypt.hash(data.password, config.bcryptRounds);
     let userId;

@@ -1,0 +1,1 @@
+{"cpuQuotaCores":2,"UV_THREADPOOL_SIZE":2,"DB_CONNECTION_LIMIT":20,"rampUpSeconds":300,"virtualUsers":500,"durationSeconds":30,"timeoutMs":5000,"reason":"Bound native password workers to the measured CPU quota; no workload, password cost, or success assertion relaxed"}
