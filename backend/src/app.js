@@ -9,7 +9,7 @@ const common = require('./middleware/common');
 
 function createApp() {
   const app = express();
-  app.set('trust proxy', 1); // behind nginx / cloud LB that terminates TLS
+  app.set('trust proxy', config.trustProxy); // explicitly scoped TLS terminator only
   app.disable('x-powered-by');
 
   app.use(common.requestId);
