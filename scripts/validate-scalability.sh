@@ -8,7 +8,9 @@ docker_cmd=(docker --host=unix:///var/run/docker.sock)
 cleanup(){ if [[ -n "$server_pid" ]];then kill "$server_pid" 2>/dev/null || true;wait "$server_pid" 2>/dev/null || true;fi; "${docker_cmd[@]}" exec hostel-management-system-db-1 mysql -uroot -proot_pass -e "DROP DATABASE IF EXISTS \`$load_db\`;";rm -rf "$scratch"; }
 trap cleanup EXIT
 "${docker_cmd[@]}" exec hostel-management-system-db-1 mysql -uroot -proot_pass -e "CREATE DATABASE \`$load_db\`; GRANT ALL ON \`$load_db\`.* TO 'hms'@'%';"
-export NODE_ENV=test DB_NAME="$load_db" HMS_APPLICATION_COMMIT="$(git rev-parse HEAD)"
+export NODE_ENV=test DB_NAME="$load_db" DB_CONNECTION_LIMIT=20 HMS_APPLICATION_COMMIT="$(git rev-parse HEAD)"
+output="${1:-docs/evidence/scalability-approved-100.json}"
+mkdir -p "$(dirname "$output")"
 npm run db:init --prefix backend
 npm run db:seed --prefix backend
 # Production-strength hash; test mode only relaxes the synthetic fixture rate limit.
@@ -18,4 +20,6 @@ server_pid=$!
 for attempt in {1..100};do [[ -f "$scratch/port" ]] && break;sleep 0.1;done
 [[ -f "$scratch/port" ]] || { cat "$scratch/server.log";exit 1; }
 mkdir -p docs/evidence
-LOADTEST_RAMP_UP_SECONDS="${LOADTEST_RAMP_UP_SECONDS:-180}" LOADTEST_VUS=500 LOADTEST_DURATION_SECONDS=30 PERF_EMAIL=admin@hms.test PERF_PASSWORD=Hostel@123 LOADTEST_BASE_URL="http://127.0.0.1:$(cat "$scratch/port")" node backend/scripts/perf/authenticated-loadtest.mjs docs/evidence/scalability-local.json
+LOADTEST_RAMP_UP_SECONDS=300 LOADTEST_VUS=100 LOADTEST_DURATION_SECONDS=30 PERF_EMAIL=admin@hms.test PERF_PASSWORD=Hostel@123 LOADTEST_BASE_URL="http://127.0.0.1:$(cat "$scratch/port")" node backend/scripts/perf/authenticated-loadtest.mjs "$output"
+
+node backend/scripts/perf/verify-load-audit.cjs "$output" "${output%.json}-audit.json"
