@@ -1,0 +1,960 @@
+{
+  "baselineMain": "5e8e991c97694d882f3c66cccef5de3936e5fad9",
+  "measuredApplication": "8982493ffbb42d343308d85af2a24c826d05d532",
+  "verdict": "BLOCKED",
+  "reason": "HMS-NF-002 500-user zero-failure acceptance not met",
+  "stages": [
+    {
+      "pr": 46,
+      "head": "efe17663b62effa911e15327c285d5a3cc895f56",
+      "backendPass": 89,
+      "backendFail": 0,
+      "vitestResults": [
+        "3 passed (3)",
+        "58 passed (58)"
+      ],
+      "workflowResults": [
+        "\u2139 pass 15",
+        "\u2139 fail 0"
+      ],
+      "fullBackend": true
+    },
+    {
+      "pr": 48,
+      "head": "2aa5f13a5ef54317c9c0bea915ed4c9ff5bc954d",
+      "backendPass": 89,
+      "backendFail": 0,
+      "vitestResults": [
+        "3 passed (3)",
+        "65 passed (65)"
+      ],
+      "workflowResults": [
+        "\u2139 pass 15",
+        "\u2139 fail 0"
+      ],
+      "fullBackend": true
+    },
+    {
+      "pr": 51,
+      "head": "e67aa81a5fdcee9a6a64104b9bd91943e249a862",
+      "backendPass": 93,
+      "backendFail": 0,
+      "vitestResults": [
+        "4 passed (4)",
+        "67 passed (67)"
+      ],
+      "workflowResults": [
+        "\u2139 pass 15",
+        "\u2139 fail 0"
+      ],
+      "fullBackend": true
+    },
+    {
+      "pr": 47,
+      "head": "3b45e2725da41316ee2f133838aae42fe02fcec4",
+      "backendPass": 7,
+      "backendFail": 0,
+      "vitestResults": [
+        "4 passed (4)",
+        "67 passed (67)"
+      ],
+      "workflowResults": [
+        "\u2139 pass 15",
+        "\u2139 fail 0"
+      ],
+      "fullBackend": false
+    },
+    {
+      "pr": 57,
+      "head": "3cd3d810e2e6e93c4e6148fe14494f244e65a159",
+      "backendPass": 6,
+      "backendFail": 0,
+      "vitestResults": [
+        "4 passed (4)",
+        "67 passed (67)"
+      ],
+      "workflowResults": [
+        "\u2139 pass 15",
+        "\u2139 fail 0"
+      ],
+      "fullBackend": false
+    },
+    {
+      "pr": 58,
+      "head": "09cd243da9ccdb50f48edbcd96c5fce94702506d",
+      "backendPass": 5,
+      "backendFail": 0,
+      "vitestResults": [
+        "4 passed (4)",
+        "67 passed (67)"
+      ],
+      "workflowResults": [
+        "\u2139 pass 15",
+        "\u2139 fail 0"
+      ],
+      "fullBackend": false
+    },
+    {
+      "pr": 59,
+      "head": "2473985d87ca9455c47f3ff097a4040fbe6c44f0",
+      "backendPass": 16,
+      "backendFail": 0,
+      "vitestResults": [
+        "4 passed (4)",
+        "67 passed (67)"
+      ],
+      "workflowResults": [
+        "\u2139 pass 15",
+        "\u2139 fail 0"
+      ],
+      "fullBackend": false
+    },
+    {
+      "pr": 49,
+      "head": "c8d681bc3de9ed33f1e0bd1ada58972594be88f7",
+      "backendPass": 11,
+      "backendFail": 0,
+      "vitestResults": [
+        "4 passed (4)",
+        "67 passed (67)"
+      ],
+      "workflowResults": [
+        "\u2139 pass 15",
+        "\u2139 fail 0"
+      ],
+      "fullBackend": false
+    },
+    {
+      "pr": 60,
+      "head": "b2d65ceb8cf9284773ec5c5a7971ff0ca8aba3cb",
+      "backendPass": 6,
+      "backendFail": 0,
+      "vitestResults": [
+        "4 passed (4)",
+        "67 passed (67)"
+      ],
+      "workflowResults": [
+        "\u2139 pass 15",
+        "\u2139 fail 0"
+      ],
+      "fullBackend": false
+    },
+    {
+      "pr": 50,
+      "head": "8982493ffbb42d343308d85af2a24c826d05d532",
+      "backendPass": 108,
+      "backendFail": 0,
+      "vitestResults": [
+        "4 passed (4)",
+        "67 passed (67)"
+      ],
+      "workflowResults": [
+        "\u2139 pass 15",
+        "\u2139 fail 0"
+      ],
+      "fullBackend": true
+    }
+  ],
+  "progressiveMergeSimulation": [
+    {
+      "pr": 46,
+      "source": "efe17663b62effa911e15327c285d5a3cc895f56",
+      "exit": 0
+    },
+    {
+      "pr": 48,
+      "source": "2aa5f13a5ef54317c9c0bea915ed4c9ff5bc954d",
+      "exit": 0
+    },
+    {
+      "pr": 51,
+      "source": "e67aa81a5fdcee9a6a64104b9bd91943e249a862",
+      "exit": 0
+    },
+    {
+      "pr": 47,
+      "source": "3b45e2725da41316ee2f133838aae42fe02fcec4",
+      "exit": 0
+    },
+    {
+      "pr": 57,
+      "source": "3cd3d810e2e6e93c4e6148fe14494f244e65a159",
+      "exit": 0
+    },
+    {
+      "pr": 58,
+      "source": "09cd243da9ccdb50f48edbcd96c5fce94702506d",
+      "exit": 0
+    },
+    {
+      "pr": 59,
+      "source": "46d3ec8b1ca3c1770a5b5af60b57796c49e644cf",
+      "exit": 0
+    },
+    {
+      "pr": 49,
+      "source": "636d78acc73f889daee4e577815ca0570de64e67",
+      "exit": 0
+    },
+    {
+      "pr": 60,
+      "source": "f2e69590d8dfb7c09fcd57edc56b7a6883b7268d",
+      "exit": 0
+    },
+    {
+      "pr": 50,
+      "source": "f3c43c3aa820ddebf60e9ebb7333cf54c3c5f2db",
+      "exit": 0
+    }
+  ],
+  "ciOnProductCommits": [
+    {
+      "pr": 46,
+      "sha": "efe17663b62effa911e15327c285d5a3cc895f56",
+      "base": "main",
+      "draft": false,
+      "mergeable": true,
+      "checks": [
+        {
+          "name": "Dependency audit (frontend, high+)",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/5A-CSE-SE-Team7/hostel-management-system/actions/runs/41874642052/job/126730619304"
+        },
+        {
+          "name": "Combined PR integration (owner contracts)",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/5A-CSE-SE-Team7/hostel-management-system/actions/runs/41874642052/job/126730619231"
+        },
+        {
+          "name": "Workflow validation",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/5A-CSE-SE-Team7/hostel-management-system/actions/runs/41874642052/job/126730619133"
+        },
+        {
+          "name": "Dependency audit (backend, high+)",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/5A-CSE-SE-Team7/hostel-management-system/actions/runs/41874642052/job/126730619129"
+        },
+        {
+          "name": "Backend unit + integration tests",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/5A-CSE-SE-Team7/hostel-management-system/actions/runs/41874642052/job/126730619044"
+        },
+        {
+          "name": "Frontend build",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/5A-CSE-SE-Team7/hostel-management-system/actions/runs/41874642052/job/126730618744"
+        },
+        {
+          "name": "PR must reference a backlog issue",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/5A-CSE-SE-Team7/hostel-management-system/actions/runs/41874642287/job/126730618193"
+        }
+      ]
+    },
+    {
+      "pr": 48,
+      "sha": "2aa5f13a5ef54317c9c0bea915ed4c9ff5bc954d",
+      "base": "main",
+      "draft": false,
+      "mergeable": true,
+      "checks": [
+        {
+          "name": "Frontend build",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/5A-CSE-SE-Team7/hostel-management-system/actions/runs/41874645500/job/126730633591"
+        },
+        {
+          "name": "Dependency audit (backend, high+)",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/5A-CSE-SE-Team7/hostel-management-system/actions/runs/41874645500/job/126730633364"
+        },
+        {
+          "name": "Combined PR integration (owner contracts)",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/5A-CSE-SE-Team7/hostel-management-system/actions/runs/41874645500/job/126730633337"
+        },
+        {
+          "name": "Backend unit + integration tests",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/5A-CSE-SE-Team7/hostel-management-system/actions/runs/41874645500/job/126730633290"
+        },
+        {
+          "name": "Dependency audit (frontend, high+)",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/5A-CSE-SE-Team7/hostel-management-system/actions/runs/41874645500/job/126730633284"
+        },
+        {
+          "name": "Workflow validation",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/5A-CSE-SE-Team7/hostel-management-system/actions/runs/41874645500/job/126730632631"
+        },
+        {
+          "name": "PR must reference a backlog issue",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/5A-CSE-SE-Team7/hostel-management-system/actions/runs/41874645520/job/126730632032"
+        }
+      ]
+    },
+    {
+      "pr": 51,
+      "sha": "e67aa81a5fdcee9a6a64104b9bd91943e249a862",
+      "base": "main",
+      "draft": false,
+      "mergeable": true,
+      "checks": [
+        {
+          "name": "PR must reference a backlog issue",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/5A-CSE-SE-Team7/hostel-management-system/actions/runs/41874654591/job/126730688268"
+        },
+        {
+          "name": "Dependency audit (frontend, high+)",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/5A-CSE-SE-Team7/hostel-management-system/actions/runs/41874654446/job/126730661593"
+        },
+        {
+          "name": "Frontend build",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/5A-CSE-SE-Team7/hostel-management-system/actions/runs/41874654446/job/126730661415"
+        },
+        {
+          "name": "Workflow validation",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/5A-CSE-SE-Team7/hostel-management-system/actions/runs/41874654446/job/126730661361"
+        },
+        {
+          "name": "Dependency audit (backend, high+)",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/5A-CSE-SE-Team7/hostel-management-system/actions/runs/41874654446/job/126730661278"
+        },
+        {
+          "name": "Backend unit + integration tests",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/5A-CSE-SE-Team7/hostel-management-system/actions/runs/41874654446/job/126730661272"
+        },
+        {
+          "name": "Combined PR integration (owner contracts)",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/5A-CSE-SE-Team7/hostel-management-system/actions/runs/41874654446/job/126730660751"
+        }
+      ]
+    },
+    {
+      "pr": 47,
+      "sha": "3b45e2725da41316ee2f133838aae42fe02fcec4",
+      "base": "main",
+      "draft": true,
+      "mergeable": true,
+      "checks": [
+        {
+          "name": "PR must reference a backlog issue",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/5A-CSE-SE-Team7/hostel-management-system/actions/runs/41874662640/job/126730689482"
+        },
+        {
+          "name": "Workflow validation",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/5A-CSE-SE-Team7/hostel-management-system/actions/runs/41874662449/job/126730688947"
+        },
+        {
+          "name": "Combined PR integration (owner contracts)",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/5A-CSE-SE-Team7/hostel-management-system/actions/runs/41874662449/job/126730688813"
+        },
+        {
+          "name": "Frontend build",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/5A-CSE-SE-Team7/hostel-management-system/actions/runs/41874662449/job/126730688735"
+        },
+        {
+          "name": "Dependency audit (backend, high+)",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/5A-CSE-SE-Team7/hostel-management-system/actions/runs/41874662449/job/126730688687"
+        },
+        {
+          "name": "Backend unit + integration tests",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/5A-CSE-SE-Team7/hostel-management-system/actions/runs/41874662449/job/126730688602"
+        },
+        {
+          "name": "Dependency audit (frontend, high+)",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/5A-CSE-SE-Team7/hostel-management-system/actions/runs/41874662449/job/126730688536"
+        }
+      ]
+    },
+    {
+      "pr": 57,
+      "sha": "3cd3d810e2e6e93c4e6148fe14494f244e65a159",
+      "base": "main",
+      "draft": false,
+      "mergeable": true,
+      "checks": [
+        {
+          "name": "PR must reference a backlog issue",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/5A-CSE-SE-Team7/hostel-management-system/actions/runs/41874666588/job/126730706062"
+        },
+        {
+          "name": "Backend unit + integration tests",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/5A-CSE-SE-Team7/hostel-management-system/actions/runs/41874666593/job/126730704707"
+        },
+        {
+          "name": "Dependency audit (backend, high+)",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/5A-CSE-SE-Team7/hostel-management-system/actions/runs/41874666593/job/126730704455"
+        },
+        {
+          "name": "Dependency audit (frontend, high+)",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/5A-CSE-SE-Team7/hostel-management-system/actions/runs/41874666593/job/126730704347"
+        },
+        {
+          "name": "Workflow validation",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/5A-CSE-SE-Team7/hostel-management-system/actions/runs/41874666593/job/126730704320"
+        },
+        {
+          "name": "Combined PR integration (owner contracts)",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/5A-CSE-SE-Team7/hostel-management-system/actions/runs/41874666593/job/126730704121"
+        },
+        {
+          "name": "Frontend build",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/5A-CSE-SE-Team7/hostel-management-system/actions/runs/41874666593/job/126730703752"
+        }
+      ]
+    },
+    {
+      "pr": 58,
+      "sha": "09cd243da9ccdb50f48edbcd96c5fce94702506d",
+      "base": "main",
+      "draft": true,
+      "mergeable": true,
+      "checks": [
+        {
+          "name": "Backend unit + integration tests",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/5A-CSE-SE-Team7/hostel-management-system/actions/runs/41874670228/job/126730719701"
+        },
+        {
+          "name": "Combined PR integration (owner contracts)",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/5A-CSE-SE-Team7/hostel-management-system/actions/runs/41874670228/job/126730719488"
+        },
+        {
+          "name": "Dependency audit (backend, high+)",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/5A-CSE-SE-Team7/hostel-management-system/actions/runs/41874670228/job/126730719439"
+        },
+        {
+          "name": "Browser smoke + accessibility checks",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/5A-CSE-SE-Team7/hostel-management-system/actions/runs/41874670228/job/126730719429"
+        },
+        {
+          "name": "Dependency audit (frontend, high+)",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/5A-CSE-SE-Team7/hostel-management-system/actions/runs/41874670228/job/126730719360"
+        },
+        {
+          "name": "Frontend build",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/5A-CSE-SE-Team7/hostel-management-system/actions/runs/41874670228/job/126730719194"
+        },
+        {
+          "name": "Workflow validation",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/5A-CSE-SE-Team7/hostel-management-system/actions/runs/41874670228/job/126730718779"
+        },
+        {
+          "name": "PR must reference a backlog issue",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/5A-CSE-SE-Team7/hostel-management-system/actions/runs/41874670131/job/126730717352"
+        }
+      ]
+    },
+    {
+      "pr": 59,
+      "sha": "2473985d87ca9455c47f3ff097a4040fbe6c44f0",
+      "base": "main",
+      "draft": false,
+      "mergeable": true,
+      "checks": [
+        {
+          "name": "Dependency audit (frontend, high+)",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/5A-CSE-SE-Team7/hostel-management-system/actions/runs/41874412113/job/126729834682"
+        },
+        {
+          "name": "Combined PR integration (owner contracts)",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/5A-CSE-SE-Team7/hostel-management-system/actions/runs/41874412113/job/126729834666"
+        },
+        {
+          "name": "Dependency audit (backend, high+)",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/5A-CSE-SE-Team7/hostel-management-system/actions/runs/41874412113/job/126729834641"
+        },
+        {
+          "name": "Backend unit + integration tests",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/5A-CSE-SE-Team7/hostel-management-system/actions/runs/41874412113/job/126729834519"
+        },
+        {
+          "name": "Browser smoke + accessibility checks",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/5A-CSE-SE-Team7/hostel-management-system/actions/runs/41874412113/job/126729834515"
+        },
+        {
+          "name": "Frontend build",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/5A-CSE-SE-Team7/hostel-management-system/actions/runs/41874412113/job/126729834492"
+        },
+        {
+          "name": "Workflow validation",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/5A-CSE-SE-Team7/hostel-management-system/actions/runs/41874412113/job/126729833978"
+        },
+        {
+          "name": "PR must reference a backlog issue",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/5A-CSE-SE-Team7/hostel-management-system/actions/runs/41874412048/job/126729804119"
+        }
+      ]
+    },
+    {
+      "pr": 49,
+      "sha": "c8d681bc3de9ed33f1e0bd1ada58972594be88f7",
+      "base": "main",
+      "draft": true,
+      "mergeable": true,
+      "checks": [
+        {
+          "name": "Workflow validation",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/5A-CSE-SE-Team7/hostel-management-system/actions/runs/41874609919/job/126730505213"
+        },
+        {
+          "name": "Browser smoke + accessibility checks",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/5A-CSE-SE-Team7/hostel-management-system/actions/runs/41874609919/job/126730505126"
+        },
+        {
+          "name": "Dependency audit (frontend, high+)",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/5A-CSE-SE-Team7/hostel-management-system/actions/runs/41874609919/job/126730504865"
+        },
+        {
+          "name": "Backend unit + integration tests",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/5A-CSE-SE-Team7/hostel-management-system/actions/runs/41874609919/job/126730504680"
+        },
+        {
+          "name": "Dependency audit (backend, high+)",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/5A-CSE-SE-Team7/hostel-management-system/actions/runs/41874609919/job/126730504522"
+        },
+        {
+          "name": "Combined PR integration (owner contracts)",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/5A-CSE-SE-Team7/hostel-management-system/actions/runs/41874609919/job/126730504504"
+        },
+        {
+          "name": "Frontend build",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/5A-CSE-SE-Team7/hostel-management-system/actions/runs/41874609919/job/126730504251"
+        },
+        {
+          "name": "PR must reference a backlog issue",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/5A-CSE-SE-Team7/hostel-management-system/actions/runs/41874609899/job/126730502347"
+        }
+      ]
+    },
+    {
+      "pr": 60,
+      "sha": "b2d65ceb8cf9284773ec5c5a7971ff0ca8aba3cb",
+      "base": "main",
+      "draft": false,
+      "mergeable": true,
+      "checks": [
+        {
+          "name": "Workflow validation",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/5A-CSE-SE-Team7/hostel-management-system/actions/runs/41874782960/job/126731120020"
+        },
+        {
+          "name": "Combined PR integration (owner contracts)",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/5A-CSE-SE-Team7/hostel-management-system/actions/runs/41874782960/job/126731119983"
+        },
+        {
+          "name": "Browser smoke + accessibility checks",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/5A-CSE-SE-Team7/hostel-management-system/actions/runs/41874782960/job/126731119981"
+        },
+        {
+          "name": "Backend unit + integration tests",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/5A-CSE-SE-Team7/hostel-management-system/actions/runs/41874782960/job/126731119918"
+        },
+        {
+          "name": "Frontend build",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/5A-CSE-SE-Team7/hostel-management-system/actions/runs/41874782960/job/126731119841"
+        },
+        {
+          "name": "Dependency audit (backend, high+)",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/5A-CSE-SE-Team7/hostel-management-system/actions/runs/41874782960/job/126731119814"
+        },
+        {
+          "name": "Dependency audit (frontend, high+)",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/5A-CSE-SE-Team7/hostel-management-system/actions/runs/41874782960/job/126731119408"
+        },
+        {
+          "name": "PR must reference a backlog issue",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/5A-CSE-SE-Team7/hostel-management-system/actions/runs/41874782791/job/126731118319"
+        }
+      ]
+    },
+    {
+      "pr": 50,
+      "sha": "8982493ffbb42d343308d85af2a24c826d05d532",
+      "base": "main",
+      "draft": true,
+      "mergeable": true,
+      "checks": [
+        {
+          "name": "Dependency audit (backend, high+)",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/5A-CSE-SE-Team7/hostel-management-system/actions/runs/41875153978/job/126732453883"
+        },
+        {
+          "name": "Dependency audit (frontend, high+)",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/5A-CSE-SE-Team7/hostel-management-system/actions/runs/41875153978/job/126732453819"
+        },
+        {
+          "name": "Browser smoke + accessibility checks",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/5A-CSE-SE-Team7/hostel-management-system/actions/runs/41875153978/job/126732453804"
+        },
+        {
+          "name": "Combined PR integration (owner contracts)",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/5A-CSE-SE-Team7/hostel-management-system/actions/runs/41875153978/job/126732453754"
+        },
+        {
+          "name": "Workflow validation",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/5A-CSE-SE-Team7/hostel-management-system/actions/runs/41875153978/job/126732453668"
+        },
+        {
+          "name": "Backend unit + integration tests",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/5A-CSE-SE-Team7/hostel-management-system/actions/runs/41875153978/job/126732453656"
+        },
+        {
+          "name": "Frontend build",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/5A-CSE-SE-Team7/hostel-management-system/actions/runs/41875153978/job/126732453257"
+        },
+        {
+          "name": "PR must reference a backlog issue",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/5A-CSE-SE-Team7/hostel-management-system/actions/runs/41875153819/job/126732452156"
+        }
+      ]
+    }
+  ],
+  "localChromium": {
+    "passed": 5,
+    "isolatedUiScenarios": 3,
+    "realBackendScenarios": 2
+  },
+  "remoteBrowserEvidence": {
+    "job": 126729834515,
+    "commit": "2473985d87ca9455c47f3ff097a4040fbe6c44f0",
+    "chromePassed": 5,
+    "firefoxPassed": 5
+  },
+  "normalLoad": {
+    "status": "PASS",
+    "endpoints": {
+      "login": {
+        "expected": 5,
+        "count": 5,
+        "errors": 0,
+        "p90Ms": 2223.07,
+        "maxMs": 2223.07,
+        "status": "PASS"
+      },
+      "inventory": {
+        "expected": 100,
+        "count": 100,
+        "errors": 0,
+        "p90Ms": 36.33,
+        "maxMs": 173.89,
+        "status": "PASS"
+      },
+      "allocation_occupancy": {
+        "expected": 100,
+        "count": 100,
+        "errors": 0,
+        "p90Ms": 31.9,
+        "maxMs": 126.19,
+        "status": "PASS"
+      },
+      "available_beds": {
+        "expected": 100,
+        "count": 100,
+        "errors": 0,
+        "p90Ms": 30.99,
+        "maxMs": 161.25,
+        "status": "PASS"
+      },
+      "complaint_tracking": {
+        "expected": 100,
+        "count": 100,
+        "errors": 0,
+        "p90Ms": 91.64,
+        "maxMs": 154.04,
+        "status": "PASS"
+      },
+      "dashboard_fee_dues": {
+        "expected": 100,
+        "count": 100,
+        "errors": 0,
+        "p90Ms": 80.15,
+        "maxMs": 115,
+        "status": "PASS"
+      },
+      "occupancy_report": {
+        "expected": 100,
+        "count": 100,
+        "errors": 0,
+        "p90Ms": 85.67,
+        "maxMs": 157.87,
+        "status": "PASS"
+      },
+      "complaint_report": {
+        "expected": 100,
+        "count": 100,
+        "errors": 0,
+        "p90Ms": 102.34,
+        "maxMs": 159.1,
+        "status": "PASS"
+      }
+    }
+  },
+  "defaultStress": {
+    "issue": "HMS-NF-002",
+    "applicationCommit": "8982493ffbb42d343308d85af2a24c826d05d532",
+    "startedAt": "2026-11-04T17:11:36.889Z",
+    "workloadStartedAt": "2026-11-04T17:16:36.781Z",
+    "endedAt": "2026-11-04T17:17:08.697Z",
+    "target": "http://127.0.0.1:40749",
+    "workload": [
+      "/api/auth/me",
+      "/api/profile",
+      "/api/complaints?limit=10",
+      "/api/occupancy",
+      "/api/fees/dues"
+    ],
+    "accountModel": "Independent authenticated sessions sharing one synthetic warden/admin account",
+    "virtualUsersRequested": 500,
+    "authenticatedVirtualUsers": 490,
+    "durationSeconds": 30,
+    "rampUpSeconds": 300,
+    "timeoutMs": 5000,
+    "login": {
+      "attempted": 500,
+      "successes": 490,
+      "errors": 10,
+      "successRatePercent": 98,
+      "p90Ms": 2440.82,
+      "maxMs": 5311.52
+    },
+    "authenticatedRequests": {
+      "total": 4861,
+      "successes": 4712,
+      "errors": 149,
+      "successRatePercent": 96.93,
+      "p90Ms": 4636.31,
+      "maxMs": 5390.8
+    },
+    "status": "FAIL"
+  },
+  "twoWorkerStress": {
+    "issue": "HMS-NF-002",
+    "applicationCommit": "8982493ffbb42d343308d85af2a24c826d05d532",
+    "startedAt": "2026-11-04T17:20:11.153Z",
+    "workloadStartedAt": "2026-11-04T17:25:11.556Z",
+    "endedAt": "2026-11-04T17:25:46.527Z",
+    "target": "http://127.0.0.1:43209",
+    "workload": [
+      "/api/auth/me",
+      "/api/profile",
+      "/api/complaints?limit=10",
+      "/api/occupancy",
+      "/api/fees/dues"
+    ],
+    "accountModel": "Independent authenticated sessions sharing one synthetic warden/admin account",
+    "virtualUsersRequested": 500,
+    "authenticatedVirtualUsers": 410,
+    "durationSeconds": 30,
+    "rampUpSeconds": 300,
+    "timeoutMs": 5000,
+    "login": {
+      "attempted": 500,
+      "successes": 410,
+      "errors": 90,
+      "successRatePercent": 82,
+      "p90Ms": 5001.88,
+      "maxMs": 19730.11
+    },
+    "authenticatedRequests": {
+      "total": 3252,
+      "successes": 1841,
+      "errors": 1411,
+      "successRatePercent": 56.61,
+      "p90Ms": 5447.78,
+      "maxMs": 5765.66
+    },
+    "status": "FAIL"
+  },
+  "recovery": {
+    "applicationCommit": "8982493ffbb42d343308d85af2a24c826d05d532",
+    "synthetic": true,
+    "restoreSeconds": 2,
+    "before": {
+      "db": "hms_integration_backup_test",
+      "audit": {
+        "valid": true,
+        "checked": 14
+      },
+      "counts": {
+        "users": 10,
+        "auditEvents": 14
+      }
+    },
+    "after": {
+      "db": "hms_integration_restore_test",
+      "audit": {
+        "valid": true,
+        "checked": 16
+      },
+      "counts": {
+        "users": 10,
+        "auditEvents": 16
+      }
+    },
+    "comparison": {
+      "tableCounts": {
+        "users": 10,
+        "students": 6,
+        "blocks": 2,
+        "rooms": 6,
+        "beds": 12,
+        "allocations": 1,
+        "complaints": 1,
+        "complaint_categories": 6,
+        "fee_assessments": 1,
+        "fee_payments": 1,
+        "visitors": 1,
+        "leave_requests": 1,
+        "notifications": 5
+      },
+      "preservedAuditRows": 14,
+      "auditHashesIdentical": true
+    }
+  },
+  "liveHealthProbe": {
+    "at": "2026-11-04T16:59:50.630Z",
+    "ok": true,
+    "httpStatus": 200,
+    "durationMs": 281.23
+  }
+}

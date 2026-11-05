@@ -1,0 +1,17 @@
+[Unit]
+Description=HMS semantic HTTPS health observation
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+DynamicUser=yes
+StateDirectory=hms-monitor
+WorkingDirectory=/opt/hms
+Environment=HMS_HEALTH_URL=https://hms.example.edu/api/health
+ExecStart=/usr/bin/node /opt/hms/backend/scripts/monitoring/availability.mjs probe --url=${HMS_HEALTH_URL} --output=/var/lib/hms-monitor/observations.jsonl
+TimeoutStartSec=15
+NoNewPrivileges=yes
+PrivateTmp=yes
+ProtectHome=yes
+ProtectSystem=strict
