@@ -16,7 +16,7 @@ This companion supplements the submitted SRS/SAD RTMs for a **local-only college
 | F-014..015 | TC-Admin-02..03 | Sprint1 API and live frontend service tests | P, automated |
 | F-016 | TC-Admin-04 | PR51 six report types, period boundaries, CSV injection and roles | P, automated |
 | NF-001 | TC-Perf-01 | PR49 actual-tree local benchmark | P local API benchmark; browser render performance not measured |
-| NF-002 / #27 | TC-Perf-02 | Approved 100-session scope: requirements/HMS-NF-002-approved-change.md; verification/HMS-NF-002.md | P: 100/100 distinct sessions, 6,562/6,562 protected requests, 2,695 valid audit events on the declared Node22 local test configuration. Other runtime results and historical 500-user samples retained in the detailed verification report |
+| NF-002 / #27 | TC-Perf-02 | Approved 100-session scope: requirements/HMS-NF-002-approved-change.md; verification/HMS-NF-002.md | P: 100/100 distinct sessions, 6,562/6,562 protected requests, 2,695 valid audit events on the declared Node22 local test configuration. Runtime-specific limitations and original test records are in the detailed verification report |
 | NF-003 | TC-Rel-01 | PR50 semantic probes, unknown coverage, maintenance exclusions | P local probe and availability-calculation tests; historical month-long target not measured |
 | NF-004 | TC-Rel-02 | PR60 isolated timed restore and real API chain verification | P local restore and audit integrity; production scheduler not required |
 | NF-005 | TC-UX-01 | PR58 automated real-page axe/responsiveness, 375/768/1280 px | P automated axe, keyboard and responsive checks; full WCAG certification not asserted |
