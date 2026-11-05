@@ -1,0 +1,21 @@
+{
+  "applicationCommit": "14f931c99e4c0f8e702bbbc798065d8b09bd26a4",
+  "passwordHashCost": 12,
+  "connectionLimit": 20,
+  "persistedSessions": 100,
+  "workerPool": "Node default",
+  "expected": {
+    "LOGIN": 100,
+    "COMPLAINT_RECORD_VIEW": 1306,
+    "FEE_DUES_VIEW": 1289
+  },
+  "actual": {
+    "COMPLAINT_RECORD_VIEW": 1306,
+    "FEE_DUES_VIEW": 1289,
+    "LOGIN": 100
+  },
+  "chain": {
+    "valid": true,
+    "checked": 2695
+  }
+}

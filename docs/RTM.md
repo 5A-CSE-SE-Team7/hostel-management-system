@@ -16,7 +16,7 @@ This execution companion supplements the unchanged submitted SRS/SAD RTMs. P bel
 | F-014..015 | TC-Admin-02..03 | Sprint1 API and live frontend service tests | P, automated |
 | F-016 | TC-Admin-04 | PR51 six report types, period boundaries, CSV injection and roles | P, automated |
 | NF-001 | TC-Perf-01 | PR49 actual-tree local benchmark | Local evidence only; deployed/browser N |
-| NF-002 / #27 | TC-Perf-02 | Approved 100-session scope: requirements/HMS-NF-002-approved-change.md; verification/HMS-NF-002.md | Current 100-user execution recorded in the focused result below; historical 500-user failures preserved |
+| NF-002 / #27 | TC-Perf-02 | Approved 100-session scope: requirements/HMS-NF-002-approved-change.md; verification/HMS-NF-002.md | P: Node22 local 100/100 sessions and 6,562/6,562 protected requests, 2,695 valid audit rows; F: Node24 95/100 logins. Deployment A; historical 500-user evidence preserved |
 | NF-003 | TC-Rel-01 | PR50 semantic probes, unknown coverage, maintenance exclusions | Monitor tests only; monthly target N |
 | NF-004 | TC-Rel-02 | PR60 isolated timed restore and real API chain verification | Local fixture only; daily deployed schedule N |
 | NF-005 | TC-UX-01 | PR58 automated real-page axe/responsiveness, 375/768/1280 px | Manual screen-reader and full AA acceptance N |
@@ -40,10 +40,10 @@ All planned HMS TC families are mapped below. P means the stated measured scope 
 | TC-Comp-01..04 | Submission, assignment, strict lifecycle, scoped persisted notifications and injected SMTP retries | P automated/adapter; A optional live SMTP delivery, no delivery claim |
 | TC-Admin-01..04 | Decimal fee ledger, visitors, leave and six reports/date/CSV/role tests | P automated, main backend/frontend/combined CI |
 | TC-Perf-01 | performance-local.json: 705/705 requests; login p90 2223.07ms, highest protected-read p90 102.34ms | P normal-load API; A production/browser sizing, not claimed |
-| TC-Perf-02 | Current approved target 100; see verification/HMS-NF-002.md and new raw/audit evidence | Use actual current-run outcome; all dated 500-user F/P results retained, no inferred 100-user PASS |
+| TC-Perf-02 | Current approved target 100; see verification/HMS-NF-002.md and new raw/audit evidence | P Node22 local: 100 sessions, 6,562/6,562 requests, valid 2,695-event chain; F managed Node24: 95/100 logins. A deployment/runtime scope; historical 500-user F/P retained |
 | TC-Rel-01 | availability tests and short synthetic lifecycle observations; monthlyTargetVerified=false | P monitor calculation/probe behavior; A real deployment and complete monthly coverage (#28) |
 | TC-Rel-02 | recovery-integration.json: 2s populated restore, 13 business-table counts, 14 original hashes preserved, restored API valid chain | P local restore; A actual daily scheduler/install and scheduled-run evidence (#29) |
-| TC-UX-01 | Main Chrome/Firefox axe/overflow checks at 375/768/1280px; focused local rerun/new keyboard results below | P existing automated scope; A manual each-role keyboard/screen-reader acceptance (#30) |
+| TC-UX-01 | Main Chrome/Firefox axe/overflow checks at 375/768/1280px; focused local rerun/new keyboard results below | P: nine local Chromium scenarios, including four real-role keyboard tests; prior ten Chrome/Firefox scenarios. A manual each-role keyboard/screen-reader acceptance (#30) |
 | TC-Sec-01 | Real child-server TLS/proxy tests and reference nginx | P local TLS1.2/1.3, refused TLS1.0/1.1 and HTTP; A actual domain/certificate/topology evidence (#20) |
 | TC-Sec-02 | bcrypt-compatible hashes and production cost12 regression; load fixture hash verified separately | P automated; no weaker production work factor |
 | TC-Sec-03 | Complete protected-router role inventory, real sessions, anonymous 401/wrong-role 403 | P current-main CI |

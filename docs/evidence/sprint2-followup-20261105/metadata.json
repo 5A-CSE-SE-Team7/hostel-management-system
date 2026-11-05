@@ -1,0 +1,114 @@
+{
+  "baseApplication": "40c513593eff3971f4daa0145ec8ddcb89ba2508",
+  "applicationSourceChanged": false,
+  "workloadSha256": "2cccdf3e90e474b8b931cfb425e7a3e3943e794ceb84060153b3df1d33fdcfa9",
+  "approvedTarget": 100,
+  "cpuQuota": "200000 100000",
+  "memoryLimitBytes": 8589934592,
+  "containerImage": "node@sha256:4b150b48b4116e2a22f2c39cc27025fbf4f153e2078fd3b14d159fdb5c7279da",
+  "runs": {
+    "scalability-approved-100-node24-failed": {
+      "issue": "HMS-NF-002",
+      "applicationCommit": "67b94b539d782508a6c151a14f7367903b08ec31",
+      "startedAt": "2026-11-05T06:22:25.476Z",
+      "workloadStartedAt": "2026-11-05T06:27:23.017Z",
+      "endedAt": "2026-11-05T06:27:53.331Z",
+      "environment": {
+        "node": "v24.19.0",
+        "cpus": 3,
+        "memoryBytes": 10452459520
+      },
+      "target": "http://127.0.0.1:46803",
+      "workload": [
+        "/api/auth/me",
+        "/api/profile",
+        "/api/complaints?limit=10",
+        "/api/occupancy",
+        "/api/fees/dues"
+      ],
+      "accountModel": "Independent authenticated sessions sharing one synthetic warden/admin account",
+      "virtualUsersRequested": 100,
+      "authenticatedVirtualUsers": 95,
+      "durationSeconds": 30,
+      "rampUpSeconds": 300,
+      "timeoutMs": 5000,
+      "login": {
+        "attempted": 100,
+        "successes": 95,
+        "errors": 5,
+        "successRatePercent": 95,
+        "p90Ms": 2240.65,
+        "maxMs": 22728.51
+      },
+      "authenticatedRequests": {
+        "total": 4917,
+        "successes": 4917,
+        "errors": 0,
+        "successRatePercent": 100,
+        "p90Ms": 975.63,
+        "maxMs": 2178.72
+      },
+      "status": "FAIL"
+    },
+    "scalability-approved-100-node22": {
+      "issue": "HMS-NF-002",
+      "applicationCommit": "14f931c99e4c0f8e702bbbc798065d8b09bd26a4",
+      "startedAt": "2026-11-05T06:29:53.220Z",
+      "workloadStartedAt": "2026-11-05T06:34:50.732Z",
+      "endedAt": "2026-11-05T06:35:21.081Z",
+      "environment": {
+        "node": "v22.23.4",
+        "cpus": 3,
+        "memoryBytes": 10452459520
+      },
+      "target": "http://127.0.0.1:44697",
+      "workload": [
+        "/api/auth/me",
+        "/api/profile",
+        "/api/complaints?limit=10",
+        "/api/occupancy",
+        "/api/fees/dues"
+      ],
+      "accountModel": "Independent authenticated sessions sharing one synthetic warden/admin account",
+      "virtualUsersRequested": 100,
+      "authenticatedVirtualUsers": 100,
+      "durationSeconds": 30,
+      "rampUpSeconds": 300,
+      "timeoutMs": 5000,
+      "login": {
+        "attempted": 100,
+        "successes": 100,
+        "errors": 0,
+        "successRatePercent": 100,
+        "p90Ms": 589.78,
+        "maxMs": 1132.64
+      },
+      "authenticatedRequests": {
+        "total": 6562,
+        "successes": 6562,
+        "errors": 0,
+        "successRatePercent": 100,
+        "p90Ms": 769.59,
+        "maxMs": 1284.03
+      },
+      "status": "PASS"
+    }
+  },
+  "verification": {
+    "focusedBackend": {
+      "passed": 8,
+      "failed": 0
+    },
+    "automatedVerifierGuards": {
+      "passed": 3,
+      "failed": 0
+    },
+    "localChromium": {
+      "passed": 9,
+      "failed": 0,
+      "version": "Chromium 154.0.8037.57 built on Debian GNU/Linux 13 (trixie)"
+    },
+    "reusedMainCI": "https://github.com/5A-CSE-SE-Team7/hostel-management-system/actions/runs/41976914388",
+    "browserScope": "Local system Chromium via project chrome; prior main CI proves branded Chrome/Firefox. No manual screen-reader sign-off."
+  }
+}

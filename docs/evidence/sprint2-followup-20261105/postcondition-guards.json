@@ -1,0 +1,23 @@
+[
+  {
+    "check": "non-load database rejected",
+    "expected": "nonzero exit, no evidence output",
+    "exitCode": 1,
+    "message": "Use a synthetic load database only",
+    "status": "PASS"
+  },
+  {
+    "check": "failed workload rejected",
+    "expected": "nonzero exit, no evidence output",
+    "exitCode": 1,
+    "message": "A failed workload cannot establish audit acceptance\n\n'FAIL' !== 'PASS'",
+    "status": "PASS"
+  },
+  {
+    "check": "changed deadline rejected",
+    "expected": "nonzero exit, no evidence output",
+    "exitCode": 1,
+    "message": "Expected values to be strictly equal:\n\n10000 !== 5000",
+    "status": "PASS"
+  }
+]

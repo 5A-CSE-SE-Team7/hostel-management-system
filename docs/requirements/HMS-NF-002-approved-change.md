@@ -6,6 +6,8 @@ Effective for the current Sprint 2 acceptance scope, 2026-11-05. Applies to SRS 
 
 Reason: the team requested a revised supported acceptance scope following reproducible 500-session failures in the constrained test environment. Those failures do not prove infrastructure alone caused every timeout. Impact: the approved test requires 100 independently persisted authenticated sessions, rather than 500; it makes no 500-user capacity claim and does not excuse any failed request at the approved load.
 
+As in the original workload, the fixture uses one synthetic admin/warden account with 100 separately authenticated, independently persisted sessions. It does not measure 100 diverse user records.
+
 The revised test must retain:
 
 - Production bcrypt cost 12 for the synthetic load account; compatible authentication, RBAC and session behavior.

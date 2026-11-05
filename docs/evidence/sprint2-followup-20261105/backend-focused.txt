@@ -1,0 +1,16 @@
+✔ availability reports unknown gaps and failed duplicates honestly (6.347258ms)
+✔ only pre-announced maintenance is excluded; empty coverage is not success (0.860962ms)
+✔ health probe validates body/status and does not mistake an open port for availability (122.085113ms)
+✔ TC-Rel-02 failed dumps never publish backups; archive and target guards precede restore (32.461682ms)
+✔ load runner handles large sample sets and validates representative protected responses (28.199521ms)
+✔ native bcrypt preserves existing bcryptjs hashes and production work factor (1118.98672ms)
+✔ TC-Sec-01 production rejects HTTP health and spoofed proxy protocol (553.512773ms)
+✔ TC-Sec-01 genuine TLS 1.2/1.3 work; TLS 1.0/1.1 are refused (723.177596ms)
+ℹ tests 8
+ℹ suites 0
+ℹ pass 8
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 3400.400732

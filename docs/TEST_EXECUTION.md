@@ -24,3 +24,24 @@ Reused credible evidence: main 40c513593eff3971f4daa0145ec8ddcb89ba2508 CI run [
 The RTM reconciliation maps every planned TC family to measured scope or an explicit A exception. Missing live TLS, human assistive-technology sign-off, installed daily backups and the real observation month are exceptions, not fabricated passing results. Optional live SMTP is not claimed. See verification/PENDING_EXTERNAL_EVIDENCE.md for the exact evidence checklist. Local scheduled-job simulation would not demonstrate production scheduling, so no fake cron installation is offered as completion.
 
 Current-run results are appended after execution, with immutable source identities, raw reports and limitations. An open evidence/documentation PR does not meet the merged-change closure gate.
+
+
+### Authentic approved-target load runs
+
+- Managed Node24, application 67b94b539d782508a6c151a14f7367903b08ec31: **FAIL**, 95/100 logins; 4,917/4,917 protected requests, p90 975.63ms. Five login timeouts are preserved; integrity acceptance was not established for this failed workload.
+- Official Node22.23.4, application 14f931c99e4c0f8e702bbbc798065d8b09bd26a4: **PASS for this local CI-runtime profile**, 100/100 distinct persisted sessions and 6,562/6,562 protected requests, p90 769.59ms. Exact audit counts matched and all 2,695 hashes/head verified. Cost12, pool20, 300s ramp, 30s sustained and 5000ms timeout remained unchanged. Same host, distinct runtime/network path; no Node-version-only cause or application performance fix is asserted.
+
+Raw samples/audit result are `evidence/scalability-approved-100-*.json`; exact control scripts, source and runtime limits are recorded in `verification/HMS-NF-002.md` and the `evidence/sprint2-followup-20261105/` directory. The application source/schema matches main40c5135. The approved requirement is not a claim that the Node24 failure disappeared or that historical 500-user failures passed.
+
+### Focused backend/postcondition checks
+
+Actual command: `NODE_ENV=test DB_NAME=hms_test node --test --test-concurrency=1 backend/tests/tls.test.js backend/tests/backup-scripts.test.js backend/tests/availability.test.js backend/tests/scalability.test.js`: **8 passed, 0 failed**. This covers real TLS handshakes/HTTP guard, backup failure/archive guards, conservative availability calculations and semantic probes, real-response load assertions, and bcrypt compatibility/cost12. Three new CLI postcondition guard checks also passed (non-load DB, failed workload and changed deadline are rejected with nonzero exit and no evidence output). Logs are in `evidence/sprint2-followup-20261105/`.
+
+Reused restore evidence is `recovery-integration.json`: 2 seconds, all 13 business-table counts equal, 14 original audit hashes retained, restored API valid16-event chain after additional reads. No new scheduled production backup or monthly uptime result is claimed.
+
+
+### Focused browser and automated guard regressions
+
+Actual local command: `NODE_ENV=test DB_NAME=hms_e2e HMS_CHROMIUM_PATH=/usr/bin/chromium npm run test:e2e --prefix frontend -- --project=chrome`: **9 passed, 0 failed (3.0 minutes)** on system Chromium154.0.8037.57. Includes all four new real-session keyboard login/navigation/skip-link/logout tests with visible focus, the genuine registration/complaint/allocation/maintenance journey, and real-page axe/overflow checks at 375/768/1280px. This is automated keyboard coverage, not a human walkthrough or screen-reader sign-off. Prior main CI provides actual branded Chrome/Firefox coverage; the new PR's CI will validate the added tests in those engines.
+
+`node --test backend/tests/load-audit-guards.test.js`: **3 passed, 0 failed** after correcting child CLI test-context inheritance and using the execution permissions required for child processes in this managed environment. The initial scratch harness failure is retained as guard-harness-initial-failed.txt; it is not an application workload failure. The separate real Node24 load failure remains FAIL. Full logs and checksum metadata are in evidence/sprint2-followup-20261105/.
