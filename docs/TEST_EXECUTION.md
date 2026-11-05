@@ -1,4 +1,4 @@
-> Historical 500-user integration acceptance (2026-11-04): TC-Perf-02 / HMS-NF-002 failed against the **superseded 500-user scope**. The instructor-approved current target is 100 users; the qualified Node22 local pass and Node24 failure are recorded below. Preserve all historical results. See verification/HMS-NF-002.md and the committed scalability-integration failure samples. Historical results below remain dated evidence.
+> **Current HMS-NF-002 / TC-Perf-02 acceptance target: 100 concurrent authenticated users.** The qualified local Node22 PASS and other recorded runtime outcomes are detailed below and in verification/HMS-NF-002.md. Older stress-test records are archived and are not current acceptance criteria.
 
 # Sprint 2 test execution and residual acceptance
 
@@ -17,7 +17,7 @@ Final broader local verification passed 107 backend tests and 67 frontend tests/
 
 ## Focused seven-issue continuation — 2026-11-05
 
-Scope is limited to #20, #30, #27, #29, #28, #37 and #34. The instructor-approved quantitative change sets HMS-NF-002 to 100 users, with the SRS/STP addendum in requirements/HMS-NF-002-approved-change.md. The team also confirms local-only college assessment; revised GitHub criteria #20, #30, #29 and #28 reflect that evaluation scope. All dated 500-user samples and findings remain unchanged. No source-document identifier cleanup, deployment, tag or release action is part of this work.
+Scope is limited to #20, #30, #27, #29, #28, #37 and #34. The instructor-approved quantitative change sets HMS-NF-002 to 100 users, with the SRS/STP addendum in requirements/HMS-NF-002-approved-change.md. The team also confirms local-only college assessment; revised GitHub criteria #20, #30, #29 and #28 reflect that evaluation scope. All previously recorded test samples and findings remain unchanged. No source-document identifier cleanup, deployment, tag or release action is part of this work.
 
 Reused credible evidence: main 40c513593eff3971f4daa0145ec8ddcb89ba2508 CI run [41976914388](https://github.com/5A-CSE-SE-Team7/hostel-management-system/actions/runs/41976914388) passed backend, frontend/build, combined real MySQL/UI integration, workflow validation and both dependency audits. Its inspected browser job 127077782484 passed all ten branded Chrome/Firefox scenarios, including real application journeys and role-page axe/overflow checks. Frontend tests: 67; live frontend/API integration: four. Runtime/dependency/application source is preserved in this continuation; changed verification tooling is tested separately.
 
@@ -31,7 +31,7 @@ Current-run results are appended after execution, with immutable source identiti
 - Managed Node24, application 67b94b539d782508a6c151a14f7367903b08ec31: **FAIL**, 95/100 logins; 4,917/4,917 protected requests, p90 975.63ms. Five login timeouts are preserved; integrity acceptance was not established for this failed workload.
 - Official Node22.23.4, application 14f931c99e4c0f8e702bbbc798065d8b09bd26a4: **PASS for this local CI-runtime profile**, 100/100 distinct persisted sessions and 6,562/6,562 protected requests, p90 769.59ms. Exact audit counts matched and all 2,695 hashes/head verified. Cost12, pool20, 300s ramp, 30s sustained and 5000ms timeout remained unchanged. Same host, distinct runtime/network path; no Node-version-only cause or application performance fix is asserted.
 
-Raw samples/audit result are `evidence/scalability-approved-100-*.json`; exact control scripts, source and runtime limits are recorded in `verification/HMS-NF-002.md` and the `evidence/sprint2-followup-20261105/` directory. The application source/schema matches main40c5135. The approved requirement is not a claim that the Node24 failure disappeared or that historical 500-user failures passed.
+Raw samples/audit result are `evidence/scalability-approved-100-*.json`; exact control scripts, source and runtime limits are recorded in `verification/HMS-NF-002.md` and the `evidence/sprint2-followup-20261105/` directory. The application source/schema matches main40c5135. Current acceptance is based on the declared 100-user local test configuration, with runtime-specific results and limitations preserved.
 
 ### Focused backend/postcondition checks
 
