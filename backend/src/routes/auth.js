@@ -1,7 +1,12 @@
 const router = require('express').Router();
 // Native asynchronous bcrypt keeps password work off the HTTP event loop.
-// The hash format and configured work factor remain compatible with bcryptjs.
-const bcrypt = require('bcrypt');
+// Falls back to bcryptjs if native bcrypt is unavailable.
+let bcrypt;
+try {
+  bcrypt = require('bcrypt');
+} catch {
+  bcrypt = require('bcryptjs');
+}
 const rateLimit = require('express-rate-limit');
 const config = require('../config');
 const { pool, withTransaction } = require('../db');
