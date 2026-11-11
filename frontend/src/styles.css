@@ -129,8 +129,10 @@ header.swiss-header strong,
   display: block;
 }
 
-/* Pill-shaped action buttons */
-.pill-btn {
+/* Pill-shaped action buttons & Sign out */
+.pill-btn,
+.signout-btn,
+.user-controls button {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -151,7 +153,9 @@ header.swiss-header strong,
   box-sizing: border-box;
 }
 
-.pill-btn:hover {
+.pill-btn:hover,
+.signout-btn:hover,
+.user-controls button:hover {
   background: var(--color-border-dark);
   color: #ffffff;
 }
@@ -612,14 +616,20 @@ button:disabled {
   background: #ffffff;
 }
 
-[data-theme="dark"] .pill-btn {
-  border-color: rgba(255, 255, 255, 0.4);
-  color: #f5f5f5;
+[data-theme="dark"] .pill-btn,
+[data-theme="dark"] .signout-btn,
+[data-theme="dark"] .user-controls button {
+  background: transparent !important;
+  color: #f5f5f5 !important;
+  border-color: rgba(255, 255, 255, 0.4) !important;
 }
 
-[data-theme="dark"] .pill-btn:hover {
-  background: #f5f5f5;
-  color: #111111;
+[data-theme="dark"] .pill-btn:hover,
+[data-theme="dark"] .signout-btn:hover,
+[data-theme="dark"] .user-controls button:hover {
+  background: #f5f5f5 !important;
+  color: #111111 !important;
+  border-color: #f5f5f5 !important;
 }
 
 [data-theme="dark"] .alert {
