@@ -1020,3 +1020,32 @@ button:disabled { opacity: .65; cursor: wait; }
 [data-theme="dark"] .narrative-col-text {
   color: #999999;
 }
+[data-theme="dark"] .showcase-section {
+  background: #0d0d0d;
+  border-bottom-color: rgba(255, 255, 255, 0.12);
+}
+[data-theme="dark"] .showcase-pretitle {
+  color: #888888;
+}
+[data-theme="dark"] .showcase-title {
+  color: #ffffff;
+}
+[data-theme="dark"] .asym-media-wrapper,
+[data-theme="dark"] .asym-circle-frame {
+  border-color: rgba(255, 255, 255, 0.15);
+  background: #141414;
+}
+[data-theme="dark"] .asym-name {
+  color: #ffffff;
+}
+[data-theme="dark"] .asym-meta {
+  color: #666666;
+}
+[data-theme="dark"] .pill-showcase {
+  border-color: rgba(255, 255, 255, 0.2);
+  background: #141414;
+}
+[data-theme="dark"] .pill-circle-overlay {
+  background: rgba(0, 0, 0, 0.9);
+  border-color: rgba(255, 255, 255, 0.3);
+}
