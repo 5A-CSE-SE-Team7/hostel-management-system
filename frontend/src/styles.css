@@ -837,6 +837,7 @@ nav a[aria-current] {
   color: #ffffff;
   font-weight: 700;
 }
+/* Dashboard & Form Controls */
 .dashboard-container {
   display: flex;
   flex-direction: column;
@@ -872,65 +873,40 @@ table { width: 100%; border-collapse: collapse; background: #ffffff; border: 1px
 caption { text-align: left; font-weight: bold; padding: 1rem; font-family: var(--font-display); font-size: 1.15rem; letter-spacing: -0.03em; }
 th, td { text-align: left; padding: .85rem 1rem; border-bottom: 1px solid var(--color-border-hairline); }
 th { font-family: var(--font-body); font-size: 12px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--color-text-secondary); background: #fafafa; }
-@media (max-width: 640px) { .layout { flex-direction: column; } nav { display: flex; flex-wrap: wrap; } header { flex-wrap: wrap; } #content { padding: 1rem; } }
-@media (prefers-color-scheme: dark) { :root { color: #edf2fa; background: #14202e; } a { color: #a9ceff; } nav a[aria-current] { background: #294567; } .error { color: #ffb4b4; } .skip { background: #14202e; } }
-@media (forced-colors: active) { button, .alert, .badge { border: 1px solid ButtonText; } }
 
-.login-portal {
-  width: 100%;
-  margin: 0 auto;
+/* Theme Toggle Button */
+.theme-toggle-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.45rem 1rem;
+  height: 40px;
+  border-radius: 9999px;
+  border: 1px solid var(--color-border-dark);
+  background: transparent;
+  color: var(--color-text-primary);
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all var(--ease-fast);
+  box-sizing: border-box;
 }
-.login-portal .registration {
-  margin: 2.5rem auto 4rem;
+.theme-toggle-btn:hover {
+  background: var(--color-border-dark);
+  color: var(--color-bg);
+}
+.theme-toggle-indicator {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.theme-mode-icon {
+  display: block;
 }
 
-/* Genuine M1 account-page presentation, scoped to its pages. */
-.registration { width: min(100% - 2rem, 34rem); margin: 4rem auto; }
-.registration h1 { margin-bottom: .5rem; }
-.registration .intro { margin-top: 0; color: #566176; line-height: 1.5; }
-.registration .card { display: grid; gap: 1rem; padding: 1.5rem; background: white; border: 1px solid #d9e0eb; border-radius: .75rem; box-shadow: 0 12px 32px #20304a12; }
-.registration .field { display: grid; gap: .4rem; font-weight: 600; }
-.registration .field input { width: 100%; min-height: 2.75rem; padding: .65rem .75rem; border: 1px solid #aab5c5; border-radius: .4rem; font: inherit; }
-.registration .field input:focus { outline: 3px solid #9ec5fe; border-color: #2869c7; }
-.registration .field input[aria-invalid="true"] { border-color: #b42318; }
-.field-error { color: #b42318; font-weight: 400; }
-.hint { color: #566176; font-weight: 400; }
-.registration .alert { margin: 0; color: #b42318; }
-.success { margin: 0; color: #18794e; }
-.registration button { min-height: 2.75rem; padding: .65rem 1rem; border: 0; border-radius: .4rem; background: #174ea6; color: white; font: inherit; font-weight: 700; cursor: pointer; }
-button:disabled { opacity: .65; cursor: wait; }
-.account-links { display: flex; gap: 1rem; margin: 1.25rem 0; }
-.student-results { display: grid; gap: .5rem; margin: 0; padding: 0; list-style: none; }
-.student-result { width: 100%; background: #eef3fb; color: #172033; text-align: left; font-weight: 500; }
-.student-editor { margin-top: 1.25rem; }
-.user-list { margin-top: 1.25rem; }
-.user-row { display: grid; grid-template-columns: minmax(10rem, 1fr) minmax(8rem, .6fr) auto auto; gap: .75rem; align-items: end; padding: .9rem 0; border-top: 1px solid #d9e0eb; }
-.user-identity { display: grid; gap: .25rem; overflow-wrap: anywhere; }
-.user-identity span { color: #566176; font-size: .9rem; }
-.user-row .registration .field { min-width: 8rem; }
-.active-toggle { display: flex; gap: .4rem; align-items: center; padding-bottom: .65rem; }
-.active-toggle input { width: 1rem; height: 1rem; }
-
-@media (max-width: 700px) { .user-row { grid-template-columns: 1fr 1fr; } }
-@media (max-width: 480px) { .registration { margin: 2rem auto; } .registration .card { padding: 1rem; } }
-
-/* Responsive account controls and accessible focus across all modules. */
-.user-row { grid-template-columns: minmax(0,1.2fr) minmax(0,1.5fr) minmax(0,1fr) auto; }
-@media(max-width:700px) { .user-row { grid-template-columns: minmax(0,1fr) minmax(0,1fr); } }
-@media(max-width:480px) { .user-row { grid-template-columns: minmax(0,1fr); } .account-links { flex-wrap:wrap; } }
-@media(prefers-reduced-motion:reduce) { *, *::before, *::after { scroll-behavior:auto!important; animation-duration:.01ms!important; transition-duration:.01ms!important; } }
-/* Grid items must shrink around long SRNs and institutional email addresses. */
-.registration .card, .student-results, .student-results > li { min-width: 0; }
-.student-result { min-width: 0; overflow-wrap: anywhere; white-space: normal; }
-.registration input, .registration select { min-width: 0; }
-/* Account cards use an explicit light palette in both OS themes. */
-.registration .card { color: #172334; color-scheme: light; }
-.registration .card a { color: #174c9b; }
-.registration .card .error, .registration .card .field-error,
-.registration .card .alert { color: #a31919; }
-.registration .card :focus-visible { outline: 3px solid #174c9b; outline-offset: 3px; }
-.registration .field input:focus { outline-color: #174c9b; }
-.registration .success { color: #18794e; }
 /* ==========================================================================
    Full Application Dark Mode Tokens & Overrides across Every Element
    ========================================================================== */
@@ -1183,4 +1159,59 @@ button:disabled { opacity: .65; cursor: wait; }
 }
 [data-theme="dark"] :focus-visible {
   outline-color: #ffffff;
+}
+@media (max-width: 640px) { .layout { flex-direction: column; } nav { display: flex; flex-wrap: wrap; } header { flex-wrap: wrap; } #content { padding: 1rem; } }
+@media (prefers-color-scheme: dark) { :root { color: #edf2fa; background: #14202e; } a { color: #a9ceff; } nav a[aria-current] { background: #294567; } .error { color: #ffb4b4; } .skip { background: #14202e; } }
+@media (forced-colors: active) { button, .alert, .badge { border: 1px solid ButtonText; } }
+
+/* Genuine M1 account-page presentation, scoped to its pages. */
+.registration { width: min(100% - 2rem, 34rem); margin: 4rem auto; }
+.registration h1 { margin-bottom: .5rem; }
+.registration .intro { margin-top: 0; color: #566176; line-height: 1.5; }
+.registration .card { display: grid; gap: 1rem; padding: 1.5rem; background: white; border: 1px solid #d9e0eb; border-radius: .75rem; box-shadow: 0 12px 32px #20304a12; }
+.registration .field { display: grid; gap: .4rem; font-weight: 600; }
+.registration .field input { width: 100%; min-height: 2.75rem; padding: .65rem .75rem; border: 1px solid #aab5c5; border-radius: .4rem; font: inherit; }
+.registration .field input:focus { outline: 3px solid #9ec5fe; border-color: #2869c7; }
+.registration .field input[aria-invalid="true"] { border-color: #b42318; }
+.field-error { color: #b42318; font-weight: 400; }
+.hint { color: #566176; font-weight: 400; }
+.registration .alert { margin: 0; color: #b42318; }
+.success { margin: 0; color: #18794e; }
+.registration button { min-height: 2.75rem; padding: .65rem 1rem; border: 0; border-radius: .4rem; background: #174ea6; color: white; font: inherit; font-weight: 700; cursor: pointer; }
+button:disabled { opacity: .65; cursor: wait; }
+.account-links { display: flex; gap: 1rem; margin: 1.25rem 0; }
+.student-results { display: grid; gap: .5rem; margin: 0; padding: 0; list-style: none; }
+.student-result { width: 100%; background: #eef3fb; color: #172033; text-align: left; font-weight: 500; }
+.student-editor { margin-top: 1.25rem; }
+.user-list { margin-top: 1.25rem; }
+.user-row { display: grid; grid-template-columns: minmax(10rem, 1fr) minmax(8rem, .6fr) auto auto; gap: .75rem; align-items: end; padding: .9rem 0; border-top: 1px solid #d9e0eb; }
+.user-identity { display: grid; gap: .25rem; overflow-wrap: anywhere; }
+.user-identity span { color: #566176; font-size: .9rem; }
+.user-row .registration .field { min-width: 8rem; }
+.active-toggle { display: flex; gap: .4rem; align-items: center; padding-bottom: .65rem; }
+.active-toggle input { width: 1rem; height: 1rem; }
+
+@media (max-width: 700px) { .user-row { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 480px) { .registration { margin: 2rem auto; } .registration .card { padding: 1rem; } }
+
+/* Responsive account controls and accessible focus across all modules. */
+.user-row { grid-template-columns: minmax(0,1.2fr) minmax(0,1.5fr) minmax(0,1fr) auto; }
+@media(max-width:700px) { .user-row { grid-template-columns: minmax(0,1fr) minmax(0,1fr); } }
+@media(max-width:480px) { .user-row { grid-template-columns: minmax(0,1fr); } .account-links { flex-wrap:wrap; } }
+@media(prefers-reduced-motion:reduce) { *, *::before, *::after { scroll-behavior:auto!important; animation-duration:.01ms!important; transition-duration:.01ms!important; } }
+/* Grid items must shrink around long SRNs and institutional email addresses. */
+.registration .card, .student-results, .student-results > li { min-width: 0; }
+.student-result { min-width: 0; overflow-wrap: anywhere; white-space: normal; }
+.registration input, .registration select { min-width: 0; }
+/* Account cards use an explicit light palette in both OS themes. */
+.registration .card { color: #172334; color-scheme: light; }
+.registration .card a { color: #174c9b; }
+.registration .card .error, .registration .card .field-error,
+.registration .card .alert { color: #a31919; }
+.registration .card :focus-visible { outline: 3px solid #174c9b; outline-offset: 3px; }
+.registration .field input:focus { outline-color: #174c9b; }
+.registration .success { color: #18794e; }
+@media (prefers-color-scheme: dark) {
+  .registration > .intro { color: #c2ccda; }
+  .registration > .success { color: #8ee0b3; }
 }
