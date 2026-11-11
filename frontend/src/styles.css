@@ -958,3 +958,24 @@ button:disabled { opacity: .65; cursor: wait; }
 [data-theme="dark"] a {
   color: #ffffff;
 }
+[data-theme="dark"] header.swiss-header {
+  background: rgba(13, 13, 13, 0.92);
+  border-bottom-color: rgba(255, 255, 255, 0.12);
+  color: #f5f5f5;
+}
+[data-theme="dark"] .brand-edition-tag {
+  color: #888888;
+}
+[data-theme="dark"] nav {
+  border-right-color: rgba(255, 255, 255, 0.12);
+}
+[data-theme="dark"] nav a {
+  color: #f5f5f5;
+}
+[data-theme="dark"] nav a:hover {
+  color: #888888;
+}
+[data-theme="dark"] nav a[aria-current] {
+  background: #f5f5f5;
+  color: #111111;
+}
