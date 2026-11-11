@@ -930,7 +930,31 @@ button:disabled { opacity: .65; cursor: wait; }
 .registration .card :focus-visible { outline: 3px solid #174c9b; outline-offset: 3px; }
 .registration .field input:focus { outline-color: #174c9b; }
 .registration .success { color: #18794e; }
-@media (prefers-color-scheme: dark) {
-  .registration > .intro { color: #c2ccda; }
-  .registration > .success { color: #8ee0b3; }
+/* ==========================================================================
+   Full Application Dark Mode Tokens & Overrides across Every Element
+   ========================================================================== */
+[data-theme="dark"] {
+  --color-bg: #0d0d0d;
+  --color-surface: #141414;
+  --color-text-primary: #f5f5f5;
+  --color-text-secondary: #999999;
+  --color-text-muted: #666666;
+  --color-border-hairline: rgba(255, 255, 255, 0.12);
+  --color-border-dark: #f5f5f5;
+  --color-dark: #080808;
+  --color-dark-text: #f5f5f5;
+
+  --echo-layer-1: #4a4a4a;
+  --echo-layer-2: #383838;
+  --echo-layer-3: #282828;
+  --echo-layer-4: #1c1c1c;
+
+  color-scheme: dark;
+}
+[data-theme="dark"] body {
+  background: var(--color-bg);
+  color: var(--color-text-primary);
+}
+[data-theme="dark"] a {
+  color: #ffffff;
 }
