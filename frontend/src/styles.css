@@ -979,3 +979,44 @@ button:disabled { opacity: .65; cursor: wait; }
   background: #f5f5f5;
   color: #111111;
 }
+[data-theme="dark"] .hero-section {
+  background: #0d0d0d;
+  border-bottom-color: rgba(255, 255, 255, 0.12);
+}
+[data-theme="dark"] .hero-meta-top {
+  color: #888888;
+}
+[data-theme="dark"] .hero-hairline {
+  background: #f5f5f5;
+}
+[data-theme="dark"] .hero-subline {
+  color: #888888;
+}
+[data-theme="dark"] .echo-foreground {
+  color: #ffffff;
+}
+[data-theme="dark"] .narrative-section {
+  background: #0d0d0d;
+  border-bottom-color: rgba(255, 255, 255, 0.12);
+}
+[data-theme="dark"] .narrative-hairline {
+  background: rgba(255, 255, 255, 0.2);
+}
+[data-theme="dark"] .narrative-quote {
+  color: #ffffff;
+}
+[data-theme="dark"] .narrative-quote .editorial-italic {
+  color: #888888;
+}
+[data-theme="dark"] .narrative-grid {
+  border-top-color: rgba(255, 255, 255, 0.12);
+}
+[data-theme="dark"] .narrative-col-index {
+  color: #666666;
+}
+[data-theme="dark"] .narrative-col-title {
+  color: #ffffff;
+}
+[data-theme="dark"] .narrative-col-text {
+  color: #999999;
+}
