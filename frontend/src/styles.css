@@ -143,6 +143,89 @@ h1, h2, h3, h4, .font-display {
   color: var(--color-text-secondary);
   margin: 0;
 }
+
+/* Philosophy / Narrative Section */
+.narrative-section {
+  position: relative;
+  padding: 6rem 2rem;
+  background: var(--color-bg);
+  border-bottom: 1px solid var(--color-border-hairline);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.narrative-hairline {
+  width: 1px;
+  height: 80px;
+  background: rgba(30, 30, 30, 0.1);
+  margin-bottom: 3.5rem;
+}
+.narrative-container {
+  max-width: 76rem;
+  width: 100%;
+  margin: 0 auto;
+  text-align: center;
+}
+.narrative-quote {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 4.5vw, 3.75rem);
+  font-weight: 700;
+  line-height: 1.05;
+  letter-spacing: -0.04em;
+  color: var(--color-text-primary);
+  margin: 0 auto 5rem;
+  max-width: 62rem;
+}
+.narrative-quote .editorial-italic {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 400;
+  color: var(--color-text-secondary);
+  padding: 0 0.15em;
+}
+.narrative-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 32px;
+  text-align: left;
+  border-top: 1px solid var(--color-border-hairline);
+  padding-top: 3.5rem;
+}
+.narrative-col {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+.narrative-col-index {
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  color: var(--color-text-muted);
+}
+.narrative-col-title {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+  color: var(--color-text-primary);
+  margin: 0;
+}
+.narrative-col-text {
+  font-family: var(--font-body);
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 1.6;
+  color: var(--color-text-secondary);
+  margin: 0;
+}
+@media (max-width: 768px) {
+  .narrative-grid {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+}
 /* Sticky Header & Minimalist Navigation */
 header.swiss-header {
   position: sticky;
