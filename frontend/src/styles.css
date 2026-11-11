@@ -52,25 +52,27 @@ h1, h2, h3, h4, .font-display {
   display: inline-block;
   font-family: var(--font-display);
   font-weight: 700;
-  letter-spacing: -0.05em;
-  line-height: 0.9;
+  letter-spacing: -0.04em;
+  line-height: 0.92;
   user-select: none;
+  padding: 0.2em 0.35em;
+  box-sizing: border-box;
 }
 .echo-layer {
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  top: 0.2em;
+  left: 0.35em;
+  width: calc(100% - 0.7em);
+  height: calc(100% - 0.4em);
   pointer-events: none;
-  white-space: pre-wrap;
+  white-space: nowrap;
   transition: transform var(--transition-reveal);
 }
 .echo-foreground {
   position: relative;
   display: inline-block;
   color: var(--color-text-primary);
-  white-space: pre-wrap;
+  white-space: nowrap;
 }
 .echo-stack:hover .echo-layer:nth-child(1) { transform: translate(-0.20em, -0.20em) !important; }
 .echo-stack:hover .echo-layer:nth-child(2) { transform: translate(-0.15em, -0.15em) !important; }
@@ -81,22 +83,23 @@ h1, h2, h3, h4, .font-display {
 .hero-section {
   position: relative;
   width: 100%;
-  min-height: 75vh;
+  min-height: 65vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   text-align: center;
-  padding: 4rem 1.5rem;
+  padding: 3.5rem 1.5rem;
   background: var(--color-bg);
-  overflow: hidden;
+  overflow: visible;
   border-bottom: 1px solid var(--color-border-hairline);
+  box-sizing: border-box;
 }
 .hero-meta-top {
   display: flex;
   align-items: center;
   gap: 0.75rem;
-  margin-bottom: 2.5rem;
+  margin-bottom: 1.5rem;
   font-family: var(--font-body);
   font-size: 11px;
   font-weight: 700;
@@ -112,14 +115,19 @@ h1, h2, h3, h4, .font-display {
   justify-content: center;
   align-items: center;
   width: 100%;
+  max-width: 100vw;
   margin: 1rem 0;
+  padding: 1.5rem 1rem;
+  overflow: visible;
+  box-sizing: border-box;
 }
 .hero-display-title {
-  font-size: clamp(3.5rem, 11vw, 180px);
+  font-size: clamp(2rem, 7.2vw, 110px);
   font-weight: 700;
-  line-height: 0.88;
-  letter-spacing: -0.05em;
+  line-height: 0.92;
+  letter-spacing: -0.04em;
   text-transform: uppercase;
+  max-width: 100%;
 }
 .hero-meta-bottom {
   display: flex;

@@ -20,7 +20,7 @@ export default function HeroSection({
       </div>
 
       <div className="hero-echo-container">
-        <EchoText text={headline} as="h1" className="hero-display-title" />
+        <EchoText text={headline} as="div" className="hero-display-title" />
       </div>
 
       <div className="hero-meta-bottom">
