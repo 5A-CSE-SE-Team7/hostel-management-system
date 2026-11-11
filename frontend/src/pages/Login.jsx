@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../auth.jsx';
+import HeroSection from '../components/HeroSection';
 
 export default function Login() {
   const { login } = useAuth();
@@ -24,22 +25,25 @@ export default function Login() {
   };
 
   return (
-    <main className="registration">
-      <h1>Hostel Management System</h1>
-      <p className="intro">Sign in with your institutional account.</p>
-      <form className="card" onSubmit={submit} noValidate>
-        {error && <p className="alert" role="alert">{error}</p>}
-        <label className="field" htmlFor="login-email">
-          <span>Institutional email</span>
-          <input id="login-email" name="email" type="email" autoComplete="username" required value={form.email} onChange={update} />
-        </label>
-        <label className="field" htmlFor="login-password">
-          <span>Password</span>
-          <input id="login-password" name="password" type="password" autoComplete="current-password" required value={form.password} onChange={update} />
-        </label>
-        <button type="submit" disabled={busy}>{busy ? 'Signing in…' : 'Sign in'}</button>
-        <p>New student? <Link to="/register">Create an account</Link></p>
-      </form>
+    <main className="login-portal">
+      <HeroSection headline="RESIDENCE" subline="SYSTEM 07 // INSTITUTIONAL LIVING ARCHITECTURE" />
+      <div className="registration">
+        <h1>Hostel Management System</h1>
+        <p className="intro">Sign in with your institutional account.</p>
+        <form className="card" onSubmit={submit} noValidate>
+          {error && <p className="alert" role="alert">{error}</p>}
+          <label className="field" htmlFor="login-email">
+            <span>Institutional email</span>
+            <input id="login-email" name="email" type="email" autoComplete="username" required value={form.email} onChange={update} />
+          </label>
+          <label className="field" htmlFor="login-password">
+            <span>Password</span>
+            <input id="login-password" name="password" type="password" autoComplete="current-password" required value={form.password} onChange={update} />
+          </label>
+          <button type="submit" disabled={busy}>{busy ? 'Signing in…' : 'Sign in'}</button>
+          <p>New student? <Link to="/register">Create an account</Link></p>
+        </form>
+      </div>
     </main>
   );
 }

@@ -828,6 +828,14 @@ th, td { text-align: left; padding: .7rem; border-bottom: 1px solid #65758a; }
 @media (prefers-color-scheme: dark) { :root { color: #edf2fa; background: #14202e; } a { color: #a9ceff; } nav a[aria-current] { background: #294567; } .error { color: #ffb4b4; } .skip { background: #14202e; } }
 @media (forced-colors: active) { button, .alert, .badge { border: 1px solid ButtonText; } }
 
+.login-portal {
+  width: 100%;
+  margin: 0 auto;
+}
+.login-portal .registration {
+  margin: 2.5rem auto 4rem;
+}
+
 /* Genuine M1 account-page presentation, scoped to its pages. */
 .registration { width: min(100% - 2rem, 34rem); margin: 4rem auto; }
 .registration h1 { margin-bottom: .5rem; }
