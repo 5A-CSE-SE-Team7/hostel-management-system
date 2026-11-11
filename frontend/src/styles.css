@@ -1049,3 +1049,48 @@ button:disabled { opacity: .65; cursor: wait; }
   background: rgba(0, 0, 0, 0.9);
   border-color: rgba(255, 255, 255, 0.3);
 }
+[data-theme="dark"] .services-section {
+  background: #0d0d0d;
+  border-bottom-color: rgba(255, 255, 255, 0.12);
+}
+[data-theme="dark"] .services-pretitle {
+  color: #888888;
+}
+[data-theme="dark"] .services-title {
+  color: #ffffff;
+}
+[data-theme="dark"] .service-card {
+  border-color: rgba(255, 255, 255, 0.12);
+  background: #141414;
+}
+[data-theme="dark"] .service-card:hover {
+  background: #1c1c1c;
+  border-color: rgba(255, 255, 255, 0.25);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.4);
+}
+[data-theme="dark"] .geometric-icon-box {
+  background: #1a1a1a;
+  border-color: #f5f5f5;
+}
+[data-theme="dark"] .geometric-icon-box svg path,
+[data-theme="dark"] .geometric-icon-box svg line,
+[data-theme="dark"] .geometric-icon-box svg rect,
+[data-theme="dark"] .geometric-icon-box svg circle,
+[data-theme="dark"] .geometric-icon-box svg polygon {
+  stroke: #f5f5f5;
+}
+[data-theme="dark"] .geometric-icon-box svg [fill="#111111"] {
+  fill: #f5f5f5;
+}
+[data-theme="dark"] .service-card-title {
+  color: #ffffff;
+}
+[data-theme="dark"] .service-card-desc {
+  color: #999999;
+}
+[data-theme="dark"] .service-card-footer {
+  border-top-color: rgba(255, 255, 255, 0.12);
+}
+[data-theme="dark"] .service-cta-link {
+  color: #ffffff;
+}
