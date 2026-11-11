@@ -309,6 +309,117 @@ h1, h2, h3, h4, .font-display {
   text-transform: uppercase;
   line-height: 1.2;
 }
+
+/* Asymmetrical Showcase Grid */
+.showcase-section {
+  padding: 6rem 2rem;
+  background: var(--color-bg);
+  border-bottom: 1px solid var(--color-border-hairline);
+  max-width: 82rem;
+  margin: 0 auto;
+}
+.showcase-header {
+  margin-bottom: 3.5rem;
+}
+.showcase-pretitle {
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  color: var(--color-text-secondary);
+  display: block;
+  margin-bottom: 0.5rem;
+}
+.showcase-title {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  line-height: 1.0;
+  margin: 0;
+}
+.asym-grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 24px;
+  align-items: center;
+}
+.asym-col-8 { grid-column: span 8; }
+.asym-col-4 { grid-column: span 4; }
+.asym-col-5 { grid-column: span 5; }
+.asym-col-7 { grid-column: span 7; }
+
+.asym-item {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+.asym-media-wrapper {
+  overflow: hidden;
+  border-radius: 4px;
+  border: 1px solid var(--color-border-dark);
+  background: #111111;
+}
+.asym-visual {
+  width: 100%;
+  height: 100%;
+  display: block;
+  filter: grayscale(20%);
+  transition: transform var(--duration-reveal) var(--ease-reveal),
+              filter var(--duration-reveal) var(--ease-reveal);
+}
+.asym-item:hover .asym-visual {
+  transform: scale(1.05);
+  filter: grayscale(0%);
+}
+.asym-circle-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.asym-circle-frame {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 1px solid var(--color-border-dark);
+  background: #111111;
+}
+.asym-circle-frame .asym-visual {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.asym-caption {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 0.85rem 0.25rem 0;
+}
+.asym-center-caption {
+  width: 100%;
+  text-align: center;
+  justify-content: center;
+  gap: 1rem;
+}
+.asym-meta {
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  color: var(--color-text-muted);
+}
+.asym-name {
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-text-primary);
+}
+@media (max-width: 900px) {
+  .asym-col-8, .asym-col-4, .asym-col-5, .asym-col-7 {
+    grid-column: span 12;
+  }
+}
 /* Sticky Header & Minimalist Navigation */
 header.swiss-header {
   position: sticky;
