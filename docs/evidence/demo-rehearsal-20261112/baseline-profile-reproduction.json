@@ -1,0 +1,30 @@
+[
+  {
+    "role": "admin",
+    "status": 400,
+    "errorCode": "VALIDATION_ERROR",
+    "details": {
+      "contact": "Contact number cannot be empty"
+    }
+  },
+  {
+    "role": "warden",
+    "status": 400,
+    "errorCode": "VALIDATION_ERROR",
+    "details": {
+      "contact": "Contact number cannot be empty"
+    }
+  },
+  {
+    "role": "maintenance",
+    "status": 400,
+    "errorCode": "VALIDATION_ERROR",
+    "details": {
+      "contact": "Contact number cannot be empty"
+    }
+  },
+  {
+    "case": "inactive student in eligibility results",
+    "found": true
+  }
+]

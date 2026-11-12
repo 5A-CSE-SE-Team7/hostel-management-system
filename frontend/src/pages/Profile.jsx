@@ -51,7 +51,9 @@ export default function Profile() {
     setError('');
     setSuccess('');
     try {
-      const saved = await put('/profile', form);
+      const editable = ['name', ...(profile.role === 'student' ? STUDENT_FIELDS.map(([name]) => name) : [])];
+      const payload = Object.fromEntries(editable.map(name => [name, form[name]]));
+      const saved = await put('/profile', payload);
       setProfile(saved);
       setForm(saved);
       setSuccess('Profile updated.');
@@ -68,11 +70,13 @@ export default function Profile() {
   return (
     <main className="registration">
       <h1>My profile</h1>
-      <p className="intro">Update your permitted details. SRN, email, and role are protected.</p>
+      <p className="intro">{profile.role === 'student'
+        ? 'Update your permitted details. SRN, email, and role are protected.'
+        : 'Update your staff name. Email and role are protected.'}</p>
       <form className="card" onSubmit={submit}>
         {error && <p className="alert" role="alert">{error}</p>}
         {success && <p className="success" role="status">{success}</p>}
-        {field('srn', 'SRN', profile.srn, () => {}, { readOnly: true })}
+        {profile.role === 'student' && field('srn', 'SRN', profile.srn, () => {}, { readOnly: true })}
         {field('email', 'Email', profile.email, () => {}, { readOnly: true })}
         {field('role', 'Role', profile.role, () => {}, { readOnly: true })}
         {field('name', 'Full name', form.name, update)}

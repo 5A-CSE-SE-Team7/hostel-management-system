@@ -1,4 +1,5 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
+import AllocationStudentSelect from '../components/AllocationStudentSelect';
 
 async function api(path, options = {}) {
   const response = await fetch(path, {
@@ -7,7 +8,10 @@ async function api(path, options = {}) {
     headers: { ...(options.body ? { 'Content-Type': 'application/json' } : {}), ...options.headers },
   });
   const body = await response.json().catch(() => ({}));
-  if (!response.ok) throw new Error(body.message || `Request failed (${response.status})`);
+  if (!response.ok) {
+    const fields = Object.values(body.details || {}).filter(value => typeof value === 'string');
+    throw new Error(fields.length ? fields.join(' ') : body.message || `Request failed (${response.status})`);
+  }
   return body;
 }
 
@@ -17,11 +21,13 @@ export default function Allocations() {
   const [allocationHistory, setAllocationHistory] = useState([]);
   const [occupancy, setOccupancy] = useState(null);
   const [studentId, setStudentId] = useState('');
+  const [studentRefresh, setStudentRefresh] = useState(0);
   const [bedId, setBedId] = useState('');
   const [transferBedIds, setTransferBedIds] = useState({});
   const [transitionDates, setTransitionDates] = useState({});
   const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
+  const allocationPending = useRef(false);
   const [transferringId, setTransferringId] = useState(null);
   const [transitioningId, setTransitioningId] = useState(null);
   const [error, setError] = useState('');
@@ -42,6 +48,7 @@ export default function Allocations() {
       setBedId((current) => beds.some((bed) => String(bed.id) === current) ? current : '');
       setActiveAllocations(allocations);
       setAllocationHistory(history);
+      setStudentRefresh(current => current + 1);
       setTransferBedIds((current) => Object.fromEntries(allocations.map((allocation) => {
         const key = String(allocation.id);
         return [key, beds.some((bed) => String(bed.id) === current[key]) ? current[key] : ''];
@@ -62,6 +69,12 @@ export default function Allocations() {
 
   async function submitAllocation(event) {
     event.preventDefault();
+    if (allocationPending.current) return;
+    if (!studentId || !bedId) {
+      setError('Choose an eligible student and an available bed.');
+      return;
+    }
+    allocationPending.current = true;
     setSubmitting(true);
     setError('');
     setNotice('');
@@ -74,8 +87,10 @@ export default function Allocations() {
       setStudentId('');
       await loadData();
     } catch (err) {
+      await loadData();
       setError(err.message || 'Could not allocate the bed.');
     } finally {
+      allocationPending.current = false;
       setSubmitting(false);
     }
   }
@@ -114,9 +129,8 @@ export default function Allocations() {
       <section aria-labelledby="new-allocation-heading">
         <h2 id="new-allocation-heading">Create allocation</h2>
         <form onSubmit={submitAllocation}>
-          <label htmlFor="allocation-student-id">Student ID </label>
-          <input id="allocation-student-id" type="number" min="1" step="1" required value={studentId}
-            onChange={(event) => setStudentId(event.target.value)} />{' '}
+          <AllocationStudentSelect value={studentId} onChange={setStudentId}
+            disabled={submitting || loading} refreshKey={studentRefresh} />
           <label htmlFor="allocation-bed">Available bed </label>
           <select id="allocation-bed" required value={bedId} onChange={(event) => setBedId(event.target.value)}>
             <option value="">Choose a bed</option>
@@ -126,7 +140,7 @@ export default function Allocations() {
               </option>
             ))}
           </select>{' '}
-          <button type="submit" disabled={submitting || loading || !availableBeds.length}>
+          <button type="submit" disabled={submitting || loading || !studentId || !availableBeds.length}>
             {submitting ? 'Allocating…' : 'Allocate bed'}
           </button>
         </form>

@@ -1,0 +1,50 @@
+{
+  "baseMain": "4ea9ea3107ca5c3626b1db8ea7d1a6aebc6a52b8",
+  "branch": "fix/demo-allocation-profiles-20261112",
+  "environment": {
+    "node": "v24.19.0",
+    "mysql": "mysql:8.0 in separate hms-rehearsal-mysql-20261112 container",
+    "dbPort": 13316,
+    "schemas": [
+      "hms_test",
+      "hms_e2e",
+      "hms_ui_test"
+    ],
+    "uiIntegrationApiPort": 14001,
+    "teamDemoDatabaseAccessed": false
+  },
+  "results": {
+    "backend": {
+      "passed": 119,
+      "failed": 0
+    },
+    "frontend": {
+      "passed": 78,
+      "failed": 0
+    },
+    "liveUIAPI": {
+      "passed": 4,
+      "failed": 0
+    },
+    "localChromium": {
+      "passed": 16,
+      "failed": 0
+    },
+    "workflow": {
+      "passed": 15,
+      "failed": 0
+    },
+    "frontendBuild": "PASS",
+    "backendAudit": "0 vulnerabilities",
+    "frontendAudit": "0 vulnerabilities"
+  },
+  "initialFailures": {
+    "selectorRegression": "2 failures reproduced duplicate POST and discarded validation detail before those fixes",
+    "browser": "14 passed / 2 failed: new fixtures expected mixed-case SRN/email; canonical uppercase SRN/lowercase email is correct application behavior. Fixtures corrected, then complete 16-test run passed."
+  },
+  "limits": [
+    "Linux/Chromium local validation; no Windows execution claimed",
+    "Remote Chrome/Firefox CI must be inspected on final PR head",
+    "No schema, allocation transaction, hash-chain format or approved scalability changes"
+  ]
+}

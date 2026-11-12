@@ -49,7 +49,12 @@ async function findProfile(userId) {
 }
 
 async function updateProfile(userId, role, body) {
-  const data = validateProfileUpdate(body);
+  // Staff have no student record. Legacy full-profile clients may still send
+  // null student fields; validate only the fields this role can actually edit.
+  const source = body && typeof body === 'object' ? body : {};
+  const permitted = role === 'student' ? source
+    : Object.hasOwn(source, 'name') ? { name: source.name } : {};
+  const data = validateProfileUpdate(permitted);
   const studentUpdates = role === 'student'
     ? studentFields.filter((field) => Object.hasOwn(data, field))
     : [];
@@ -97,6 +102,11 @@ router.put('/profile', requireAuth, async (req, res, next) => {
 
 router.get('/students', staffOnly, async (req, res, next) => {
   try {
+    const eligibility = req.query.eligibleForAllocation;
+    if (eligibility !== undefined && !['true', 'false'].includes(eligibility)) {
+      throw E.validation({ eligibleForAllocation: 'Use true or false' });
+    }
+    const eligibleOnly = eligibility === 'true';
     const search = typeof req.query.search === 'string' ? req.query.search.trim().slice(0, 100) : '';
     const like = `%${search}%`;
     const [rows] = await pool.query(
@@ -104,7 +114,11 @@ router.get('/students', staffOnly, async (req, res, next) => {
               s.year_of_study AS yearOfStudy, s.guardian_name AS guardianName,
               s.guardian_contact AS guardianContact, s.address
          FROM students s JOIN users u ON u.id = s.user_id
-        WHERE ? = '' OR s.srn LIKE ? OR u.name LIKE ? OR u.email LIKE ?
+        WHERE u.role = 'student'
+          ${eligibleOnly ? `AND u.is_active = 1 AND NOT EXISTS (
+            SELECT 1 FROM allocations a WHERE a.student_id = u.id AND a.released_at IS NULL
+          )` : ''}
+          AND (? = '' OR s.srn LIKE ? OR u.name LIKE ? OR u.email LIKE ?)
         ORDER BY u.name, u.id LIMIT 100`,
       [search, like, like, like],
     );
