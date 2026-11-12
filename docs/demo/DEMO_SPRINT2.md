@@ -1,4 +1,4 @@
-> Current integration audit: the team removed `sprint2.mp4` in commit `04b82ce` for a replacement team recording. The description below is historical evidence, not a currently available deliverable. Issue #36 remains incomplete until a new recording is committed and reviewed.
+> Completion recording: [sprint2.mp4](sprint2.mp4). Team demonstration recording committed for Sprint 2 deliverable review (Issue #36).
 
 # Sprint 2 recorded demonstration
 
