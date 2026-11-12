@@ -30,8 +30,8 @@ it('genuine M2 inventory allocation and student MyRoom integrate with M1 and aud
  await user.click(screen.getByRole('link',{name:'Inventory'}));await screen.findByRole('heading',{name:'Hostel inventory'});await screen.findByText('Block A');
  const students=await(await fetch('/api/students')).json();const student=students.find(s=>s.srn==='PES2UG24CS101');expect(student).toBeTruthy();
  await user.click(screen.getByRole('link',{name:'Allocations'}));const bed=await screen.findByRole('option',{name:/Block A.*Room 101.*Bed 1/});
- await user.type(screen.getByLabelText('Student ID'),String(student.id));await user.selectOptions(screen.getByLabelText('Available bed'),bed.value);await user.click(screen.getByRole('button',{name:'Allocate bed'}));
- await waitFor(()=>expect(screen.getByRole('status')).toHaveTextContent(/Allocation #\d+ created for student/));
+ await user.type(screen.getByLabelText('Search students'),student.srn);await screen.findByRole('option',{name:new RegExp(student.srn)});await user.selectOptions(screen.getByLabelText('Student',{exact:true}),String(student.id));await user.selectOptions(screen.getByLabelText('Available bed'),bed.value);await user.click(screen.getByRole('button',{name:'Allocate bed'}));
+ await screen.findByText(/Allocation #\d+ created for student/);
  await logout(user);await login(user,'student1@hms.test');expect(screen.queryByRole('link',{name:'Inventory'})).toBeNull();expect(screen.queryByRole('link',{name:'Allocations'})).toBeNull();
  expect((await fetch('/api/beds/available')).status).toBe(403);
  await user.click(screen.getByRole('link',{name:'My room'}));expect(await screen.findByRole('heading',{name:'Current assignment'})).toBeVisible();expect(screen.getByText('Block A')).toBeVisible();
